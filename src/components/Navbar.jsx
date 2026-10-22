@@ -6,8 +6,16 @@ function Navbar () {
     return (
         <Menu className="navbar-brunch">
 
-            <Menu.Item as={NavLink} to="/" end header>
-                Logo
+            <Menu.Item
+                as={NavLink}
+                to="/"
+                end
+                header
+                className="navbar-logo"
+            >
+            <span className="marca-brunch">
+                Brunch<span className="marca-acento">.</span>
+            </span>
             </Menu.Item>
 
             <Menu.Item as={NavLink} to="/" end>

@@ -1,108 +1,309 @@
 
+/* =========================================
+   1. BOTÓN FLOTANTE DEL CHATBOT
+========================================= */
+
 .chatbot-boton.ui.button {
   position: fixed;
   bottom: 25px;
   right: 25px;
+
   width: 60px;
   height: 60px;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   background-color: var(--color-verde);
   color: white;
+
+  font-family: var(--fuente-texto);
+  font-weight: 600;
+
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  cursor: pointer;
   z-index: 1001;
+
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease;
 }
+
+/* Efecto hover del botón flotante */
+.chatbot-boton.ui.button:hover,
+.chatbot-boton.ui.button:focus {
+  background-color: var(--color-verde);
+  color: white;
+}
+
+.chatbot-boton.ui.button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Centrar el icono de cerrar */
+.chatbot-boton.ui.button .icon {
+  margin: 0;
+}
+
+
+/* =========================================
+   2. VENTANA PRINCIPAL DEL CHATBOT
+========================================= */
 
 .chatbot-ventana {
   position: fixed;
   bottom: 95px;
   right: 25px;
+
   width: 350px;
   max-width: calc(100vw - 30px);
+
   height: 420px;
   max-height: calc(100dvh - 120px);
 
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-
   display: flex;
   flex-direction: column;
+
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+
   overflow: hidden;
   z-index: 1000;
+
+  font-family: var(--fuente-texto);
 }
+
+
+/* =========================================
+   3. ENCABEZADO DEL CHATBOT
+========================================= */
 
 .chatbot-encabezado {
   background-color: var(--color-cafe);
-  color: white;
+  color: var(--color-crema);
+
   padding: 18px;
   text-align: center;
-  font-weight: bold;
+
+  font-family: var(--fuente-titulos);
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  flex-shrink: 0;
 }
+
+
+/* =========================================
+   4. CONTENEDOR DE MENSAJES
+========================================= */
 
 .chatbot-mensajes {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
-  padding: 15px;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  padding: 15px;
 }
 
-.mensaje {
-  padding: 10px;
-  border-radius: 10px;
+
+/* =========================================
+   5. ESTILOS GENERALES DE MENSAJES
+========================================= */
+
+.chatbot-mensajes .mensaje {
   max-width: 85%;
+  padding: 10px 12px;
+
+  border-radius: 10px;
+
+  font-family: var(--fuente-texto);
+  font-size: 0.9rem;
+  line-height: 1.5;
+
   overflow-wrap: anywhere;
 }
 
-.mensaje.bot {
+
+/* =========================================
+   6. MENSAJES DEL ASISTENTE
+========================================= */
+
+.chatbot-mensajes .mensaje.bot {
   background-color: var(--color-crema);
+  color: var(--color-cafe);
+
   align-self: flex-start;
 }
 
-.mensaje.usuario {
-  background-color: var(--color-verde);
+
+/* =========================================
+   7. MENSAJES DEL USUARIO
+========================================= */
+
+.chatbot-mensajes .mensaje.usuario {
+  background-color: #53643A;
   color: white;
+
   align-self: flex-end;
 }
 
-.chatbot-formulario {
-  display: flex;
-  gap: 5px;
-  padding: 10px;
-  border-top: 1px solid #ddd;
-}
 
-.chatbot-formulario .ui.input {
-  flex: 1;
-  min-width: 0;
-}
-
-@media (max-width: 767px) {
-  .chatbot-boton.ui.button {
-    bottom: 15px;
-    right: 15px;
-  }
-
-  .chatbot-ventana {
-    right: 15px;
-    bottom: 85px;
-  }
-}
+/* =========================================
+   8. BOTONES DE PREGUNTAS FRECUENTES
+========================================= */
 
 .chatbot-opciones {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+
   gap: 6px;
   padding: 10px;
+
+  flex-shrink: 0;
 }
 
 .chatbot-opciones .ui.button {
   margin: 0;
+  padding: 8px 10px;
+
   background-color: var(--color-crema);
   color: var(--color-cafe);
+
+  font-family: var(--fuente-texto);
+  font-size: 0.8rem;
+
+  border-radius: 6px;
+
+  transition: background-color 0.3s ease,
+              color 0.3s ease;
 }
 
+/* Efecto hover en preguntas rápidas */
 .chatbot-opciones .ui.button:hover {
+  background-color: #53643A;
+  color: white;
+}
+
+
+/* =========================================
+   9. FORMULARIO PARA ENVIAR MENSAJES
+========================================= */
+
+.chatbot-formulario {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+  padding: 10px;
+
+  border-top: 1px solid #ddd;
+  background-color: white;
+
+  flex-shrink: 0;
+}
+
+/* Campo de texto */
+.chatbot-formulario .ui.input {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Botón de enviar */
+.chatbot-formulario .ui.button {
+  margin: 0;
+
   background-color: var(--color-verde);
   color: white;
 }
+
+.chatbot-formulario .ui.button:hover {
+  background-color: #53643A;
+  color: white;
+}
+
+
+/* =========================================
+   10. ACCESIBILIDAD
+========================================= */
+
+.chatbot-boton.ui.button:focus-visible,
+.chatbot-opciones .ui.button:focus-visible,
+.chatbot-formulario .ui.button:focus-visible {
+  outline: 3px solid var(--color-terracota);
+  outline-offset: 2px;
+}
+
+
+/* =========================================
+   11. DISEÑO RESPONSIVE PARA CELULARES
+========================================= */
+
+@media (max-width: 767px) {
+
+  /* Botón flotante */
+  .chatbot-boton.ui.button {
+    bottom: 15px;
+    right: 15px;
+
+    width: 55px;
+    height: 55px;
+  }
+
+  /* Ventana */
+  .chatbot-ventana {
+    bottom: 80px;
+    right: 15px;
+
+    width: 350px;
+    max-width: calc(100vw - 30px);
+
+    max-height: calc(100dvh - 95px);
+  }
+
+  /* Mensajes */
+  .chatbot-mensajes {
+    padding: 12px;
+  }
+
+  /* Encabezado */
+  .chatbot-encabezado {
+    padding: 15px;
+  }
+
+  /* Preguntas frecuentes */
+  .chatbot-opciones {
+    gap: 5px;
+    padding: 8px;
+  }
+
+}
+
+
+/* =========================================
+   12. PREFERENCIAS DE MOVIMIENTO REDUCIDO
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .chatbot-boton.ui.button,
+  .chatbot-opciones .ui.button {
+    transition: none;
+  }
+
+  .chatbot-boton.ui.button:hover {
+    transform: none;
+  }
+
+}
+
