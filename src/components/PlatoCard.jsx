@@ -13,13 +13,15 @@ function PlatoCard({ nombre, precio, imagen }) {
 
     return (
         <Card fluid>
+            <div className="plato-imagen-contenedor">
             <Image 
                 src={imagen}
                 alt={nombre}
                 className="imagen-plato"
             
             />
-                
+            </div>
+   
            
 
             <Card.Content>

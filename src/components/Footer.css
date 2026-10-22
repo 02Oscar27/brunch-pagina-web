@@ -1,42 +1,88 @@
+
+/* =========================================
+   1. FOOTER PRINCIPAL
+========================================= */
+
 .footer-brunch {
-    background-color: var(--color-cafe);
-    color: white;
-    padding: 35px 20 px;
+  background-color: var(--color-cafe);
+  color: var(--color-crema);
+
+  padding: 35px 20px;
+  width: 100%;
 }
+
+
+/* =========================================
+   2. ORGANIZACIÓN DEL CONTENIDO
+========================================= */
 
 .footer-contenido {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 15px;
+  text-align: center;
 }
+
+
+/* =========================================
+   3. NOMBRE DEL RESTAURANTE
+========================================= */
 
 .footer-contenido h3 {
-    color: white;
-    margin: 0;
+  font-family: var(--fuente-titulos);
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  color: var(--color-crema);
+  margin: 0;
 }
 
+
+/* =========================================
+   4. ICONOS DE REDES SOCIALES
+========================================= */
+
 .footer-redes {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
 }
 
 .footer-redes .icon {
-    cursor: pointer;
-    transition: color 0.3s ease;
+  color: var(--color-crema);
+  margin: 0;
+
+  transition: color 0.3s ease;
 }
 
+/* Cambio de color al pasar el cursor */
 .footer-redes .icon:hover {
-    color: var(--color-verde);
+  color: var(--color-verde);
 }
+
+
+/* =========================================
+   5. INFORMACIÓN DE CONTACTO
+========================================= */
 
 .footer-contenido p {
-    margin: 0;
-    font-size: 14px;
+  font-family: var(--fuente-texto);
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  color: var(--color-crema);
+  margin: 0;
 }
 
-/* Adaptación del Footer para celulares */
+
+/* =========================================
+   6. DISEÑO RESPONSIVE PARA CELULARES
+========================================= */
+
 @media (max-width: 767px) {
 
   .footer-brunch {
@@ -48,22 +94,32 @@
   }
 
   .footer-contenido h3 {
-    font-size: 20px;
+    font-size: 1.3rem;
   }
 
   .footer-redes {
     gap: 25px;
-    align-items: center;
   }
 
   .footer-brunch .footer-redes .icon {
     font-size: 24px;
-    margin: 0;
   }
 
   .footer-contenido p {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 0.875rem;
+  }
+
+}
+
+
+/* =========================================
+   7. ACCESIBILIDAD
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .footer-redes .icon {
+    transition: none;
   }
 
 }

@@ -67,7 +67,8 @@ useGSAP(() => {
                     <Grid.Column>
                         <div className="bienvenida-texto">
                             <h1 className="titulo-bienvenida">
-                                DISFRUTA UN BRUNCH DIFERENTE
+                                Disfruta un brunch
+                                <span>diferente.</span>
                             </h1>
 
                             <p>

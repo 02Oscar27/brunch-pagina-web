@@ -1,36 +1,121 @@
-/* Barra de navegación principal */
+
+/* =========================================
+   1. BARRA DE NAVEGACIÓN PRINCIPAL
+========================================= */
+
 .ui.menu.navbar-brunch {
-    background-color: var(--color-cafe);
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    margin: 0;
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  background-color: var(--color-cafe);
+
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
 }
-/* Elementos del menú */
+
+
+/* =========================================
+   2. ELEMENTOS DEL MENÚ
+========================================= */
+
 .ui.menu.navbar-brunch .item {
-    color: var(--color-crema);
-    font-weight: bold;
-    justify-content: center;
-    padding: 20px;
+  color: var(--color-crema);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+
+  justify-content: center;
+  padding: 20px;
+
+  transition: background-color 0.3s ease,
+              color 0.3s ease;
 }
 
-/* Elemento seleccionado */
-.ui.menu.navbar-brunch .active.item:not(.header)  {
-    background-color: var(--color-crema);
-    color:var(--color-cafe);
-}
 
-/* Cuando el usuario pasa el mouse */
+/* =========================================
+   3. EFECTO HOVER DE LOS ENLACES
+========================================= */
+
 .ui.menu.navbar-brunch .item:hover {
-    background-color: #555C45;
-    color:white;
+  background-color: #555C45;
+  color: var(--color-crema);
 }
 
-/* Logo */
-.ui.menu.navbar-brunch .header.item,
-.ui.menu.navbar-brunch .header.item.active {
+
+/* =========================================
+   4. PÁGINA SELECCIONADA
+========================================= */
+
+.ui.menu.navbar-brunch .active.item:not(.header),
+.ui.menu.navbar-brunch .active.item:not(.header):hover {
+  background-color: var(--color-crema);
+  color: var(--color-cafe);
+}
+
+
+/* =========================================
+   5. IDENTIDAD VISUAL DEL LOGO
+========================================= */
+
+/* Mantener el fondo del logo */
+.ui.menu.navbar-brunch .navbar-logo.item,
+.ui.menu.navbar-brunch .navbar-logo.item:hover,
+.ui.menu.navbar-brunch .navbar-logo.item.active {
   background-color: transparent;
   color: var(--color-crema);
 }
+
+/* Nombre del restaurante */
+.ui.menu.navbar-brunch .marca-brunch {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+/* Punto decorativo */
+.ui.menu.navbar-brunch .marca-acento {
+  color: var(--color-terracota);
+}
+
+
+/* =========================================
+   6. ACCESIBILIDAD DEL MENÚ
+========================================= */
+
+.ui.menu.navbar-brunch .item:focus-visible {
+  outline: 2px solid var(--color-terracota);
+  outline-offset: -3px;
+}
+
+
+/* =========================================
+   7. AJUSTES PARA CELULARES
+========================================= */
+
+@media (max-width: 767px) {
+
+  /* Reducir el tamaño del logo */
+  .ui.menu.navbar-brunch .marca-brunch {
+    font-size: 1rem;
+  }
+
+}
+
+
+/* =========================================
+   8. PREFERENCIAS DE MOVIMIENTO REDUCIDO
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ui.menu.navbar-brunch .item {
+    transition: none;
+  }
+
+}
+
