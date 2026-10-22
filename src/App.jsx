@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
+import Chatbot from './components/Chatbot.jsx'
 
 
 import Inicio from './pages/Inicio.jsx'
@@ -32,6 +33,7 @@ function App() {
       </main>
 
      <Footer />
+     <Chatbot />
     </div>
     
   )
