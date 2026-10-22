@@ -1,0 +1,64 @@
+.seccion-bienvenida {
+    width: 100%;
+    background-color: var(--color-crema);
+}
+
+/* Eliminar espacios predeterminados del Grid */
+.seccion-bienvenida .ui.grid {
+    margin:0;
+}
+
+.seccion-bienvenida .ui.grid > .column {
+    padding: o;
+}
+
+/* Contenido de bienvenida */
+.bienvenida-texto {
+    min-height: 400px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.bienvenida-texto h1 {
+    font-size: 18px;
+    color: var(--color-cafe);
+}
+
+.bienvenida-texto p {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* Botones */
+.bienvenida-botones {
+    margin-top: 20px;
+}
+
+.ui.button.boton-menu{
+    background-color: var(--color-verde);
+    color: white;
+}
+
+.ui.button.boton-reserva{
+    background-color: var(--color-terracota);
+    color: white;
+}
+
+/* Espacio reservado para la imagen */
+.bienvenida-imagen {
+    height: 400px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.imagen-principal {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+

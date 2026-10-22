@@ -1,0 +1,28 @@
+/* Barra de navegación principal */
+.ui.menu.navbar-brunch {
+    background-color: #777777;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+}
+/* Elementos del menú */
+.ui.menu.navbar-brunch .item {
+    color: white;
+    font-weight: bold;
+    justify-content: center;
+}
+
+/* Elemento seleccionado */
+.ui.menu.navbar-brunch .active.item {
+    background-color: #666666;
+    color: white;
+}
+
+/* Cuando el usuario pasa el mouse */
+.ui.menu.navbar-brunch .item:hover {
+    background-color: #555555;
+    color:white;
+}

@@ -1,0 +1,21 @@
+:root {
+  --color-crema: #F5F0E6;
+  --color-verde: #8A9A5B;
+  --color-terracota: #A66A4C;
+  --color-cafe: #3D3A32;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}

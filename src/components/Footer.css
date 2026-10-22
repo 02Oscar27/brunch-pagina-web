@@ -1,0 +1,37 @@
+.footer-brunch {
+    background-color: var(--color-cafe);
+    color: white;
+    padding: 35px 20 px;
+}
+
+.footer-contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+}
+
+.footer-contenido h3 {
+    color: white;
+    margin: 0;
+}
+
+.footer-redes {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-redes .icon {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.footer-redes .ico:hover {
+    color: var(--color-verde);
+}
+
+.footer-contenido p {
+    margin: 0;
+    font-size: 14px;
+}
