@@ -1,6 +1,6 @@
 /* Barra de navegación principal */
 .ui.menu.navbar-brunch {
-    background-color: #777777;
+    background-color: var(--color-cafe);
     border: none;
     border-radius: 0;
     box-shadow: none;
@@ -10,19 +10,27 @@
 }
 /* Elementos del menú */
 .ui.menu.navbar-brunch .item {
-    color: white;
+    color: var(--color-crema);
     font-weight: bold;
     justify-content: center;
+    padding: 20px;
 }
 
 /* Elemento seleccionado */
-.ui.menu.navbar-brunch .active.item {
-    background-color: #666666;
-    color: white;
+.ui.menu.navbar-brunch .active.item:not(.header)  {
+    background-color: var(--color-crema);
+    color:var(--color-cafe);
 }
 
 /* Cuando el usuario pasa el mouse */
 .ui.menu.navbar-brunch .item:hover {
-    background-color: #555555;
+    background-color: #555C45;
     color:white;
+}
+
+/* Logo */
+.ui.menu.navbar-brunch .header.item,
+.ui.menu.navbar-brunch .header.item.active {
+  background-color: transparent;
+  color: var(--color-crema);
 }
