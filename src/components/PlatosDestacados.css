@@ -33,3 +33,22 @@
     height: 220px;
     object-fit: cover;
 }
+
+
+/* Adaptación de platos destacados a celulares */
+@media (max-width: 767px) {
+
+  .platos-destacados {
+    padding: 40px 18px;
+  }
+
+  .platos-destacados h2 {
+    font-size: 25px;
+    margin-bottom: 25px;
+  }
+
+  .platos-destacados .ui.card .imagen-plato {
+    height: 220px;
+  }
+
+}

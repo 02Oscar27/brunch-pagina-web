@@ -62,3 +62,39 @@
     display: block;
 }
 
+/* Diseño para celulares */
+@media (max-width: 767px) {
+
+  .bienvenida-texto {
+    min-height: auto;
+    padding: 45px 20px 30px;
+  }
+
+  .bienvenida-texto h1 {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .bienvenida-texto p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-top: 15px;
+  }
+
+  .bienvenida-botones {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .bienvenida-botones .ui.button {
+    margin: 0;
+  }
+
+  .bienvenida-imagen {
+    height: 260px;
+  }
+
+}
