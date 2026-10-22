@@ -1,62 +1,100 @@
 
-/* Estilos exclusivos de la página del menú */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
+
+:root {
+  --color-crema: #F5F0E6;
+  --color-verde: #8A9A5B;
+  --color-terracota: #A66A4C;
+  --color-cafe: #3D3A32;
+
+  --fuente-texto: 'DM Sans', sans-serif;
+  --fuente-titulos: 'Fraunces', Georgia, serif;
+}
+
+/* ========================================
+   CONTENEDOR PRINCIPAL
+======================================== */
 
 .menu-page {
   width: 100%;
-  padding: 24px 5% 40px;
-  box-sizing: border-box;
-  color: #39362f;
-  background: #fff;
   min-height: 450px;
+  padding: 32px 5% 45px;
+  box-sizing: border-box;
+
+  background: var(--color-crema);
+  color: var(--color-cafe);
+  font-family: var(--fuente-texto);
 }
 
-/* Encabezado */
+/* ========================================
+   ENCABEZADO
+======================================== */
 
 .menu-encabezado {
-  text-align: center;
   max-width: 850px;
-  margin: 0 auto 28px;
+  margin: 0 auto 35px;
+  text-align: center;
 }
 
 .menu-encabezado h1 {
-  margin: 0 0 8px;
-  font-size: clamp(28px, 3vw, 38px);
+  margin: 0 0 10px;
+
+  color: var(--color-cafe);
+  font-family: var(--fuente-titulos);
+  font-size: clamp(30px, 3vw, 42px);
   font-weight: 600;
-  color: #39362f;
+  line-height: 1.2;
 }
 
 .menu-subtitulo {
-  margin: 0 0 22px;
+  margin: 0 0 25px;
+
+  color: var(--color-cafe);
+  font-family: var(--fuente-texto);
   font-size: 16px;
-  color: #666157;
+  line-height: 1.6;
 }
 
-/* Buscador */
+/* ========================================
+   BUSCADOR
+======================================== */
 
 .menu-buscador {
   max-width: 460px;
-  margin: 0 auto 22px;
+  margin: 0 auto 25px;
 }
 
 .menu-buscador input {
+  display: block;
   width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #d6d0c4;
-  border-radius: 7px;
-  background: #fff;
-  color: #39362f;
-  font-size: 15px;
+  padding: 13px 17px;
   box-sizing: border-box;
+
+  border: 1px solid #D5CCBB;
+  border-radius: 6px;
+
+  background: #FFFCF6;
+  color: var(--color-cafe);
+
+  font-family: var(--fuente-texto);
+  font-size: 15px;
+
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.menu-buscador input::placeholder {
+  color: #888174;
 }
 
 .menu-buscador input:focus {
-  border-color: #929e5e;
-  box-shadow: 0 0 0 3px rgb(146 158 94 / 18%);
+  border-color: var(--color-verde);
+  box-shadow: 0 0 0 3px rgb(138 154 91 / 18%);
 }
 
-/* Categorías y filtros */
+/* ========================================
+   CATEGORÍAS Y FILTROS
+======================================== */
 
 .menu-categorias {
   display: flex;
@@ -68,13 +106,19 @@
 .menu-filtro {
   min-width: 125px;
   padding: 12px 22px;
-  border: 1px solid #ddd7ca;
+
+  border: 1px solid #D8CEBD;
   border-radius: 5px;
-  background: #f4f0e7;
-  color: #39362f;
+
+  background: #EAE3D5;
+  color: var(--color-cafe);
+
+  font-family: var(--fuente-texto);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
+
   cursor: pointer;
+
   transition:
     background-color 0.25s,
     color 0.25s,
@@ -83,60 +127,78 @@
 }
 
 .menu-filtro:hover {
-  background: #e7e2d6;
+  background: #DDD4C3;
+  border-color: var(--color-verde);
   transform: translateY(-2px);
 }
 
 .menu-filtro.activo {
-  background: #929e5e;
-  border-color: #929e5e;
-  color: #fff;
+  background: var(--color-verde);
+  border-color: var(--color-verde);
+  color: #FFFFFF;
 }
 
-/* Cuadrícula de productos */
+/* ========================================
+   CUADRÍCULA DE PRODUCTOS
+======================================== */
 
 .menu-productos {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
   gap: 28px;
+
+  width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  align-items: stretch;
 }
 
-/* Tarjetas */
+/* ========================================
+   TARJETAS
+======================================== */
 
 .menu-tarjeta {
   min-width: 0;
   overflow: hidden;
-  background: #fff;
-  border: 1px solid #e9e4da;
+
+  background: #FFFCF6;
+  border: 1px solid #E2D9C9;
   border-radius: 8px;
-  box-shadow: 0 3px 12px rgb(57 54 47 / 8%);
+
+  box-shadow: 0 3px 12px rgb(61 58 50 / 8%);
+
+  animation: menu-aparecer 0.35s ease both;
+
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
-  animation: menu-aparecer 0.35s ease both;
 }
 
 .menu-tarjeta:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 22px rgb(57 54 47 / 14%);
+  box-shadow: 0 9px 22px rgb(61 58 50 / 14%);
 }
+
+/* ========================================
+   IMÁGENES
+======================================== */
 
 .menu-imagen-contenedor {
   position: relative;
   width: 100%;
-  height: 210px;
+  height: 230px;
   overflow: hidden;
-  background: #eee9df;
+
+  background: #EAE3D5;
 }
 
 .menu-imagen {
   display: block;
   width: 100%;
   height: 100%;
+
   object-fit: cover;
+
   transition: transform 0.4s ease;
 }
 
@@ -144,102 +206,165 @@
   transform: scale(1.05);
 }
 
+/* ========================================
+   ETIQUETAS: NUEVO / MÁS PEDIDO
+======================================== */
+
 .menu-etiqueta {
   position: absolute;
   top: 12px;
   left: 12px;
   z-index: 1;
-  padding: 6px 10px;
+
+  padding: 6px 11px;
   border-radius: 4px;
-  background: #929e5e;
-  color: #fff;
+
+  background: var(--color-terracota);
+  color: #FFFFFF;
+
+  font-family: var(--fuente-texto);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-/* Información del producto */
+/* ========================================
+   INFORMACIÓN DE PRODUCTOS
+======================================== */
 
 .menu-info {
-  padding: 18px;
+  padding: 20px;
 }
 
 .menu-categoria-producto {
-  color: #858b5a;
+  color: var(--color-terracota);
+
+  font-family: var(--fuente-texto);
   font-size: 12px;
-  text-transform: uppercase;
+  font-weight: 700;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .menu-info h2 {
-  margin: 8px 0;
-  color: #39362f;
-  font-size: 20px;
+  margin: 9px 0;
+
+  color: var(--color-cafe);
+  font-family: var(--fuente-titulos);
+  font-size: 23px;
   font-weight: 600;
+  line-height: 1.3;
 }
 
 .menu-precio {
-  margin: 0 0 16px;
-  color: #716c5d;
+  margin: 0 0 17px;
+
+  color: var(--color-cafe);
+  font-family: var(--fuente-texto);
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
+/* ========================================
+   BOTÓN VER MÁS
+======================================== */
+
 .menu-ver-mas {
-  padding: 9px 18px;
-  border: 1px solid #39362f;
-  border-radius: 4px;
-  background: #39362f;
-  color: #fff;
+  padding: 10px 20px;
+
+  border: 1px solid var(--color-cafe);
+  border-radius: 5px;
+
+  background: var(--color-cafe);
+  color: var(--color-crema);
+
+  font-family: var(--fuente-texto);
   font-size: 14px;
+  font-weight: 600;
+
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+
+  transition:
+    background-color 0.25s,
+    border-color 0.25s,
+    transform 0.25s;
 }
 
 .menu-ver-mas:hover {
-  background: #929e5e;
-  border-color: #929e5e;
+  background: var(--color-terracota);
+  border-color: var(--color-terracota);
+  transform: translateY(-1px);
 }
+
+/* ========================================
+   DESCRIPCIÓN DESPLEGABLE
+======================================== */
 
 .menu-descripcion {
   margin: 14px 0 0;
-  color: #666157;
+
+  color: #625D52;
+  font-family: var(--fuente-texto);
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.7;
+
   animation: menu-aparecer 0.25s ease;
 }
 
-/* Sin resultados y cargar más */
+/* ========================================
+   MENSAJE SIN RESULTADOS
+======================================== */
 
 .menu-sin-resultados {
   grid-column: 1 / -1;
-  padding: 30px 10px;
+
+  padding: 35px 15px;
+
+  color: var(--color-cafe);
+  font-family: var(--fuente-texto);
+  font-size: 16px;
   text-align: center;
-  color: #666157;
 }
+
+/* ========================================
+   BOTÓN CARGAR MÁS
+======================================== */
 
 .menu-cargar-contenedor {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+
+  margin-top: 35px;
 }
 
 .menu-cargar {
-  padding: 12px 28px;
-  border: 1px solid #929e5e;
+  padding: 13px 30px;
+
+  border: 1px solid var(--color-verde);
   border-radius: 5px;
-  background: #929e5e;
-  color: #fff;
+
+  background: var(--color-verde);
+  color: #FFFFFF;
+
+  font-family: var(--fuente-texto);
   font-size: 15px;
+  font-weight: 600;
+
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+
+  transition:
+    background-color 0.25s,
+    transform 0.25s;
 }
 
 .menu-cargar:hover {
-  background: #7d894d;
+  background: var(--color-cafe);
+  border-color: var(--color-cafe);
   transform: translateY(-2px);
 }
 
-/* Animación de entrada */
+/* ========================================
+   ANIMACIONES
+======================================== */
 
 @keyframes menu-aparecer {
   from {
@@ -253,16 +378,22 @@
   }
 }
 
-/* Adaptación a tabletas */
+/* ========================================
+   TABLETAS
+======================================== */
 
 @media (max-width: 900px) {
+  .menu-page {
+    padding: 28px 4% 38px;
+  }
+
   .menu-productos {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
+    gap: 22px;
   }
 
   .menu-imagen-contenedor {
-    height: 190px;
+    height: 200px;
   }
 
   .menu-filtro {
@@ -270,15 +401,25 @@
   }
 }
 
-/* Adaptación a celulares */
+/* ========================================
+   CELULARES
+======================================== */
 
 @media (max-width: 560px) {
   .menu-page {
-    padding: 22px 16px 32px;
+    padding: 24px 16px 32px;
+  }
+
+  .menu-encabezado {
+    margin-bottom: 26px;
   }
 
   .menu-encabezado h1 {
-    font-size: 28px;
+    font-size: 32px;
+  }
+
+  .menu-subtitulo {
+    font-size: 14px;
   }
 
   .menu-categorias {
@@ -295,7 +436,7 @@
 
   .menu-productos {
     grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
+    gap: 22px;
   }
 
   .menu-imagen-contenedor {
@@ -303,7 +444,11 @@
   }
 
   .menu-info {
-    padding: 16px;
+    padding: 17px;
+  }
+
+  .menu-info h2 {
+    font-size: 22px;
   }
 }
 
