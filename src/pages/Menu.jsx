@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -99,13 +99,11 @@ const productos = [
 
 const categorias = ["Todos", "Desayunos", "Dulces", "Bebidas"];
 
-function Menu() {
+function Menu({ carrito = {}, cambiarCantidad }) {
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
   const [busqueda, setBusqueda] = useState("");
   const [cantidadVisible, setCantidadVisible] = useState(6);
   const [tarjetasGiradas, setTarjetasGiradas] = useState([]);
-  const [cantidades, setCantidades] = useState({});
-  const [carritoAbierto, setCarritoAbierto] = useState(false);
 
   const menuRef = useRef(null);
   const encabezadoRef = useRef(null);
@@ -195,22 +193,6 @@ function Menu() {
 
   const productosVisibles = productosFiltrados.slice(0, cantidadVisible);
 
-  const productosCarrito = useMemo(
-    () =>
-      productos.filter((producto) => (cantidades[producto.id] || 0) > 0),
-    [cantidades]
-  );
-
-  const totalUnidades = productosCarrito.reduce(
-    (total, producto) => total + cantidades[producto.id],
-    0
-  );
-
-  const totalPrecio = productosCarrito.reduce(
-    (total, producto) => total + producto.precio * cantidades[producto.id],
-    0
-  );
-
   const formatoPrecio = (precio) =>
     precio.toLocaleString("es-CO", {
       style: "currency",
@@ -229,21 +211,6 @@ function Menu() {
         ? actuales.filter((tarjetaId) => tarjetaId !== id)
         : [...actuales, id]
     );
-  };
-
-  const cambiarCantidad = (id, cambio) => {
-    setCantidades((actuales) => {
-      const nuevaCantidad = Math.max(0, (actuales[id] || 0) + cambio);
-      const nuevasCantidades = { ...actuales };
-
-      if (nuevaCantidad === 0) {
-        delete nuevasCantidades[id];
-      } else {
-        nuevasCantidades[id] = nuevaCantidad;
-      }
-
-      return nuevasCantidades;
-    });
   };
 
   const animarBoton = (elemento, escala) => {
@@ -265,85 +232,7 @@ function Menu() {
         <div className="menu-marca" aria-label="Menú de brunch">
           Nuestro brunch
         </div>
-
-        <button
-          type="button"
-          className="menu-carrito-boton"
-          onClick={() => setCarritoAbierto((abierto) => !abierto)}
-          aria-label={`Abrir carrito. ${totalUnidades} productos`}
-          aria-expanded={carritoAbierto}
-        >
-          <svg
-            className="menu-carrito-icono"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6" />
-            <circle cx="10" cy="20" r="1.2" />
-            <circle cx="18" cy="20" r="1.2" />
-          </svg>
-          <span>Carrito</span>
-          <span className="menu-carrito-contador">{totalUnidades}</span>
-        </button>
       </div>
-
-      {carritoAbierto && (
-        <aside className="menu-carrito-panel" aria-label="Contenido del carrito">
-          <div className="menu-carrito-cabecera">
-            <h2>Tu carrito</h2>
-            <button
-              type="button"
-              className="menu-carrito-cerrar"
-              onClick={() => setCarritoAbierto(false)}
-              aria-label="Cerrar carrito"
-            >
-              ×
-            </button>
-          </div>
-
-          {productosCarrito.length === 0 ? (
-            <p className="menu-carrito-vacio">
-              Tu carrito está vacío. Agrega tus platos favoritos.
-            </p>
-          ) : (
-            <>
-              <ul className="menu-carrito-lista">
-                {productosCarrito.map((producto) => (
-                  <li className="menu-carrito-item" key={producto.id}>
-                    <img src={producto.imagen} alt="" />
-                    <div className="menu-carrito-detalle">
-                      <strong>{producto.nombre}</strong>
-                      <span>{formatoPrecio(producto.precio)}</span>
-                      <div className="menu-controles-cantidad menu-controles-carrito">
-                        <button
-                          type="button"
-                          onClick={() => cambiarCantidad(producto.id, -1)}
-                          aria-label={`Quitar una unidad de ${producto.nombre}`}
-                        >
-                          −
-                        </button>
-                        <span>{cantidades[producto.id]}</span>
-                        <button
-                          type="button"
-                          onClick={() => cambiarCantidad(producto.id, 1)}
-                          aria-label={`Agregar una unidad de ${producto.nombre}`}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="menu-carrito-total">
-                <span>Total</span>
-                <strong>{formatoPrecio(totalPrecio)}</strong>
-              </div>
-            </>
-          )}
-        </aside>
-      )}
 
       <section className="menu-encabezado" ref={encabezadoRef}>
         <h1 className="menu-titulo">Nuestro menú</h1>
@@ -387,7 +276,7 @@ function Menu() {
         {productosVisibles.length > 0 ? (
           productosVisibles.map((producto) => {
             const girada = tarjetasGiradas.includes(producto.id);
-            const cantidad = cantidades[producto.id] || 0;
+            const cantidad = carrito[producto.id]?.cantidad || 0;
 
             return (
               <article
@@ -435,7 +324,7 @@ function Menu() {
                       <div className="menu-controles-cantidad">
                         <button
                           type="button"
-                          onClick={() => cambiarCantidad(producto.id, -1)}
+                          onClick={() => cambiarCantidad(producto, -1)}
                           disabled={cantidad === 0}
                           aria-label={`Quitar una unidad de ${producto.nombre}`}
                         >
@@ -444,7 +333,7 @@ function Menu() {
                         <span aria-live="polite">{cantidad}</span>
                         <button
                           type="button"
-                          onClick={() => cambiarCantidad(producto.id, 1)}
+                          onClick={() => cambiarCantidad(producto, 1)}
                           aria-label={`Agregar una unidad de ${producto.nombre}`}
                         >
                           +
@@ -477,7 +366,7 @@ function Menu() {
                       <div className="menu-controles-cantidad">
                         <button
                           type="button"
-                          onClick={() => cambiarCantidad(producto.id, -1)}
+                          onClick={() => cambiarCantidad(producto, -1)}
                           disabled={cantidad === 0}
                           aria-label={`Quitar una unidad de ${producto.nombre}`}
                         >
@@ -486,7 +375,7 @@ function Menu() {
                         <span aria-live="polite">{cantidad}</span>
                         <button
                           type="button"
-                          onClick={() => cambiarCantidad(producto.id, 1)}
+                          onClick={() => cambiarCantidad(producto, 1)}
                           aria-label={`Agregar una unidad de ${producto.nombre}`}
                         >
                           +
