@@ -1,0 +1,127 @@
+
+/* =========================================
+   1. SECCIÓN PRINCIPAL
+========================================= */
+
+.ambiente-brunch {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 460px;
+  padding: 80px 25px;
+
+  /* Capa oscura + fotografía */
+  background-image:
+  linear-gradient(
+    rgba(40, 35, 29, 0.48),
+    rgba(40, 35, 29, 0.68)
+  ),
+  url('../assets/images/ambiente-brunch.jpg');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* =========================================
+   2. CONTENIDO CENTRAL
+========================================= */
+
+.ambiente-brunch-contenido {
+  width: 100%;
+  max-width: 850px;
+
+  text-align: center;
+  color: var(--color-crema);
+}
+
+
+/* =========================================
+   3. ETIQUETA SUPERIOR
+========================================= */
+
+.ambiente-brunch-etiqueta {
+  font-family: var(--fuente-texto);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+
+  color: #F3D7C5;
+  margin: 0 0 20px;
+}
+
+
+/* =========================================
+   4. TÍTULO PRINCIPAL
+========================================= */
+
+.ambiente-brunch h2 {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2.3rem, 4.5vw, 4rem);
+  font-weight: 600;
+  line-height: 1.2;
+
+  color: var(--color-crema);
+  margin: 0 0 22px;
+
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Palabras destacadas */
+.ambiente-brunch h2 span {
+  font-style: italic;
+  color: #F3D7C5;
+}
+
+
+/* =========================================
+   5. DESCRIPCIÓN
+========================================= */
+
+.ambiente-brunch-descripcion {
+    font-family: var(--fuente-texto);
+    font-size: 1.15rem;
+    line-height: 1.7;
+    font-weight: 500;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+
+    max-width: 650px;
+    margin: 0 auto;
+
+    color: var(--color-crema);
+}
+
+
+/* =========================================
+   6. DISEÑO RESPONSIVE
+========================================= */
+
+@media (max-width: 767px) {
+
+  .ambiente-brunch {
+    min-height: 360px;
+    padding: 55px 24px;
+    background-position: center;
+  }
+
+  .ambiente-brunch-contenido {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .ambiente-brunch h2 {
+    font-size: clamp(2rem, 8vw, 2.5rem);
+    line-height: 1.2;
+  }
+
+  .ambiente-brunch-descripcion {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+}

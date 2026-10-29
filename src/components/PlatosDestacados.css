@@ -2,9 +2,9 @@
 /* =========================================
    1. SECCIÓN DE PLATOS DESTACADOS
 ========================================= */
-
 .platos-destacados {
-  padding: 60px 20px;
+  position: relative;
+  padding: 75px 20px 50px;
   background-color: var(--color-crema);
 }
 
