@@ -15,6 +15,8 @@ function App() {
   const [carrito, setCarrito] = useState({})
 
   // Se comparte el mismo carrito entre el menú y el navbar.
+  const vaciarCarrito = () => setCarrito({})
+
   const cambiarCantidad = (producto, cambio) => {
     setCarrito((actual) => {
       const cantidadActual = actual[producto.id]?.cantidad || 0
@@ -33,7 +35,7 @@ function App() {
 
   return (
     <div>
-      <Navbar carrito={carrito} cambiarCantidad={cambiarCantidad} />
+      <Navbar carrito={carrito} cambiarCantidad={cambiarCantidad} vaciarCarrito={vaciarCarrito} />
 
       <main>
         <Routes>

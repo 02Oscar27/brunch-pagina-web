@@ -3,9 +3,8 @@
    1. SECCIÓN DE PLATOS DESTACADOS
 ========================================= */
 .platos-destacados {
-  position: relative;
-  padding: 75px 20px 50px;
-  background-color: var(--color-crema);
+  padding: 55px 20px 40px;
+  background-color: #F0EBE2;
 }
 
 

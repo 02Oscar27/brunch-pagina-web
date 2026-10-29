@@ -300,3 +300,72 @@
     right: 12px;
   }
 }
+
+
+/* Botón para confirmar la compra */
+.navbar-realizar-compra {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--color-verde, #8A9A5B);
+  border-radius: 7px;
+  background: var(--color-verde, #8A9A5B);
+  color: #fff;
+  font: 700 14px var(--fuente-texto, 'DM Sans', sans-serif);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-realizar-compra:hover {
+  background: var(--color-cafe, #3D3A32);
+  border-color: var(--color-cafe, #3D3A32);
+  transform: translateY(-1px);
+}
+
+.navbar-realizar-compra:focus-visible {
+  outline: 3px solid var(--color-terracota, #A66A4C);
+  outline-offset: 3px;
+}
+
+/* Aviso temporal de compra realizada */
+.navbar-compra-aviso {
+  position: fixed;
+  z-index: 2000;
+  top: 105px;
+  right: 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: calc(100vw - 32px);
+  padding: 14px 18px;
+  border: 1px solid #D7E2C1;
+  border-radius: 9px;
+  background: #F4F8EC;
+  color: #354225;
+  box-shadow: 0 8px 24px rgb(61 58 50 / 16%);
+  font: 600 14px var(--fuente-texto, 'DM Sans', sans-serif);
+  animation: navbar-aviso-entrada 0.25s ease-out;
+}
+
+.navbar-compra-aviso span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--color-verde, #8A9A5B);
+  color: #fff;
+  font-weight: 700;
+}
+
+@keyframes navbar-aviso-entrada {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar-realizar-compra,
+  .navbar-compra-aviso { animation: none; transition: none; }
+}

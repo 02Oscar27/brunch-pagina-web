@@ -1,10 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Menu } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
-function Navbar({ carrito = {}, cambiarCantidad }) {
+function Navbar({ carrito = {}, cambiarCantidad, vaciarCarrito }) {
   const [carritoAbierto, setCarritoAbierto] = useState(false)
+  const [avisoCompra, setAvisoCompra] = useState(false)
+
+  useEffect(() => {
+    if (!avisoCompra) return
+    const temporizador = window.setTimeout(() => setAvisoCompra(false), 3500)
+    return () => window.clearTimeout(temporizador)
+  }, [avisoCompra])
+
+  const realizarCompra = () => {
+    if (totalUnidades === 0) return
+    vaciarCarrito?.()
+    setCarritoAbierto(false)
+    setAvisoCompra(true)
+  }
   const productosCarrito = Object.values(carrito)
   const totalUnidades = productosCarrito.reduce((total, item) => total + item.cantidad, 0)
   const totalPrecio = productosCarrito.reduce(
@@ -20,6 +34,7 @@ function Navbar({ carrito = {}, cambiarCantidad }) {
     })
 
   return (
+    <>
     <Menu className="navbar-brunch">
       <Menu.Item
         as={NavLink}
@@ -102,8 +117,15 @@ function Navbar({ carrito = {}, cambiarCantidad }) {
                   <span>Total</span>
                   <strong>{formatoPrecio(totalPrecio)}</strong>
                 </div>
+                <button
+                  type="button"
+                  className="navbar-realizar-compra"
+                  onClick={realizarCompra}
+                >
+                  Realizar compra
+                </button>
                 <p className="navbar-carrito-nota">
-                  Vista previa: todavía no procesa pagos ni pedidos.
+                  Demostración: este botón no procesa pagos reales.
                 </p>
               </>
             )}
@@ -111,6 +133,12 @@ function Navbar({ carrito = {}, cambiarCantidad }) {
         )}
       </Menu.Item>
     </Menu>
+    {avisoCompra && (
+      <div className="navbar-compra-aviso" role="status" aria-live="polite">
+        <span aria-hidden="true">✓</span> Compra realizada correctamente
+      </div>
+    )}
+    </>
   )
 }
 
