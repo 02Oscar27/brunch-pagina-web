@@ -412,3 +412,4 @@ function Menu({ carrito = {}, cambiarCantidad }) {
 }
 
 export default Menu;
+
