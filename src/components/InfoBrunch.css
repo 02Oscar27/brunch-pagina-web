@@ -1,0 +1,177 @@
+
+/* =========================================
+   1. SECCIÓN INFORMATIVA
+========================================= */
+
+.info-brunch {
+  padding: 65px 20px;
+  background-color: #ffffff;
+}
+
+/* Título principal de la sección */
+.info-brunch h2 {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 600;
+
+  color: var(--color-cafe);
+  text-align: center;
+
+  margin: 0 0 35px;
+}
+
+
+/* =========================================
+   2. DISTRIBUCIÓN DE LAS TARJETAS
+========================================= */
+
+.info-brunch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+
+/* =========================================
+   3. DISEÑO GENERAL DE LAS TARJETAS
+========================================= */
+
+.info-brunch-tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 30px 25px;
+  text-align: center;
+
+  background-color: var(--color-crema);
+  border-radius: 14px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* Elevación suave al pasar el cursor */
+.info-brunch-tarjeta:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.10);
+}
+
+
+/* =========================================
+   4. ICONOS DE LAS TARJETAS
+========================================= */
+
+.info-brunch-tarjeta > .icon {
+  color: var(--color-terracota);
+  margin: 0 0 18px;
+}
+
+
+/* =========================================
+   5. TÍTULOS DE LAS TARJETAS
+========================================= */
+
+.info-brunch-tarjeta h3 {
+  font-family: var(--fuente-titulos);
+  font-size: 1.4rem;
+  font-weight: 600;
+
+  color: var(--color-cafe);
+  margin: 0 0 15px;
+}
+
+
+/* =========================================
+   6. DESCRIPCIONES DE LAS TARJETAS
+========================================= */
+
+.info-brunch-tarjeta p {
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+
+  color: var(--color-cafe);
+  margin: 0 0 10px;
+}
+
+/* Destacar el horario de atención */
+.info-brunch-tarjeta .info-brunch-destacado {
+  color: var(--color-terracota);
+  font-weight: 700;
+}
+
+
+/* =========================================
+   7. DISEÑO RESPONSIVE PARA TABLETAS
+========================================= */
+
+@media (max-width: 991px) {
+
+  .info-brunch-grid {
+    grid-template-columns: 1fr;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+}
+
+
+/* =========================================
+   8. DISEÑO RESPONSIVE PARA CELULARES
+========================================= */
+
+@media (max-width: 767px) {
+
+  /* Sección principal */
+  .info-brunch {
+    padding: 45px 18px;
+  }
+
+  /* Título principal */
+  .info-brunch h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+
+  /* Separación entre tarjetas */
+  .info-brunch-grid {
+    gap: 18px;
+  }
+
+  /* Tamaño de las tarjetas */
+  .info-brunch-tarjeta {
+    padding: 25px 20px;
+  }
+
+  /* Títulos de las tarjetas */
+  .info-brunch-tarjeta h3 {
+    font-size: 1.3rem;
+  }
+
+  /* Descripciones */
+  .info-brunch-tarjeta p {
+    font-size: 0.95rem;
+  }
+
+}
+
+
+/* =========================================
+   9. ACCESIBILIDAD
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .info-brunch-tarjeta {
+    transition: none;
+  }
+
+  .info-brunch-tarjeta:hover {
+    transform: none;
+  }
+
+}
+

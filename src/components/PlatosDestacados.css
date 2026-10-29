@@ -14,27 +14,76 @@
 ========================================= */
 
 .platos-destacados h2 {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: clamp(2rem, 3vw, 2.8rem);
   font-weight: 600;
 
-  text-align: center;
   color: var(--color-cafe);
+  text-align: center;
 
   margin: 0 0 35px;
 }
 
 
 /* =========================================
-   3. TARJETAS DE LOS PLATOS
+   3. ESTRUCTURA DEL CARRUSEL
 ========================================= */
 
-.platos-destacados .ui.card {
+/* Contiene las flechas y el área de tarjetas */
+.carrusel-marco {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Área donde se muestran los platos */
+.carrusel-ventana {
   width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+  padding: 8px 0 16px;
+}
+
+/* Pista horizontal que mueve las tarjetas */
+.carrusel-pista {
+  display: flex;
+  align-items: stretch;
+
+  will-change: transform;
+}
+
+/* Contenedor individual de cada plato */
+.carrusel-pista .plato-destacado {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+
+/* =========================================
+   4. TARJETAS GIRATORIAS
+========================================= */
+
+/* Tarjeta principal */
+.platos-destacados .ui.card.flip-card {
+  display: block;
+
+  width: 100%;
+  height: 315px;
+
+  padding: 0;
   margin: 0;
+  border: none;
+
+  text-align: left;
+  background-color: white;
 
   border-radius: 12px;
   overflow: hidden;
+
+  perspective: 1000px;
+  cursor: pointer;
 
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 
@@ -42,110 +91,296 @@
               box-shadow 0.3s ease;
 }
 
-
-/* =========================================
-   4. EFECTO HOVER DE LAS TARJETAS
-========================================= */
-
-.platos-destacados .ui.card:hover {
+/* Elevación de la tarjeta al pasar el cursor */
+.platos-destacados .ui.card.flip-card:hover {
   transform: translateY(-6px);
 
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Elemento interno encargado del giro */
+.flip-card-inner {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+}
+
+/* Giro cuando la tarjeta está seleccionada */
+.flip-card.volteada .flip-card-inner {
+  transform: rotateY(180deg);
+}
 
 
 /* =========================================
-   5. FOTOGRAFÍAS DE LOS PLATOS
+   5. CARAS DE LA TARJETA
 ========================================= */
 
-/* Contenedor de la fotografía */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 12px;
+  overflow: hidden;
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Cara frontal */
+.flip-card-front {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+/* Cara posterior */
+.flip-card-back {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+  text-align: center;
+
+  background-color: var(--color-crema);
+  color: var(--color-cafe);
+
+  transform: rotateY(180deg);
+}
+
+
+/* =========================================
+   6. FOTOGRAFÍAS DE LOS PLATOS
+========================================= */
+
 .platos-destacados .plato-imagen-contenedor {
   width: 100%;
   height: 220px;
   overflow: hidden;
 }
 
-/* Fotografía */
 .platos-destacados .ui.card .imagen-plato {
+  display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
-  display: block;
 
   transition: transform 0.35s ease;
 }
 
-/* Zoom al pasar el cursor sobre la tarjeta */
+/* Zoom suave sobre la fotografía */
 .platos-destacados .ui.card:hover .imagen-plato {
   transform: scale(1.05);
 }
 
 
-
 /* =========================================
-   6. NOMBRE DEL PLATO
+   7. INFORMACIÓN FRONTAL DEL PLATO
 ========================================= */
 
-.platos-destacados .ui.card .header {
-  font-family: 'DM Sans', sans-serif;
+/* Espaciado del contenido */
+.platos-destacados .flip-card-front .content {
+  padding: 14px 16px;
+}
+
+/* Nombre del plato */
+.platos-destacados .flip-card-front .header {
+  font-family: var(--fuente-texto);
   font-size: 1.1rem;
   font-weight: 700;
+  line-height: 1.3;
 
   color: var(--color-cafe);
 }
 
-
-/* =========================================
-   7. PRECIO DEL PLATO
-========================================= */
-
-.platos-destacados .ui.card .description {
-  font-family: 'DM Sans', sans-serif;
+/* Precio del plato */
+.platos-destacados .flip-card-front .description {
+  font-family: var(--fuente-texto);
   font-size: 1rem;
   font-weight: 600;
 
   color: var(--color-terracota);
+  margin-top: 6px;
 }
 
 
 /* =========================================
-   8. DISEÑO RESPONSIVE PARA CELULARES
+   8. INFORMACIÓN POSTERIOR DEL PLATO
 ========================================= */
 
+/* Nombre */
+.flip-card-back h3 {
+  font-family: var(--fuente-titulos);
+  font-size: 1.5rem;
+
+  color: var(--color-cafe);
+  margin: 0 0 15px;
+}
+
+/* Descripción */
+.flip-card-back p {
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+
+  margin: 0 0 15px;
+}
+
+/* Precio */
+.precio-plato {
+  font-family: var(--fuente-texto);
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  color: var(--color-terracota);
+}
+
+/* Instrucción para regresar */
+.volver-plato {
+  margin-top: 20px;
+
+  font-family: var(--fuente-texto);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+
+/* =========================================
+   9. FLECHAS LATERALES DEL CARRUSEL
+========================================= */
+
+.flecha-carrusel.ui.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+  margin: 0;
+
+  border-radius: 50%;
+
+  background-color: var(--color-cafe);
+  color: var(--color-crema);
+
+  transition: background-color 0.3s ease,
+              transform 0.3s ease;
+}
+
+/* Efecto hover */
+.flecha-carrusel.ui.button:hover {
+  background-color: var(--color-terracota);
+  color: white;
+
+  transform: scale(1.06);
+}
+
+/* Centrar los iconos */
+.flecha-carrusel.ui.button .icon {
+  margin: 0;
+}
+
+/* =========================================
+   11. DISEÑO RESPONSIVE
+========================================= */
+
+/* Tabletas */
+@media (max-width: 1024px) {
+
+  .platos-destacados {
+    padding: 50px 20px;
+  }
+
+}
+
+/* Celulares */
 @media (max-width: 767px) {
 
-  /* Sección */
   .platos-destacados {
     padding: 40px 18px;
   }
 
-  /* Título */
   .platos-destacados h2 {
     font-size: 1.7rem;
     margin-bottom: 25px;
   }
 
-  /* Fotografías */
-  .platos-destacados .ui.card .imagen-plato {
-    height: 220px;
+  .carrusel-marco {
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
+    gap: 6px;
+  }
+
+  .flecha-carrusel.ui.button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carrusel-ventana {
+    padding: 6px 0 12px;
+  }
+
+  .platos-destacados .plato-imagen-contenedor {
+    height: 210px;
+  }
+
+  .flip-card-back {
+    padding: 18px;
+  }
+
+  .flip-card-back h3 {
+    font-size: 1.3rem;
+  }
+
+  .flip-card-back p {
+    font-size: 0.9rem;
   }
 
 }
 
 
 /* =========================================
-   9. ACCESIBILIDAD DE LAS ANIMACIONES CSS
+   12. ACCESIBILIDAD
 ========================================= */
 
+/* Mostrar el foco al navegar con teclado */
+.platos-destacados .ui.card.flip-card:focus-visible,
+.flecha-carrusel.ui.button:focus-visible,
+.carrusel-reproduccion .ui.button:focus-visible {
+  outline: 3px solid var(--color-terracota);
+  outline-offset: 3px;
+}
+
+/* Reducir animaciones según preferencia del usuario */
 @media (prefers-reduced-motion: reduce) {
 
-  .platos-destacados .ui.card {
+  .platos-destacados .ui.card.flip-card,
+  .flip-card-inner,
+  .platos-destacados .ui.card .imagen-plato,
+  .flecha-carrusel.ui.button {
     transition: none;
   }
 
-  .platos-destacados .ui.card:hover {
+  .platos-destacados .ui.card.flip-card:hover,
+  .flecha-carrusel.ui.button:hover,
+  .platos-destacados .ui.card:hover .imagen-plato {
     transform: none;
+  }
+
+  .carrusel-pista {
+    transition-duration: 1ms !important;
   }
 
 }
