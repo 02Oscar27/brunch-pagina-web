@@ -1,0 +1,187 @@
+.reserva-seccion {
+  padding: 60px 20px;
+  background-color: var(--color-crema);
+}
+
+.reserva-encabezado {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.reserva-encabezado h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 600;
+
+  color: var(--color-cafe);
+  margin: 0 0 10px;
+}
+
+.reserva-encabezado p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.1rem;
+
+  color: var(--color-cafe);
+  margin: 0;
+}
+
+.reserva-tarjeta {
+  padding: 30px;
+
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.ui.form.reserva-formulario .field > label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+
+  color: var(--color-cafe);
+}
+
+.ui.form.reserva-formulario .field:not(.error) input:focus,
+.ui.form.reserva-formulario .field:not(.error) textarea:focus {
+  border-color: var(--color-verde);
+  box-shadow: 0 0 0 3px rgba(138, 154, 91, 0.2);
+}
+
+.reserva-error {
+  display: block;
+  margin-top: 6px;
+
+  font-size: 0.875rem;
+  color: #9f3a38;
+}
+
+.reserva-contador {
+  display: block;
+  margin-top: 4px;
+
+  text-align: right;
+  font-size: 0.8rem;
+  color: #6b675d;
+}
+
+.ui.button.boton-confirmar {
+  margin-top: 10px;
+  padding: 15px 28px;
+
+  background-color: var(--color-terracota);
+  color: white;
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+
+  border-radius: 8px;
+
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease,
+              filter 0.3s ease;
+}
+
+.ui.button.boton-confirmar:hover {
+  background-color: var(--color-terracota);
+  color: white;
+
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  filter: brightness(0.96);
+}
+
+.ui.button.boton-confirmar:focus-visible {
+  outline: 3px solid var(--color-terracota);
+  outline-offset: 3px;
+}
+
+.reserva-confirmacion {
+  text-align: center;
+}
+
+.reserva-confirmacion .icon {
+  color: var(--color-verde);
+  margin-bottom: 10px;
+}
+
+.reserva-confirmacion h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+
+  color: var(--color-cafe);
+  margin: 0 0 10px;
+}
+
+.reserva-confirmacion p {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--color-cafe);
+}
+
+.reserva-confirmacion ul {
+  display: inline-block;
+  margin: 10px 0 25px;
+  padding: 0;
+
+  text-align: left;
+  list-style: none;
+
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.9;
+  color: var(--color-cafe);
+}
+
+.ui.grid > .reserva-columna-imagen.column {
+  display: flex;
+}
+
+.reserva-imagen {
+  position: relative;
+  flex: 1;
+  min-height: 320px;
+
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.reserva-imagen img {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 767px) {
+
+  .reserva-seccion {
+    padding: 40px 16px;
+  }
+
+  .reserva-encabezado {
+    margin-bottom: 25px;
+  }
+
+  .reserva-tarjeta {
+    padding: 22px 18px;
+  }
+
+  .reserva-imagen {
+    min-height: 240px;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ui.button.boton-confirmar {
+    transition: none;
+  }
+
+  .ui.button.boton-confirmar:hover {
+    transform: none;
+  }
+
+}
