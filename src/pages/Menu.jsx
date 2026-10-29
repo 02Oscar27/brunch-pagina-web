@@ -304,7 +304,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                           loading="lazy"
                         />
                         <span className="menu-indicacion-giro">
-                          Ver descripción ↻
+                          Dar clic para ver descripción ↻
                         </span>
                       </div>
 
@@ -319,7 +319,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                       </div>
                     </button>
 
-                    <div className="menu-tarjeta-pie">
+                    <div className="menu-tarjeta-pie" onClick={(e) => e.stopPropagation()}>
                       <span className="menu-cantidad-etiqueta">Cantidad</span>
                       <div className="menu-controles-cantidad">
                         <button
@@ -342,16 +342,19 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                     </div>
                   </div>
 
-                  <div className="menu-cara menu-cara-trasera">
-                    <button
-                      type="button"
-                      className="menu-volver"
-                      onClick={() => alternarTarjeta(producto.id)}
-                      aria-label={`Volver a la imagen de ${producto.nombre}`}
-                    >
-                      ↻ Volver a la imagen
-                    </button>
-
+                  <div
+                    className="menu-cara menu-cara-trasera"
+                    onClick={() => alternarTarjeta(producto.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        alternarTarjeta(producto.id);
+                      }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Dar clic para volver a la imagen de ${producto.nombre}`}
+                  >
                     <span className="menu-categoria-producto">
                       {producto.categoria}
                     </span>
@@ -361,7 +364,11 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                       {formatoPrecio(producto.precio)}
                     </p>
 
-                    <div className="menu-tarjeta-pie">
+                    <span className="menu-indicacion-volver">
+                      Volver a la imagen ↻
+                    </span>
+
+                    <div className="menu-tarjeta-pie" onClick={(e) => e.stopPropagation()}>
                       <span className="menu-cantidad-etiqueta">Cantidad</span>
                       <div className="menu-controles-cantidad">
                         <button
@@ -412,4 +419,3 @@ function Menu({ carrito = {}, cambiarCantidad }) {
 }
 
 export default Menu;
-

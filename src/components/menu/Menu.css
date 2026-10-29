@@ -665,3 +665,32 @@
     transition: none !important;
   }
 }
+
+
+/* Indicaciones para girar las tarjetas del menú */
+.menu-indicacion-volver {
+  align-self: center;
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 0;
+  background: transparent;
+  color: #8A8478;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.menu-cara-trasera {
+  cursor: pointer;
+}
+
+.menu-cara-trasera:focus-visible {
+  outline: 3px solid var(--color-verde);
+  outline-offset: -5px;
+}
+
+.menu-indicacion-giro {
+  max-width: calc(100% - 20px);
+  text-align: center;
+}
