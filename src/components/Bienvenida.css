@@ -23,13 +23,14 @@
 ========================================= */
 
 .bienvenida-texto {
-  min-height: 400px;
-  padding: 40px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  min-height: 400px;
+  padding: 40px;
+
   text-align: center;
 }
 
@@ -39,7 +40,7 @@
 ========================================= */
 
 .bienvenida-texto .titulo-bienvenida {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: clamp(2.3rem, 4vw, 4rem);
   font-weight: 600;
   line-height: 1.15;
@@ -49,11 +50,13 @@
   margin: 0;
 }
 
-/* Palabra destacada: diferente */
-.titulo-bienvenida span {
+/* Destacar la palabra "diferente" */
+.bienvenida-texto .titulo-bienvenida span {
   display: block;
+
   color: var(--color-terracota);
   font-style: italic;
+
   margin-top: 8px;
 }
 
@@ -63,7 +66,7 @@
 ========================================= */
 
 .bienvenida-texto p {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   font-size: 1.2rem;
   line-height: 1.7;
 
@@ -75,24 +78,28 @@
 
 
 /* =========================================
-   5. BOTONES DE BIENVENIDA
+   5. CONTENEDOR DE BOTONES
 ========================================= */
 
 .bienvenida-botones {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 15px;
 
+  gap: 15px;
   margin-top: 30px;
 }
 
-/* Estilos generales de los botones */
+
+/* =========================================
+   6. ESTILOS GENERALES DE LOS BOTONES
+========================================= */
+
 .bienvenida-botones .ui.button {
   padding: 15px 28px;
   margin: 0;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   font-size: 1rem;
   font-weight: 600;
 
@@ -103,26 +110,27 @@
               filter 0.3s ease;
 }
 
-/* Botón Ver menú */
-.ui.button.boton-menu {
+/* Botón "Ver menú" */
+.bienvenida-botones .ui.button.boton-menu {
   background-color: var(--color-verde);
   color: white;
 }
 
-/* Botón Reservar */
-.ui.button.boton-reserva {
+/* Botón "Reservar" */
+.bienvenida-botones .ui.button.boton-reserva {
   background-color: var(--color-terracota);
   color: white;
 }
 
-/* Efecto hover en los botones */
+/* Efecto hover */
 .bienvenida-botones .ui.button:hover {
   transform: translateY(-3px);
+
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
   filter: brightness(0.96);
 }
 
-/* Accesibilidad al navegar con teclado */
+/* Accesibilidad con teclado */
 .bienvenida-botones .ui.button:focus-visible {
   outline: 3px solid var(--color-terracota);
   outline-offset: 3px;
@@ -130,32 +138,35 @@
 
 
 /* =========================================
-   6. IMAGEN PRINCIPAL DEL BRUNCH
+   7. FOTOGRAFÍA PRINCIPAL
 ========================================= */
 
 .bienvenida-imagen {
   width: 100%;
   height: 400px;
-  overflow: hidden;
 
+  overflow: hidden;
   border-radius: 14px;
 }
 
-.imagen-principal {
+/* Imagen del restaurante */
+.bienvenida-imagen .imagen-principal {
+  display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
-  display: block;
 }
 
 
 /* =========================================
-   7. DISEÑO RESPONSIVE PARA CELULARES
+   8. DISEÑO RESPONSIVE PARA CELULARES
 ========================================= */
 
 @media (max-width: 767px) {
 
-  /* Contenido */
+  /* Contenido principal */
   .bienvenida-texto {
     min-height: auto;
     padding: 45px 20px 30px;
@@ -172,6 +183,7 @@
   .bienvenida-texto p {
     font-size: 1rem;
     line-height: 1.6;
+
     margin-top: 15px;
   }
 
@@ -181,15 +193,32 @@
     margin-top: 20px;
   }
 
-  /* Botones */
+  /* Tamaño de botones */
   .bienvenida-botones .ui.button {
     padding: 12px 20px;
     font-size: 0.95rem;
   }
 
-  /* Imagen */
+  /* Fotografía */
   .bienvenida-imagen {
     height: 260px;
+  }
+
+}
+
+
+/* =========================================
+   9. ACCESIBILIDAD
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .bienvenida-botones .ui.button {
+    transition: none;
+  }
+
+  .bienvenida-botones .ui.button:hover {
+    transform: none;
   }
 
 }
