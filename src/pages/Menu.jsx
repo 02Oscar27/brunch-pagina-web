@@ -1,10 +1,15 @@
-import { useState } from "react";
-import "../components/menu/Menu.css";
+import { useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import "../components/menu/Menu.css";
 import pancakesImg from "../assets/images/pancakes.png";
 import wafflesImg from "../assets/images/waffles.png";
 import huevosImg from "../assets/images/huevos-benedictinos.png";
 import brunchImg from "../assets/images/brunch-principal.png";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const productos = [
   {
@@ -14,7 +19,8 @@ const productos = [
     precio: 18000,
     imagen: pancakesImg,
     etiqueta: "Más pedido",
-    descripcion: "Esponjosos pancakes acompañados de sirope y fruta fresca.",
+    descripcion:
+      "Esponjosos pancakes acompañados de sirope y fruta fresca.",
   },
   {
     id: 2,
@@ -32,7 +38,8 @@ const productos = [
     precio: 24000,
     imagen: huevosImg,
     etiqueta: "Más pedido",
-    descripcion: "Huevos preparados al estilo Benedictino para un brunch especial.",
+    descripcion:
+      "Huevos preparados al estilo Benedictino para un brunch especial.",
   },
   {
     id: 4,
@@ -96,27 +103,113 @@ function Menu() {
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
   const [busqueda, setBusqueda] = useState("");
   const [cantidadVisible, setCantidadVisible] = useState(6);
-  const [productoAbierto, setProductoAbierto] = useState(null);
+  const [tarjetasGiradas, setTarjetasGiradas] = useState([]);
+  const [cantidades, setCantidades] = useState({});
+  const [carritoAbierto, setCarritoAbierto] = useState(false);
+
+  const menuRef = useRef(null);
+  const encabezadoRef = useRef(null);
+  const tarjetasRef = useRef(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      const elementos = gsap.utils.toArray(
+        [".menu-titulo", ".menu-subtitulo", ".menu-buscador"],
+        encabezadoRef.current
+      );
+
+      gsap.from(elementos, {
+        y: 24,
+        opacity: 0,
+        duration: 0.65,
+        stagger: 0.13,
+        ease: "power2.out",
+        clearProps: "all",
+      });
+
+      gsap.from(".menu-filtro", {
+        y: 12,
+        opacity: 0,
+        duration: 0.4,
+        stagger: 0.1,
+        delay: 0.25,
+        ease: "power2.out",
+        clearProps: "all",
+      });
+    },
+    { scope: menuRef }
+  );
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      const tarjetas = gsap.utils.toArray(
+        ".menu-tarjeta",
+        tarjetasRef.current
+      );
+
+      tarjetas.forEach((tarjeta) => {
+        gsap.fromTo(
+          tarjeta,
+          { y: 28, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.55,
+            ease: "power2.out",
+            clearProps: "transform,opacity",
+            scrollTrigger: {
+              trigger: tarjeta,
+              start: "top 95%",
+              once: true,
+            },
+          }
+        );
+      });
+    },
+    {
+      scope: menuRef,
+      dependencies: [categoriaActiva, busqueda, cantidadVisible],
+      revertOnUpdate: true,
+    }
+  );
 
   const productosFiltrados = productos.filter((producto) => {
     const coincideCategoria =
-      categoriaActiva === "Todos" ||
-      producto.categoria === categoriaActiva;
+      categoriaActiva === "Todos" || producto.categoria === categoriaActiva;
 
-    const coincideBusqueda = producto.nombre
-      .toLowerCase()
-      .includes(busqueda.trim().toLowerCase());
+    const termino = busqueda.trim().toLowerCase();
+    const coincideBusqueda =
+      producto.nombre.toLowerCase().includes(termino) ||
+      producto.descripcion.toLowerCase().includes(termino);
 
     return coincideCategoria && coincideBusqueda;
   });
 
   const productosVisibles = productosFiltrados.slice(0, cantidadVisible);
 
-  const cambiarCategoria = (categoria) => {
-    setCategoriaActiva(categoria);
-    setCantidadVisible(6);
-    setProductoAbierto(null);
-  };
+  const productosCarrito = useMemo(
+    () =>
+      productos.filter((producto) => (cantidades[producto.id] || 0) > 0),
+    [cantidades]
+  );
+
+  const totalUnidades = productosCarrito.reduce(
+    (total, producto) => total + cantidades[producto.id],
+    0
+  );
+
+  const totalPrecio = productosCarrito.reduce(
+    (total, producto) => total + producto.precio * cantidades[producto.id],
+    0
+  );
 
   const formatoPrecio = (precio) =>
     precio.toLocaleString("es-CO", {
@@ -125,13 +218,136 @@ function Menu() {
       maximumFractionDigits: 0,
     });
 
+  const cambiarCategoria = (categoria) => {
+    setCategoriaActiva(categoria);
+    setCantidadVisible(6);
+  };
+
+  const alternarTarjeta = (id) => {
+    setTarjetasGiradas((actuales) =>
+      actuales.includes(id)
+        ? actuales.filter((tarjetaId) => tarjetaId !== id)
+        : [...actuales, id]
+    );
+  };
+
+  const cambiarCantidad = (id, cambio) => {
+    setCantidades((actuales) => {
+      const nuevaCantidad = Math.max(0, (actuales[id] || 0) + cambio);
+      const nuevasCantidades = { ...actuales };
+
+      if (nuevaCantidad === 0) {
+        delete nuevasCantidades[id];
+      } else {
+        nuevasCantidades[id] = nuevaCantidad;
+      }
+
+      return nuevasCantidades;
+    });
+  };
+
+  const animarBoton = (elemento, escala) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    gsap.to(elemento, {
+      scale: escala,
+      duration: 0.2,
+      ease: "power1.out",
+      overwrite: "auto",
+    });
+  };
+
   return (
-    <main className="menu-page">
-      <section className="menu-encabezado">
-        <h1>Nuestro menú</h1>
-        <p className="menu-subtitulo">
-          Conoce nuestras opciones de brunch
-        </p>
+    <main className="menu-page" ref={menuRef}>
+      <div className="menu-barra-superior">
+        <div className="menu-marca" aria-label="Menú de brunch">
+          Nuestro brunch
+        </div>
+
+        <button
+          type="button"
+          className="menu-carrito-boton"
+          onClick={() => setCarritoAbierto((abierto) => !abierto)}
+          aria-label={`Abrir carrito. ${totalUnidades} productos`}
+          aria-expanded={carritoAbierto}
+        >
+          <svg
+            className="menu-carrito-icono"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6" />
+            <circle cx="10" cy="20" r="1.2" />
+            <circle cx="18" cy="20" r="1.2" />
+          </svg>
+          <span>Carrito</span>
+          <span className="menu-carrito-contador">{totalUnidades}</span>
+        </button>
+      </div>
+
+      {carritoAbierto && (
+        <aside className="menu-carrito-panel" aria-label="Contenido del carrito">
+          <div className="menu-carrito-cabecera">
+            <h2>Tu carrito</h2>
+            <button
+              type="button"
+              className="menu-carrito-cerrar"
+              onClick={() => setCarritoAbierto(false)}
+              aria-label="Cerrar carrito"
+            >
+              ×
+            </button>
+          </div>
+
+          {productosCarrito.length === 0 ? (
+            <p className="menu-carrito-vacio">
+              Tu carrito está vacío. Agrega tus platos favoritos.
+            </p>
+          ) : (
+            <>
+              <ul className="menu-carrito-lista">
+                {productosCarrito.map((producto) => (
+                  <li className="menu-carrito-item" key={producto.id}>
+                    <img src={producto.imagen} alt="" />
+                    <div className="menu-carrito-detalle">
+                      <strong>{producto.nombre}</strong>
+                      <span>{formatoPrecio(producto.precio)}</span>
+                      <div className="menu-controles-cantidad menu-controles-carrito">
+                        <button
+                          type="button"
+                          onClick={() => cambiarCantidad(producto.id, -1)}
+                          aria-label={`Quitar una unidad de ${producto.nombre}`}
+                        >
+                          −
+                        </button>
+                        <span>{cantidades[producto.id]}</span>
+                        <button
+                          type="button"
+                          onClick={() => cambiarCantidad(producto.id, 1)}
+                          aria-label={`Agregar una unidad de ${producto.nombre}`}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="menu-carrito-total">
+                <span>Total</span>
+                <strong>{formatoPrecio(totalPrecio)}</strong>
+              </div>
+            </>
+          )}
+        </aside>
+      )}
+
+      <section className="menu-encabezado" ref={encabezadoRef}>
+        <h1 className="menu-titulo">Nuestro menú</h1>
+        <p className="menu-subtitulo">Conoce nuestras opciones de brunch</p>
 
         <div className="menu-buscador">
           <input
@@ -163,61 +379,125 @@ function Menu() {
         </div>
       </section>
 
-      <section className="menu-productos" aria-label="Productos del menú">
+      <section
+        className="menu-productos"
+        aria-label="Productos del menú"
+        ref={tarjetasRef}
+      >
         {productosVisibles.length > 0 ? (
-          productosVisibles.map((producto) => (
-            <article className="menu-tarjeta" key={producto.id}>
-              <div className="menu-imagen-contenedor">
-                {producto.etiqueta && (
-                  <span className="menu-etiqueta">
-                    {producto.etiqueta}
-                  </span>
-                )}
+          productosVisibles.map((producto) => {
+            const girada = tarjetasGiradas.includes(producto.id);
+            const cantidad = cantidades[producto.id] || 0;
 
-                <img
-                  className="menu-imagen"
-                  src={producto.imagen}
-                  alt={producto.nombre}
-                  loading="lazy"
-                />
-              </div>
+            return (
+              <article
+                className={`menu-tarjeta ${girada ? "girada" : ""}`}
+                key={producto.id}
+              >
+                <div className="menu-tarjeta-interior">
+                  <div className="menu-cara menu-cara-frontal">
+                    <button
+                      type="button"
+                      className="menu-cara-clic"
+                      onClick={() => alternarTarjeta(producto.id)}
+                      aria-label={`Ver descripción de ${producto.nombre}`}
+                    >
+                      <div className="menu-imagen-contenedor">
+                        {producto.etiqueta && (
+                          <span className="menu-etiqueta">
+                            {producto.etiqueta}
+                          </span>
+                        )}
+                        <img
+                          className="menu-imagen"
+                          src={producto.imagen}
+                          alt={producto.nombre}
+                          loading="lazy"
+                        />
+                        <span className="menu-indicacion-giro">
+                          Ver descripción ↻
+                        </span>
+                      </div>
 
-              <div className="menu-info">
-                <span className="menu-categoria-producto">
-                  {producto.categoria}
-                </span>
+                      <div className="menu-info">
+                        <span className="menu-categoria-producto">
+                          {producto.categoria}
+                        </span>
+                        <h2>{producto.nombre}</h2>
+                        <p className="menu-precio">
+                          {formatoPrecio(producto.precio)}
+                        </p>
+                      </div>
+                    </button>
 
-                <h2>{producto.nombre}</h2>
+                    <div className="menu-tarjeta-pie">
+                      <span className="menu-cantidad-etiqueta">Cantidad</span>
+                      <div className="menu-controles-cantidad">
+                        <button
+                          type="button"
+                          onClick={() => cambiarCantidad(producto.id, -1)}
+                          disabled={cantidad === 0}
+                          aria-label={`Quitar una unidad de ${producto.nombre}`}
+                        >
+                          −
+                        </button>
+                        <span aria-live="polite">{cantidad}</span>
+                        <button
+                          type="button"
+                          onClick={() => cambiarCantidad(producto.id, 1)}
+                          aria-label={`Agregar una unidad de ${producto.nombre}`}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
 
-                <p className="menu-precio">
-                  {formatoPrecio(producto.precio)}
-                </p>
+                  <div className="menu-cara menu-cara-trasera">
+                    <button
+                      type="button"
+                      className="menu-volver"
+                      onClick={() => alternarTarjeta(producto.id)}
+                      aria-label={`Volver a la imagen de ${producto.nombre}`}
+                    >
+                      ↻ Volver a la imagen
+                    </button>
 
-                <button
-                  className="menu-ver-mas"
-                  type="button"
-                  aria-expanded={productoAbierto === producto.id}
-                  onClick={() =>
-                    setProductoAbierto(
-                      productoAbierto === producto.id
-                        ? null
-                        : producto.id
-                    )
-                  }
-                >
-                  {productoAbierto === producto.id
-                    ? "Ver menos"
-                    : "Ver más"}
-                </button>
+                    <span className="menu-categoria-producto">
+                      {producto.categoria}
+                    </span>
+                    <h2>{producto.nombre}</h2>
+                    <p className="menu-descripcion">{producto.descripcion}</p>
+                    <p className="menu-precio">
+                      {formatoPrecio(producto.precio)}
+                    </p>
 
-                {productoAbierto === producto.id && (
-                  <p className="menu-descripcion">
-                    {producto.descripcion}
-                  </p>
-                )}
-              </div>
-            </article>
-          ))
+                    <div className="menu-tarjeta-pie">
+                      <span className="menu-cantidad-etiqueta">Cantidad</span>
+                      <div className="menu-controles-cantidad">
+                        <button
+                          type="button"
+                          onClick={() => cambiarCantidad(producto.id, -1)}
+                          disabled={cantidad === 0}
+                          aria-label={`Quitar una unidad de ${producto.nombre}`}
+                        >
+                          −
+                        </button>
+                        <span aria-live="polite">{cantidad}</span>
+                        <button
+                          type="button"
+                          onClick={() => cambiarCantidad(producto.id, 1)}
+                          aria-label={`Agregar una unidad de ${producto.nombre}`}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            );
+          })
         ) : (
           <p className="menu-sin-resultados">
             No encontramos productos con esa búsqueda.
@@ -230,9 +510,9 @@ function Menu() {
           <button
             className="menu-cargar"
             type="button"
-            onClick={() =>
-              setCantidadVisible((cantidad) => cantidad + 3)
-            }
+            onClick={() => setCantidadVisible((cantidad) => cantidad + 3)}
+            onMouseEnter={(e) => animarBoton(e.currentTarget, 1.04)}
+            onMouseLeave={(e) => animarBoton(e.currentTarget, 1)}
           >
             Cargar más
           </button>
