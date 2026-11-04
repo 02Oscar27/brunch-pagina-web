@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,6 +21,7 @@ const productos = [
     etiqueta: "Más pedido",
     descripcion:
       "Esponjosos pancakes acompañados de sirope y fruta fresca.",
+    ingredientes: ["Harina de trigo", "Leche", "Huevo", "Mantequilla", "Sirope", "Fruta fresca"],
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ const productos = [
     imagen: wafflesImg,
     etiqueta: "Nuevo",
     descripcion: "Waffles dorados ideales para comenzar el día.",
+    ingredientes: ["Harina de trigo", "Leche", "Huevo", "Mantequilla", "Vainilla"],
   },
   {
     id: 3,
@@ -40,6 +42,7 @@ const productos = [
     etiqueta: "Más pedido",
     descripcion:
       "Huevos preparados al estilo Benedictino para un brunch especial.",
+    ingredientes: ["Huevos pochados", "Pan tipo muffin", "Jamón", "Salsa holandesa", "Cebollín"],
   },
   {
     id: 4,
@@ -49,6 +52,7 @@ const productos = [
     imagen: brunchImg,
     etiqueta: "",
     descripcion: "Croissant de textura crujiente y centro suave.",
+    ingredientes: ["Harina de trigo", "Mantequilla", "Levadura", "Leche", "Azúcar"],
   },
   {
     id: 5,
@@ -58,6 +62,7 @@ const productos = [
     imagen: brunchImg,
     etiqueta: "Nuevo",
     descripcion: "Una combinación fresca de frutas de temporada.",
+    ingredientes: ["Fresas", "Banano", "Uvas", "Papaya", "Fruta de temporada"],
   },
   {
     id: 6,
@@ -67,6 +72,7 @@ const productos = [
     imagen: brunchImg,
     etiqueta: "Más pedido",
     descripcion: "Café aromático, perfecto para acompañar tu desayuno.",
+    ingredientes: ["Café molido", "Agua"],
   },
   {
     id: 7,
@@ -76,6 +82,7 @@ const productos = [
     imagen: pancakesImg,
     etiqueta: "",
     descripcion: "Tostadas dulces con un toque especial de la casa.",
+    ingredientes: ["Pan", "Huevo", "Leche", "Canela", "Mantequilla", "Miel"],
   },
   {
     id: 8,
@@ -85,6 +92,7 @@ const productos = [
     imagen: brunchImg,
     etiqueta: "",
     descripcion: "Bebida caliente, cremosa y reconfortante.",
+    ingredientes: ["Leche", "Chocolate", "Azúcar"],
   },
   {
     id: 9,
@@ -94,6 +102,7 @@ const productos = [
     imagen: wafflesImg,
     etiqueta: "Nuevo",
     descripcion: "Waffles acompañados de fruta y un toque dulce.",
+    ingredientes: ["Harina de trigo", "Leche", "Huevo", "Mantequilla", "Fruta fresca", "Sirope"],
   },
 ];
 
@@ -104,6 +113,8 @@ function Menu({ carrito = {}, cambiarCantidad }) {
   const [busqueda, setBusqueda] = useState("");
   const [cantidadVisible, setCantidadVisible] = useState(6);
   const [tarjetasGiradas, setTarjetasGiradas] = useState([]);
+  const [carritoAbierto, setCarritoAbierto] = useState(false);
+  const [avisoCompra, setAvisoCompra] = useState(false);
 
   const menuRef = useRef(null);
   const encabezadoRef = useRef(null);
@@ -186,12 +197,27 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     const termino = busqueda.trim().toLowerCase();
     const coincideBusqueda =
       producto.nombre.toLowerCase().includes(termino) ||
-      producto.descripcion.toLowerCase().includes(termino);
+      producto.descripcion.toLowerCase().includes(termino) ||
+      producto.ingredientes.some((ingrediente) =>
+        ingrediente.toLowerCase().includes(termino)
+      );
 
     return coincideCategoria && coincideBusqueda;
   });
 
   const productosVisibles = productosFiltrados.slice(0, cantidadVisible);
+
+  const productosCarrito = Object.values(carrito);
+
+  const totalUnidades = productosCarrito.reduce(
+    (total, item) => total + item.cantidad,
+    0
+  );
+
+  const totalPrecio = productosCarrito.reduce(
+    (total, item) => total + item.producto.precio * item.cantidad,
+    0
+  );
 
   const formatoPrecio = (precio) =>
     precio.toLocaleString("es-CO", {
@@ -213,6 +239,23 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     );
   };
 
+  const realizarCompra = () => {
+    if (productosCarrito.length === 0) return;
+
+    productosCarrito.forEach(({ producto, cantidad }) => {
+      cambiarCantidad(producto, -cantidad);
+    });
+
+    setCarritoAbierto(false);
+    setAvisoCompra(true);
+  };
+
+  useEffect(() => {
+    if (!avisoCompra) return;
+    const temporizador = window.setTimeout(() => setAvisoCompra(false), 2800);
+    return () => window.clearTimeout(temporizador);
+  }, [avisoCompra]);
+
   const animarBoton = (elemento, escala) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
@@ -233,6 +276,72 @@ function Menu({ carrito = {}, cambiarCantidad }) {
           Nuestro brunch
         </div>
       </div>
+
+      <button
+        type="button"
+        className="menu-carrito-flotante"
+        onClick={() => setCarritoAbierto((abierto) => !abierto)}
+        aria-label={`Abrir carrito. ${totalUnidades} productos`}
+        aria-expanded={carritoAbierto}
+      >
+        <svg className="menu-carrito-icono" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6" />
+          <circle cx="10" cy="20" r="1.2" />
+          <circle cx="18" cy="20" r="1.2" />
+        </svg>
+        <span className="menu-carrito-flotante-texto">Carrito</span>
+        <span className="menu-carrito-contador">{totalUnidades}</span>
+      </button>
+
+      {avisoCompra && (
+        <div className="menu-aviso-compra" role="status">
+          <span aria-hidden="true">✓</span> Compra realizada correctamente
+        </div>
+      )}
+
+      {carritoAbierto && (
+        <aside className="menu-carrito-panel-flotante" aria-label="Contenido del carrito">
+          <div className="menu-carrito-cabecera">
+            <h2>Tu carrito</h2>
+            <button
+              type="button"
+              className="menu-carrito-cerrar"
+              onClick={() => setCarritoAbierto(false)}
+              aria-label="Cerrar carrito"
+            >×</button>
+          </div>
+
+          {productosCarrito.length === 0 ? (
+            <p className="menu-carrito-vacio">Tu carrito está vacío. Agrega tus platos favoritos.</p>
+          ) : (
+            <>
+              <ul className="menu-carrito-lista">
+                {productosCarrito.map(({ producto, cantidad }) => (
+                  <li className="menu-carrito-item" key={producto.id}>
+                    <img src={producto.imagen} alt="" />
+                    <div className="menu-carrito-detalle">
+                      <strong>{producto.nombre}</strong>
+                      <span>{formatoPrecio(producto.precio)}</span>
+                      <div className="menu-controles-cantidad menu-controles-carrito">
+                        <button type="button" onClick={() => cambiarCantidad(producto, -1)} aria-label={`Quitar una unidad de ${producto.nombre}`}>−</button>
+                        <span>{cantidad}</span>
+                        <button type="button" onClick={() => cambiarCantidad(producto, 1)} aria-label={`Agregar una unidad de ${producto.nombre}`}>+</button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="menu-carrito-total">
+                <span>Total</span>
+                <strong>{formatoPrecio(totalPrecio)}</strong>
+              </div>
+              <button type="button" className="menu-realizar-compra" onClick={realizarCompra}>
+                Realizar compra
+              </button>
+            </>
+          )}
+        </aside>
+      )}
 
       <section className="menu-encabezado" ref={encabezadoRef}>
         <h1 className="menu-titulo">Nuestro menú</h1>
@@ -282,6 +391,11 @@ function Menu({ carrito = {}, cambiarCantidad }) {
               <article
                 className={`menu-tarjeta ${girada ? "girada" : ""}`}
                 key={producto.id}
+                onMouseLeave={() => {
+                  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                    setTarjetasGiradas((actuales) => actuales.filter((id) => id !== producto.id));
+                  }
+                }}
               >
                 <div className="menu-tarjeta-interior">
                   <div className="menu-cara menu-cara-frontal">
@@ -303,9 +417,6 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                           alt={producto.nombre}
                           loading="lazy"
                         />
-                        <span className="menu-indicacion-giro">
-                          Dar clic para ver descripción ↻
-                        </span>
                       </div>
 
                       <div className="menu-info">
@@ -319,7 +430,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                       </div>
                     </button>
 
-                    <div className="menu-tarjeta-pie" onClick={(e) => e.stopPropagation()}>
+                    <div className="menu-tarjeta-pie">
                       <span className="menu-cantidad-etiqueta">Cantidad</span>
                       <div className="menu-controles-cantidad">
                         <button
@@ -342,33 +453,22 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                     </div>
                   </div>
 
-                  <div
-                    className="menu-cara menu-cara-trasera"
-                    onClick={() => alternarTarjeta(producto.id)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        alternarTarjeta(producto.id);
-                      }
-                    }}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`Dar clic para volver a la imagen de ${producto.nombre}`}
-                  >
+                  <div className="menu-cara menu-cara-trasera">
                     <span className="menu-categoria-producto">
                       {producto.categoria}
                     </span>
                     <h2>{producto.nombre}</h2>
                     <p className="menu-descripcion">{producto.descripcion}</p>
-                    <p className="menu-precio">
-                      {formatoPrecio(producto.precio)}
-                    </p>
+                    <div className="menu-ingredientes">
+                      <h3>Ingredientes</h3>
+                      <ul>
+                        {producto.ingredientes.map((ingrediente) => (
+                          <li key={ingrediente}>{ingrediente}</li>
+                        ))}
+                      </ul>
+                    </div>
 
-                    <span className="menu-indicacion-volver">
-                      Volver a la imagen ↻
-                    </span>
-
-                    <div className="menu-tarjeta-pie" onClick={(e) => e.stopPropagation()}>
+                    <div className="menu-tarjeta-pie">
                       <span className="menu-cantidad-etiqueta">Cantidad</span>
                       <div className="menu-controles-cantidad">
                         <button
