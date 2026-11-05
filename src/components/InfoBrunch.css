@@ -5,7 +5,7 @@
 
 .info-brunch {
   padding: 65px 20px;
-  background-color: #ffffff;
+  background-color: #F1EBE1;
 }
 
 /* Título principal de la sección */
@@ -176,16 +176,12 @@
 }
 
 .info-brunch {
-  background-color: #ffffff;
+  background-color:#F1EBE1;
   padding: 85px 20px 70px;
   position: relative;
 }
 
-.info-brunch {
-  background-color: #ffffff;
-  padding: 85px 20px 70px;
-  position: relative;
-}
+
 
 /* línea decorativa superior */
 .info-brunch::before {
