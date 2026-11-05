@@ -14,10 +14,7 @@ import { platos } from '../data/platos.js'
 // Estilos
 import './PlatosDestacados.css'
 
-
-// =========================================
 // 1. CONFIGURACIÓN GENERAL
-// =========================================
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -33,21 +30,14 @@ const DURACION_TRANSICION = 550
 
 function PlatosDestacados() {
 
-  // =========================================
   // 2. REFERENCIAS
-  // =========================================
-
   const seccionRef = useRef(null)
   const ventanaRef = useRef(null)
 
   // Evita iniciar otro movimiento mientras
   // el carrusel está cambiando de posición.
   const moviendoRef = useRef(false)
-
-
-  // =========================================
   // 3. ESTADOS DEL CARRUSEL
-  // =========================================
 
   const total = platos.length
 
@@ -72,20 +62,13 @@ function PlatosDestacados() {
 
   // Identificar el plato cuya descripción está abierta.
   const [platoVolteado, setPlatoVolteado] = useState(null)
-
-
-  // =========================================
   // 4. PLATOS DEL CARRUSEL INFINITO
-  // =========================================
 
   // Repetir los platos tres veces permite
   // avanzar y retroceder sin cortes visibles.
   const pista = [...platos, ...platos, ...platos]
 
-
-  // =========================================
   // 5. ADAPTACIÓN RESPONSIVE
-  // =========================================
 
   useEffect(() => {
 
@@ -132,11 +115,7 @@ function PlatosDestacados() {
 
   }, [])
 
-
-  // =========================================
   // 6. PREFERENCIA DE MOVIMIENTO REDUCIDO
-  // =========================================
-
   useEffect(() => {
 
     const consulta = window.matchMedia(
@@ -162,11 +141,7 @@ function PlatosDestacados() {
     }
 
   }, [])
-
-
-  // =========================================
   // 7. ANIMACIÓN DE ENTRADA CON GSAP
-  // =========================================
 
   useGSAP(() => {
 
@@ -201,12 +176,7 @@ function PlatosDestacados() {
     )
 
   }, { scope: seccionRef })
-
-
-  // =========================================
   // 8. CALCULAR EL TAMAÑO DE LAS TARJETAS
-  // =========================================
-
   const anchoTarjeta = anchoVentana > 0
     ? (
         anchoVentana -
@@ -217,12 +187,7 @@ function PlatosDestacados() {
   // Distancia entre el inicio de una tarjeta
   // y el inicio de la siguiente.
   const distancia = anchoTarjeta + ESPACIO
-
-
-  // =========================================
   // 9. NAVEGACIÓN MANUAL
-  // =========================================
-
   const mover = (direccion) => {
 
     // No permitir movimientos simultáneos.
@@ -243,11 +208,7 @@ function PlatosDestacados() {
     setIndice((anterior) => anterior + direccion)
 
   }
-
-
-  // =========================================
   // 10. MOVIMIENTO AUTOMÁTICO
-  // =========================================
 
   useEffect(() => {
 
@@ -291,11 +252,7 @@ function PlatosDestacados() {
     transicion,
     anchoTarjeta
   ])
-
-
-  // =========================================
   // 11. REINICIO INVISIBLE DEL CARRUSEL
-  // =========================================
 
   const finalizarMovimiento = (evento) => {
 
@@ -328,12 +285,7 @@ function PlatosDestacados() {
     }
 
   }
-
-
-  // =========================================
   // 12. RESTABLECER LA TRANSICIÓN
-  // =========================================
-
   useEffect(() => {
 
     if (transicion) return
@@ -359,11 +311,7 @@ function PlatosDestacados() {
     }
 
   }, [transicion])
-
-
-  // =========================================
   // 13. GIRAR UNA TARJETA
-  // =========================================
 
   const girarPlato = (id) => {
 
@@ -372,22 +320,26 @@ function PlatosDestacados() {
     )
 
   }
-
-
-  // =========================================
   // 14. RENDERIZADO
-  // =========================================
-
   return (
 
     <section
       className="platos-destacados"
       ref={seccionRef}
     >
-
       <Container>
 
         <h2>Platos destacados</h2>
+
+        {/* Decoración bajo el título */}
+        <div className="platos-decoracion" aria-hidden="true">
+          <span className="linea-decoracion" />
+
+          <Icon name="leaf" />
+
+          <span className="linea-decoracion" />
+
+        </div>
 
         {/* Carrusel y flechas laterales */}
         <div
@@ -484,7 +436,6 @@ function PlatosDestacados() {
             </div>
 
           </div>
-
 
           {/* FLECHA DERECHA */}
           <Button

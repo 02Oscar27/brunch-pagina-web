@@ -4,13 +4,12 @@
 ========================================= */
 
 .footer-brunch {
+  width: 100%;
+  padding: 45px 20px;
+
   background-color: var(--color-cafe);
   color: var(--color-crema);
-
-  padding: 35px 20px;
-  width: 100%;
 }
-
 
 /* =========================================
    2. ORGANIZACIÓN DEL CONTENIDO
@@ -21,23 +20,30 @@
   flex-direction: column;
   align-items: center;
 
-  gap: 15px;
+  gap: 18px;
   text-align: center;
 }
 
 
 /* =========================================
-   3. NOMBRE DEL RESTAURANTE
+   3. LOGO DEL RESTAURANTE
 ========================================= */
 
-.footer-contenido h3 {
+.footer-contenido .footer-logo {
   font-family: var(--fuente-titulos);
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 
   color: var(--color-crema);
   margin: 0;
 }
+
+/* Punto terracota del logo */
+.footer-contenido .footer-logo span {
+  color: var(--color-terracota);
+}
+
 
 
 /* =========================================
@@ -49,7 +55,7 @@
   justify-content: center;
   align-items: center;
 
-  gap: 20px;
+  gap: 22px;
 }
 
 .footer-redes .icon {
@@ -69,7 +75,7 @@
    5. INFORMACIÓN DE CONTACTO
 ========================================= */
 
-.footer-contenido p {
+.footer-contenido .footer-contacto {
   font-family: var(--fuente-texto);
   font-size: 0.9rem;
   line-height: 1.5;
@@ -86,26 +92,26 @@
 @media (max-width: 767px) {
 
   .footer-brunch {
-    padding: 30px 15px;
+    padding: 35px 15px;
   }
 
   .footer-contenido {
-    gap: 18px;
+    gap: 16px;
   }
 
-  .footer-contenido h3 {
-    font-size: 1.3rem;
+  .footer-contenido .footer-logo {
+    font-size: 1.7rem;
   }
 
   .footer-redes {
     gap: 25px;
   }
 
-  .footer-brunch .footer-redes .icon {
+  .footer-redes .icon {
     font-size: 24px;
   }
 
-  .footer-contenido p {
+  .footer-contenido .footer-contacto {
     font-size: 0.875rem;
   }
 
