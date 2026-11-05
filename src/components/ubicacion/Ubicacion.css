@@ -1,0 +1,282 @@
+
+/* =========================================
+   1. PÁGINA UBICACIÓN
+========================================= */
+
+.ubicacion-pagina {
+  min-height: calc(100vh - 180px);
+  padding: 65px 20px 85px;
+
+  background-color: var(--color-crema);
+}
+
+
+/* =========================================
+   2. ENCABEZADO
+========================================= */
+
+.ubicacion-encabezado {
+  max-width: 680px;
+  margin: 0 auto 45px;
+
+  text-align: center;
+}
+
+.ubicacion-etiqueta {
+  font-family: var(--fuente-texto);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+
+  color: var(--color-terracota);
+}
+
+.ubicacion-encabezado h1 {
+  font-family: var(--fuente-titulos);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 600;
+
+  color: var(--color-cafe);
+  margin: 12px 0 18px;
+}
+
+.ubicacion-encabezado p {
+  font-family: var(--fuente-texto);
+  font-size: 1.1rem;
+  line-height: 1.7;
+
+  color: var(--color-cafe);
+}
+
+
+/* =========================================
+   3. DISTRIBUCIÓN EN COLUMNAS
+========================================= */
+
+.ubicacion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+
+  gap: 30px;
+  align-items: stretch;
+}
+
+
+/* =========================================
+   4. INFORMACIÓN DEL RESTAURANTE
+========================================= */
+
+.ubicacion-informacion {
+  padding: 35px;
+
+  background-color: #FBF8F3;
+  border-radius: 18px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.ubicacion-informacion h2 {
+  font-family: var(--fuente-titulos);
+  font-size: 1.9rem;
+
+  color: var(--color-cafe);
+  margin-bottom: 15px;
+}
+
+.ubicacion-descripcion {
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.7;
+
+  color: var(--color-cafe);
+  margin-bottom: 30px;
+}
+
+
+/* =========================================
+   5. DETALLES: DIRECCIÓN Y HORARIOS
+========================================= */
+
+.ubicacion-detalle {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.ubicacion-detalle > .icon {
+  color: var(--color-terracota);
+  margin: 3px 0 0;
+
+  flex-shrink: 0;
+}
+
+.ubicacion-detalle h3 {
+  font-family: var(--fuente-titulos);
+  font-size: 1.2rem;
+
+  color: var(--color-cafe);
+  margin: 0 0 8px;
+}
+
+.ubicacion-detalle p,
+.ubicacion-detalle small {
+  display: block;
+
+  font-family: var(--fuente-texto);
+  line-height: 1.6;
+
+  color: var(--color-cafe);
+  margin: 0;
+}
+
+.ubicacion-detalle small {
+  margin-top: 5px;
+  opacity: 0.7;
+}
+
+
+/* =========================================
+   6. BOTÓN DE RESERVAS
+========================================= */
+
+.ubicacion-pagina .ui.button.ubicacion-boton {
+  margin: 10px 0 0;
+  padding: 14px 25px;
+
+  border-radius: 8px;
+
+  background-color: var(--color-verde);
+  color: white;
+
+  font-family: var(--fuente-texto);
+  font-weight: 600;
+
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.ubicacion-pagina .ui.button.ubicacion-boton:hover {
+  background-color: #53643A;
+  color: white;
+  transform: translateY(-3px);
+}
+
+
+/* =========================================
+   7. MAPA INTERACTIVO
+========================================= */
+
+.ubicacion-mapa-contenedor {
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background-color: #FBF8F3;
+  border-radius: 18px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.ubicacion-mapa-contenedor iframe {
+  display: block;
+
+  width: 100%;
+  min-height: 400px;
+
+  flex: 1;
+  border: 0;
+}
+
+.ubicacion-enlace-mapa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+  padding: 18px;
+
+  font-family: var(--fuente-texto);
+  font-weight: 600;
+
+  color: var(--color-terracota);
+}
+
+.ubicacion-enlace-mapa:hover {
+  color: var(--color-cafe);
+}
+
+
+/* =========================================
+   8. RESPONSIVE
+========================================= */
+
+@media (max-width: 991px) {
+
+  .ubicacion-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ubicacion-mapa-contenedor iframe {
+    min-height: 350px;
+  }
+
+}
+
+@media (max-width: 767px) {
+
+  .ubicacion-pagina {
+    padding: 45px 18px 60px;
+  }
+
+  .ubicacion-encabezado {
+    margin-bottom: 30px;
+  }
+
+  .ubicacion-encabezado p {
+    font-size: 1rem;
+  }
+
+  .ubicacion-informacion {
+    padding: 25px 20px;
+  }
+
+  .ubicacion-informacion h2 {
+    font-size: 1.6rem;
+  }
+
+  .ubicacion-grid {
+    gap: 20px;
+  }
+
+  .ubicacion-mapa-contenedor iframe {
+    min-height: 300px;
+  }
+
+}
+
+
+/* =========================================
+   9. ACCESIBILIDAD
+========================================= */
+
+.ubicacion-pagina .ui.button:focus-visible,
+.ubicacion-enlace-mapa:focus-visible {
+  outline: 3px solid var(--color-terracota);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .ubicacion-pagina .ui.button.ubicacion-boton {
+    transition: none;
+  }
+
+  .ubicacion-pagina .ui.button.ubicacion-boton:hover {
+    transform: none;
+  }
+
+}
