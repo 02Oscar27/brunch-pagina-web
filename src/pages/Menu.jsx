@@ -8,6 +8,11 @@ import pancakesImg from "../assets/images/pancakes.png";
 import wafflesImg from "../assets/images/waffles.png";
 import huevosImg from "../assets/images/huevos-benedictinos.png";
 import brunchImg from "../assets/images/brunch-principal.png";
+import croasant from "../assets/images/croasant.png";
+import bolfrutas from "../assets/images/bolfrutas.png";
+import cafe from "../assets/images/cafe.png";
+import francesas from "../assets/images/tostadasFrancesas.png";
+import chocolate from "../assets/images/chocolate.png";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -49,7 +54,7 @@ const productos = [
     nombre: "Croissant",
     categoria: "Desayunos",
     precio: 12000,
-    imagen: brunchImg,
+    imagen: croasant,
     etiqueta: "",
     descripcion: "Croissant de textura crujiente y centro suave.",
     ingredientes: ["Harina de trigo", "Mantequilla", "Levadura", "Leche", "Azúcar"],
@@ -59,7 +64,7 @@ const productos = [
     nombre: "Bowl de frutas",
     categoria: "Dulces",
     precio: 16000,
-    imagen: brunchImg,
+    imagen: bolfrutas,
     etiqueta: "Nuevo",
     descripcion: "Una combinación fresca de frutas de temporada.",
     ingredientes: ["Fresas", "Banano", "Uvas", "Papaya", "Fruta de temporada"],
@@ -69,7 +74,7 @@ const productos = [
     nombre: "Café",
     categoria: "Bebidas",
     precio: 7000,
-    imagen: brunchImg,
+    imagen: cafe,
     etiqueta: "Más pedido",
     descripcion: "Café aromático, perfecto para acompañar tu desayuno.",
     ingredientes: ["Café molido", "Agua"],
@@ -79,7 +84,7 @@ const productos = [
     nombre: "Tostadas francesas",
     categoria: "Dulces",
     precio: 17000,
-    imagen: pancakesImg,
+    imagen: francesas,
     etiqueta: "",
     descripcion: "Tostadas dulces con un toque especial de la casa.",
     ingredientes: ["Pan", "Huevo", "Leche", "Canela", "Mantequilla", "Miel"],
@@ -89,7 +94,7 @@ const productos = [
     nombre: "Chocolate caliente",
     categoria: "Bebidas",
     precio: 8000,
-    imagen: brunchImg,
+    imagen: cafe,
     etiqueta: "",
     descripcion: "Bebida caliente, cremosa y reconfortante.",
     ingredientes: ["Leche", "Chocolate", "Azúcar"],
