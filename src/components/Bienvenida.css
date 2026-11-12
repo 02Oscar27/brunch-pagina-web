@@ -17,7 +17,6 @@
   padding: 0;
 }
 
-
 /* =========================================
    2. CONTENIDO DE BIENVENIDA
 ========================================= */
@@ -33,7 +32,6 @@
 
   text-align: center;
 }
-
 
 /* =========================================
    3. TÍTULO PRINCIPAL
@@ -60,7 +58,6 @@
   margin-top: 8px;
 }
 
-
 /* =========================================
    4. DESCRIPCIÓN DE BIENVENIDA
 ========================================= */
@@ -76,7 +73,6 @@
   color: var(--color-cafe);
 }
 
-
 /* =========================================
    5. CONTENEDOR DE BOTONES
 ========================================= */
@@ -89,7 +85,6 @@
   gap: 15px;
   margin-top: 30px;
 }
-
 
 /* =========================================
    6. ESTILOS GENERALES DE LOS BOTONES
@@ -105,9 +100,10 @@
 
   border-radius: 8px;
 
-  transition: transform 0.3s ease,
-              box-shadow 0.3s ease,
-              filter 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
 }
 
 /* Botón "Ver menú" */
@@ -136,7 +132,6 @@
   outline-offset: 3px;
 }
 
-
 /* =========================================
    7. FOTOGRAFÍA PRINCIPAL
 ========================================= */
@@ -157,8 +152,11 @@
   height: 100%;
 
   object-fit: cover;
-}
 
+  /* Preparación para la animación clipPath */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  will-change: clip-path;
+}
 
 /* =========================================
    8. DISEÑO RESPONSIVE PARA CELULARES
@@ -203,9 +201,7 @@
   .bienvenida-imagen {
     height: 260px;
   }
-
 }
-
 
 /* =========================================
    9. ACCESIBILIDAD
@@ -221,4 +217,7 @@
     transform: none;
   }
 
+  .bienvenida-imagen .imagen-principal {
+    will-change: auto;
+  }
 }
