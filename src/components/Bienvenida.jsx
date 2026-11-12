@@ -1,57 +1,38 @@
+
 import { useRef } from 'react'
 
-
 import { Container, Grid, Button } from 'semantic-ui-react'
-
-
 import { Link } from 'react-router-dom'
-
 
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import brunchPrincipal from '../assets/images/brunch-principal.png'
 
-
 import './Bienvenida.css'
 
-
-/* =========================================
-   2. CONFIGURACIÓN DE GSAP
-========================================= */
-
-// Registrar el plugin de React
-gsap.registerPlugin(useGSAP)
-
-
-/* =========================================
-   3. COMPONENTE BIENVENIDA
-========================================= */
+// Registrar los plugins de GSAP.
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 function Bienvenida() {
-
-  // Referencia a la sección principal
+  // Referencia a la sección principal.
   const seccionRef = useRef(null)
 
-
-  /* =========================================
-     4. ANIMACIONES DE ENTRADA
-  ========================================= */
-
   useGSAP(() => {
-
-    // Respetar la preferencia de movimiento reducido
     const reducirMovimiento = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
 
     if (reducirMovimiento) return
 
-    // Crear una secuencia de animaciones
+    const imagen = seccionRef.current?.querySelector(
+      '.imagen-principal'
+    )
+
+    // Animación de entrada del título.
     const tl = gsap.timeline()
 
-    // 1. El título entra desde la izquierda
     tl.fromTo(
       '.titulo-bienvenida',
       {
@@ -66,8 +47,8 @@ function Bienvenida() {
       }
     )
 
-    // 2. La fotografía entra desde la derecha
-    .fromTo(
+    // Animación de entrada de la fotografía.
+    tl.fromTo(
       '.imagen-principal',
       {
         x: 100,
@@ -82,30 +63,38 @@ function Bienvenida() {
       '-=0.6'
     )
 
+    // Animación de revelado mediante clipPath.
+    if (imagen) {
+      gsap.fromTo(
+        imagen,
+        {
+          clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
+        },
+        {
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          duration: 1.2,
+          ease: 'power3.inOut',
+          scrollTrigger: {
+            trigger: imagen,
+            start: 'top 85%',
+            once: true
+          }
+        }
+      )
+    }
+
   }, { scope: seccionRef })
 
-
-  /* =========================================
-     5. ESTRUCTURA DE BIENVENIDA
-  ========================================= */
-
   return (
-
     <section
       className="seccion-bienvenida"
       ref={seccionRef}
     >
-
       <Container fluid>
-
         <Grid columns={2} stackable>
 
-          {/* =================================
-              COLUMNA IZQUIERDA: INFORMACIÓN
-          ================================= */}
-
+          {/* COLUMNA IZQUIERDA: INFORMACIÓN */}
           <Grid.Column>
-
             <div className="bienvenida-texto">
 
               {/* Título principal */}
@@ -140,18 +129,11 @@ function Bienvenida() {
                 </Button>
 
               </div>
-
             </div>
-
           </Grid.Column>
 
-
-          {/* =================================
-              COLUMNA DERECHA: FOTOGRAFÍA
-          ================================= */}
-
+          {/* COLUMNA DERECHA: FOTOGRAFÍA */}
           <Grid.Column>
-
             <div className="bienvenida-imagen">
 
               <img
@@ -161,15 +143,11 @@ function Bienvenida() {
               />
 
             </div>
-
           </Grid.Column>
 
         </Grid>
-
       </Container>
-
     </section>
-
   )
 }
 
