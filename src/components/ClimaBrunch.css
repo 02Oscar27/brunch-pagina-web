@@ -1,0 +1,151 @@
+
+/* =========================================
+   1. CONTENEDOR PRINCIPAL
+========================================= */
+
+.clima-brunch {
+  margin-top: 30px;
+  padding: 30px;
+
+  background-color: #F0EBE2;
+  border-radius: 18px;
+
+  box-shadow: 0 5px 20px rgba(61, 58, 50, 0.06);
+}
+
+
+/* =========================================
+   2. ENCABEZADO
+========================================= */
+
+.clima-brunch-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.clima-brunch-encabezado > .icon {
+  color: var(--color-terracota);
+  margin: 0;
+}
+
+.clima-brunch-encabezado h2 {
+  font-family: var(--fuente-titulos);
+  font-size: 1.7rem;
+  color: var(--color-cafe);
+  margin: 0 0 8px;
+}
+
+.clima-brunch-encabezado p {
+  font-family: var(--fuente-texto);
+  color: var(--color-cafe);
+  margin: 0;
+}
+
+
+/* =========================================
+   3. DATOS DEL CLIMA
+========================================= */
+
+.clima-brunch-datos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.clima-brunch-dato {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
+  padding: 25px 15px;
+
+  background-color: #FBF8F3;
+  border-radius: 12px;
+
+  text-align: center;
+}
+
+.clima-brunch-dato > .icon {
+  color: var(--color-terracota);
+  margin: 0;
+}
+
+.clima-brunch-dato strong {
+  font-family: var(--fuente-titulos);
+  font-size: 2rem;
+
+  color: var(--color-cafe);
+}
+
+.clima-brunch-dato span {
+  font-family: var(--fuente-texto);
+  font-size: 0.95rem;
+
+  color: var(--color-cafe);
+}
+
+
+/* =========================================
+   4. MENSAJES Y FUENTE
+========================================= */
+
+.clima-brunch-mensaje {
+  padding: 20px 0;
+  text-align: center;
+
+  font-family: var(--fuente-texto);
+  color: var(--color-cafe);
+}
+
+.clima-brunch-fuente {
+  font-family: var(--fuente-texto);
+  font-size: 0.8rem;
+
+  text-align: center;
+  color: #6E665E;
+
+  margin: 22px 0 0;
+}
+
+.clima-brunch-fuente a {
+  color: var(--color-terracota);
+  font-weight: 600;
+}
+
+
+/* =========================================
+   5. RESPONSIVE
+========================================= */
+
+@media (max-width: 767px) {
+
+  .clima-brunch {
+    padding: 25px 18px;
+  }
+
+  .clima-brunch-encabezado {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .clima-brunch-encabezado h2 {
+    font-size: 1.4rem;
+  }
+
+  .clima-brunch-datos {
+    gap: 10px;
+  }
+
+  .clima-brunch-dato {
+    padding: 20px 8px;
+  }
+
+  .clima-brunch-dato strong {
+    font-size: 1.6rem;
+  }
+
+}
