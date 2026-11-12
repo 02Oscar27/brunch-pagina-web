@@ -13,6 +13,7 @@ import bolfrutas from "../assets/images/bolfrutas.png";
 import cafe from "../assets/images/cafe.png";
 import francesas from "../assets/images/tostadasFrancesas.png";
 import chocolate from "../assets/images/chocolate.png";
+import sandwich from "../assets/images/sandwich-brunch.png"
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -94,20 +95,20 @@ const productos = [
     nombre: "Chocolate caliente",
     categoria: "Bebidas",
     precio: 8000,
-    imagen: cafe,
+    imagen: chocolate,
     etiqueta: "",
     descripcion: "Bebida caliente, cremosa y reconfortante.",
     ingredientes: ["Leche", "Chocolate", "Azúcar"],
   },
   {
     id: 9,
-    nombre: "Waffles con fruta",
-    categoria: "Dulces",
-    precio: 22000,
-    imagen: wafflesImg,
+    nombre: "Sándwich brunch",
+    categoria: "Desayunos",
+    precio: 24000,
+    imagen: sandwich,
     etiqueta: "Nuevo",
-    descripcion: "Waffles acompañados de fruta y un toque dulce.",
-    ingredientes: ["Harina de trigo", "Leche", "Huevo", "Mantequilla", "Fruta fresca", "Sirope"],
+    descripcion: "Sándwich de pan artesanal con huevo, aguacate, queso y vegetales.",
+    ingredientes: [  "Pan artesanal", "Huevo frito","Aguacate","Tomate","Espinaca","Queso"],
   },
 ];
 

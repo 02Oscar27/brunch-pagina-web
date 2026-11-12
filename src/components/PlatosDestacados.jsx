@@ -2,103 +2,77 @@
 import { useEffect, useRef, useState } from 'react'
 import { Container, Button, Icon } from 'semantic-ui-react'
 
-// Animaciones GSAP
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-// Componentes y datos del proyecto
 import PlatoCard from './PlatoCard.jsx'
 import { platos } from '../data/platos.js'
 
-// Estilos
 import './PlatosDestacados.css'
-
-// 1. CONFIGURACIÓN GENERAL
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-// Espacio entre las tarjetas (px)
+// Espacio entre tarjetas.
 const ESPACIO = 24
 
-// Tiempo entre movimientos automáticos (ms)
+// Tiempo entre movimientos automáticos.
 const TIEMPO_AUTOMATICO = 4000
 
-// Duración del desplazamiento (ms)
+// Duración del desplazamiento del carrusel.
 const DURACION_TRANSICION = 550
 
-
 function PlatosDestacados() {
-
-  // 2. REFERENCIAS
+  // Referencias.
   const seccionRef = useRef(null)
   const ventanaRef = useRef(null)
-
-  // Evita iniciar otro movimiento mientras
-  // el carrusel está cambiando de posición.
   const moviendoRef = useRef(false)
-  // 3. ESTADOS DEL CARRUSEL
 
+  // Datos generales.
   const total = platos.length
 
-  // Comenzar en la copia central.
+  // El carrusel comienza en la copia central.
   const [indice, setIndice] = useState(total)
 
   // Cantidad de tarjetas visibles.
   const [cardsPorVista, setCardsPorVista] = useState(3)
 
-  // Ancho disponible para mostrar las tarjetas.
+  // Ancho disponible para el carrusel.
   const [anchoVentana, setAnchoVentana] = useState(0)
 
-  // Control de la transición.
+  // Control de transición.
   const [transicion, setTransicion] = useState(true)
 
-  // Detectar interacción del usuario.
+  // Estados de interacción.
   const [interactuando, setInteractuando] = useState(false)
+  const [platoVolteado, setPlatoVolteado] = useState(null)
 
   // Preferencia de accesibilidad.
-  const [movimientoReducido, setMovimientoReducido] =
-    useState(false)
+  const [movimientoReducido, setMovimientoReducido] = useState(false)
 
-  // Identificar el plato cuya descripción está abierta.
-  const [platoVolteado, setPlatoVolteado] = useState(null)
-  // 4. PLATOS DEL CARRUSEL INFINITO
-
-  // Repetir los platos tres veces permite
-  // avanzar y retroceder sin cortes visibles.
+  // Tres copias para conseguir el efecto infinito.
   const pista = [...platos, ...platos, ...platos]
 
-  // 5. ADAPTACIÓN RESPONSIVE
-
+  // Adaptar la cantidad de tarjetas según el tamaño de pantalla.
   useEffect(() => {
-
     const actualizarVista = () => {
-
       const anchoPantalla = window.innerWidth
 
-      // Celulares: una tarjeta
       if (anchoPantalla <= 767) {
         setCardsPorVista(1)
-
-      // Tabletas: dos tarjetas
       } else if (anchoPantalla <= 1024) {
         setCardsPorVista(2)
-
-      // Computadores: tres tarjetas
       } else {
         setCardsPorVista(3)
       }
 
-      // Obtener el ancho del carrusel.
       if (ventanaRef.current) {
         setAnchoVentana(ventanaRef.current.clientWidth)
       }
-
     }
 
     actualizarVista()
 
-    // Observar cambios en el tamaño del contenedor.
     const observador = new ResizeObserver(actualizarVista)
 
     if (ventanaRef.current) {
@@ -107,17 +81,14 @@ function PlatosDestacados() {
 
     window.addEventListener('resize', actualizarVista)
 
-    // Limpiar eventos al desmontar el componente.
     return () => {
       observador.disconnect()
       window.removeEventListener('resize', actualizarVista)
     }
-
   }, [])
 
-  // 6. PREFERENCIA DE MOVIMIENTO REDUCIDO
+  // Detectar si el usuario prefiere movimiento reducido.
   useEffect(() => {
-
     const consulta = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     )
@@ -128,69 +99,112 @@ function PlatosDestacados() {
 
     actualizarPreferencia()
 
-    consulta.addEventListener(
-      'change',
-      actualizarPreferencia
-    )
+    consulta.addEventListener('change', actualizarPreferencia)
 
     return () => {
-      consulta.removeEventListener(
-        'change',
-        actualizarPreferencia
-      )
+      consulta.removeEventListener('change', actualizarPreferencia)
     }
-
   }, [])
-  // 7. ANIMACIÓN DE ENTRADA CON GSAP
 
-  useGSAP(() => {
-
-    // Evitar la animación cuando el usuario
-    // prefiere movimiento reducido.
-    if (
-      window.matchMedia(
-        '(prefers-reduced-motion: reduce)'
-      ).matches
-    ) {
-      return
-    }
-
-    gsap.fromTo(
-      '.carrusel-marco',
-      {
-        y: 40,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power2.out',
-
-        scrollTrigger: {
-          trigger: seccionRef.current,
-          start: 'top 80%',
-          once: true
-        }
+  // Animación de entrada de la sección.
+  useGSAP(
+    () => {
+      if (
+        window.matchMedia(
+          '(prefers-reduced-motion: reduce)'
+        ).matches
+      ) {
+        return
       }
-    )
 
-  }, { scope: seccionRef })
-  // 8. CALCULAR EL TAMAÑO DE LAS TARJETAS
-  const anchoTarjeta = anchoVentana > 0
-    ? (
-        anchoVentana -
-        ESPACIO * (cardsPorVista - 1)
-      ) / cardsPorVista
-    : 0
+      gsap.fromTo(
+        '.carrusel-marco',
+        {
+          y: 40,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: seccionRef.current,
+            start: 'top 80%',
+            once: true
+          }
+        }
+      )
+    },
+    { scope: seccionRef }
+  )
 
-  // Distancia entre el inicio de una tarjeta
-  // y el inicio de la siguiente.
+  // Calcular el ancho de cada tarjeta.
+  const anchoTarjeta =
+    anchoVentana > 0
+      ? (
+          anchoVentana -
+          ESPACIO * (cardsPorVista - 1)
+        ) / cardsPorVista
+      : 0
+
+  // Distancia entre el inicio de una tarjeta y la siguiente.
   const distancia = anchoTarjeta + ESPACIO
-  // 9. NAVEGACIÓN MANUAL
-  const mover = (direccion) => {
 
-    // No permitir movimientos simultáneos.
+  // Efecto 3D de las tarjetas.
+  useGSAP(
+    () => {
+      if (!ventanaRef.current) return
+
+      const items = gsap.utils.toArray(
+        '.plato-destacado',
+        ventanaRef.current
+      )
+
+      if (movimientoReducido) {
+        gsap.set(items, {
+          rotateY: 0,
+          z: 0,
+          scale: 1
+        })
+        return
+      }
+
+      // Tarjeta de referencia:
+      // 1 visible: primera tarjeta.
+      // 2 visibles: segunda tarjeta.
+      // 3 visibles: tarjeta central.
+      const currentIndex =
+        indice + Math.floor(cardsPorVista / 2)
+
+      items.forEach((item) => {
+        const itemIndex = Number(item.dataset.carouselIndex)
+        const offset = itemIndex - currentIndex
+
+        gsap.to(item, {
+          rotateY: offset * -30,
+          z: offset === 0 ? 50 : -Math.abs(offset) * 30,
+          scale: offset === 0 ? 1.2 : 0.85,
+          duration: 0.5,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        })
+      })
+    },
+    {
+      scope: seccionRef,
+      dependencies: [
+        indice,
+        cardsPorVista,
+        movimientoReducido,
+        anchoVentana
+      ],
+      revertOnUpdate: true
+    }
+  )
+
+  // Navegación manual.
+  const mover = (direccion) => {
     if (
       moviendoRef.current ||
       !transicion ||
@@ -200,23 +214,13 @@ function PlatosDestacados() {
     }
 
     moviendoRef.current = true
-
-    // Cerrar la descripción si estaba abierta.
     setPlatoVolteado(null)
 
-    // -1: anterior | 1: siguiente
     setIndice((anterior) => anterior + direccion)
-
   }
-  // 10. MOVIMIENTO AUTOMÁTICO
 
+  // Movimiento automático.
   useEffect(() => {
-
-    // Detener temporalmente el movimiento cuando:
-    // - El usuario interactúa con el carrusel.
-    // - Una descripción está abierta.
-    // - Se prefiere movimiento reducido.
-    // - El carrusel está reajustando su posición.
     if (
       interactuando ||
       platoVolteado !== null ||
@@ -227,24 +231,16 @@ function PlatosDestacados() {
       return
     }
 
-    // Avanzar automáticamente cada cuatro segundos.
     const intervalo = window.setInterval(() => {
-
       if (!moviendoRef.current) {
-
         moviendoRef.current = true
-
         setIndice((anterior) => anterior + 1)
-
       }
-
     }, TIEMPO_AUTOMATICO)
 
-    // Evitar intervalos acumulados.
     return () => {
       window.clearInterval(intervalo)
     }
-
   }, [
     interactuando,
     platoVolteado,
@@ -252,11 +248,9 @@ function PlatosDestacados() {
     transicion,
     anchoTarjeta
   ])
-  // 11. REINICIO INVISIBLE DEL CARRUSEL
 
+  // Reajustar la posición cuando se llega a los extremos de las copias.
   const finalizarMovimiento = (evento) => {
-
-    // Solo escuchar la transición de la pista.
     if (
       evento.target !== evento.currentTarget ||
       evento.propertyName !== 'transform'
@@ -266,92 +260,69 @@ function PlatosDestacados() {
 
     moviendoRef.current = false
 
-    // Si llegamos a la tercera copia,
-    // regresar a la posición equivalente
-    // de la copia central.
+    // Llegada a la tercera copia.
     if (indice >= total * 2) {
-
       setTransicion(false)
       setIndice((actual) => actual - total)
-
-    // Si llegamos a la primera copia,
-    // volver a la posición equivalente
-    // de la copia central.
-    } else if (indice < total) {
-
+    }
+    // Llegada a la primera copia.
+    else if (indice < total) {
       setTransicion(false)
       setIndice((actual) => actual + total)
-
     }
-
   }
-  // 12. RESTABLECER LA TRANSICIÓN
-  useEffect(() => {
 
+  // Restablecer la transición después del reajuste invisible.
+  useEffect(() => {
     if (transicion) return
 
     let segundoFrame
 
     const primerFrame = requestAnimationFrame(() => {
-
       segundoFrame = requestAnimationFrame(() => {
         setTransicion(true)
       })
-
     })
 
     return () => {
-
       cancelAnimationFrame(primerFrame)
 
       if (segundoFrame !== undefined) {
         cancelAnimationFrame(segundoFrame)
       }
-
     }
-
   }, [transicion])
-  // 13. GIRAR UNA TARJETA
 
+  // Girar una tarjeta para mostrar su descripción.
   const girarPlato = (id) => {
-
     setPlatoVolteado((actual) =>
       actual === id ? null : id
     )
-
   }
-  // 14. RENDERIZADO
-  return (
 
+  return (
     <section
       className="platos-destacados"
       ref={seccionRef}
     >
       <Container>
-
         <h2>Platos destacados</h2>
 
-        {/* Decoración bajo el título */}
-        <div className="platos-decoracion" aria-hidden="true">
+        <div
+          className="platos-decoracion"
+          aria-hidden="true"
+        >
           <span className="linea-decoracion" />
-
           <Icon name="leaf" />
-
           <span className="linea-decoracion" />
-
         </div>
 
-        {/* Carrusel y flechas laterales */}
         <div
           className="carrusel-marco"
-
           onMouseEnter={() => setInteractuando(true)}
           onMouseLeave={() => setInteractuando(false)}
-
           onFocusCapture={() => setInteractuando(true)}
-
           onBlurCapture={(evento) => {
-
             if (
               !evento.currentTarget.contains(
                 evento.relatedTarget
@@ -359,101 +330,78 @@ function PlatosDestacados() {
             ) {
               setInteractuando(false)
             }
-
           }}
         >
-
-          {/* FLECHA IZQUIERDA */}
+          {/* Flecha izquierda */}
           <Button
             type="button"
             icon
-            className="flecha-carrusel"
+            className="flecha-carrusel flecha-izquierda"
             aria-label="Ver plato anterior"
             onClick={() => mover(-1)}
           >
             <Icon name="angle left" />
           </Button>
 
-
-          {/* VENTANA DEL CARRUSEL */}
+          {/* Ventana del carrusel */}
           <div
             className="carrusel-ventana"
             ref={ventanaRef}
           >
-
-            {/* PISTA DESLIZANTE */}
+            {/* Pista deslizante */}
             <div
               className="carrusel-pista"
               onTransitionEnd={finalizarMovimiento}
-
               style={{
-
                 gap: `${ESPACIO}px`,
-
                 transform: `translate3d(${
                   -indice * distancia
                 }px, 0, 0)`,
-
                 transition:
                   transicion && anchoTarjeta > 0
                     ? `transform ${DURACION_TRANSICION}ms ease`
                     : 'none'
-
               }}
             >
-
-              {/* TARJETAS */}
               {pista.map((plato, posicion) => (
-
                 <div
                   key={`${posicion}-${plato.id}`}
                   className="plato-destacado"
-
+                  data-carousel-index={posicion}
                   style={{
-                    width: anchoTarjeta > 0
-                      ? `${anchoTarjeta}px`
-                      : '100%'
+                    width:
+                      anchoTarjeta > 0
+                        ? `${anchoTarjeta}px`
+                        : '100%'
                   }}
                 >
-
                   <PlatoCard
                     nombre={plato.nombre}
                     precio={plato.precio}
                     imagen={plato.imagen}
                     descripcion={plato.descripcion}
-
-                    volteada={
-                      platoVolteado === plato.id
-                    }
-
+                    volteada={platoVolteado === plato.id}
                     onGirar={() => girarPlato(plato.id)}
                   />
-
                 </div>
-
               ))}
-
             </div>
-
           </div>
 
-          {/* FLECHA DERECHA */}
+          {/* Flecha derecha */}
           <Button
             type="button"
             icon
-            className="flecha-carrusel"
+            className="flecha-carrusel flecha-derecha"
             aria-label="Ver plato siguiente"
             onClick={() => mover(1)}
           >
             <Icon name="angle right" />
           </Button>
-
         </div>
-
       </Container>
-
     </section>
-
   )
 }
+
 export default PlatosDestacados
