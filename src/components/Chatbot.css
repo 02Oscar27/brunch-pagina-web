@@ -17,7 +17,7 @@
   justify-content: center;
   align-items: center;
 
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 
   font-family: var(--fuente-texto);
@@ -36,7 +36,7 @@
 /* Efecto hover del botón flotante */
 .chatbot-boton.ui.button:hover,
 .chatbot-boton.ui.button:focus {
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
@@ -151,7 +151,7 @@
 ========================================= */
 
 .chatbot-mensajes .mensaje.usuario {
-  background-color: #53643A;
+  background-color: var(--color-verde-oscuro);
   color: white;
 
   align-self: flex-end;
@@ -191,7 +191,7 @@
 
 /* Efecto hover en preguntas rápidas */
 .chatbot-opciones .ui.button:hover {
-  background-color: #53643A;
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
@@ -223,12 +223,12 @@
 .chatbot-formulario .ui.button {
   margin: 0;
 
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
 .chatbot-formulario .ui.button:hover {
-  background-color: #53643A;
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
