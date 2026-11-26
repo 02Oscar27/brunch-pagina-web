@@ -206,3 +206,110 @@
     height: 20px;
   }
 }
+
+/* En escritorio, los enlaces siguen en la misma fila del Navbar. */
+.navbar-enlaces {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-enlaces .item {
+  white-space: nowrap;
+}
+
+/* El botón hamburguesa únicamente se muestra en pantallas pequeñas. */
+.navbar-menu-toggle {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid var(--color-crema);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-crema);
+  font: 600 14px var(--fuente-texto);
+  cursor: pointer;
+}
+
+.navbar-menu-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.navbar-menu-toggle:hover {
+  background: #555C45;
+}
+
+.navbar-menu-toggle:focus-visible {
+  outline: 3px solid var(--color-crema);
+  outline-offset: 3px;
+}
+
+/* En tabletas y celulares, los enlaces se muestran solo al abrir el menú. */
+@media (max-width: 1024px) {
+  .ui.menu.navbar-brunch {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .ui.menu.navbar-brunch .navbar-logo.item {
+    order: 1;
+    padding: 12px 14px;
+  }
+
+  .ui.menu.navbar-brunch .navbar-carrito-item {
+    order: 2;
+    margin-left: auto !important;
+    padding: 8px !important;
+  }
+
+  .navbar-menu-toggle {
+    display: inline-flex;
+    order: 3;
+    flex: none;
+    margin-right: 12px;
+  }
+
+  .ui.menu.navbar-brunch .navbar-enlaces {
+    display: none;
+    order: 4;
+    flex: 0 0 100%;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    border-top: 1px solid rgb(245 240 230 / 22%);
+  }
+
+  .ui.menu.navbar-brunch.navbar-abierto .navbar-enlaces {
+    display: flex;
+  }
+
+  .ui.menu.navbar-brunch .navbar-enlaces .item {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0;
+    padding: 14px 20px;
+    border-radius: 0;
+  }
+
+  .ui.menu.navbar-brunch .navbar-enlaces .item::before {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar-menu-texto {
+    display: none;
+  }
+
+  .navbar-menu-toggle {
+    padding: 8px 10px;
+  }
+}
