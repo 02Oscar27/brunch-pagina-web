@@ -1,155 +1,13 @@
+
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "../components/menu/Menu.css";
-import pancakesImg from "../assets/images/pancakes.png";
-import wafflesImg from "../assets/images/waffles.png";
-import huevosImg from "../assets/images/huevos-benedictinos.png";
-import croasant from "../assets/images/croasant.png";
-import bolfrutas from "../assets/images/bolfrutas.png";
-import cafe from "../assets/images/cafe.png";
-import francesas from "../assets/images/tostadasFrancesas.png";
-import chocolate from "../assets/images/chocolate.png";
-import sandwich from "../assets/images/sandwich-brunch.png";
+import { productos } from "../data/platos.js";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-const productos = [
-  {
-    id: 1,
-    nombre: "Pancakes",
-    categoria: "Desayunos",
-    precio: 18000,
-    imagen: pancakesImg,
-    etiqueta: "Más pedido",
-    descripcion:
-      "Esponjosos pancakes acompañados de sirope y fruta fresca.",
-    ingredientes: [
-      "Harina de trigo",
-      "Leche",
-      "Huevo",
-      "Mantequilla",
-      "Sirope",
-      "Fruta fresca",
-    ],
-  },
-  {
-    id: 2,
-    nombre: "Waffles",
-    categoria: "Desayunos",
-    precio: 20000,
-    imagen: wafflesImg,
-    etiqueta: "Nuevo",
-    descripcion: "Waffles dorados ideales para comenzar el día.",
-    ingredientes: [
-      "Harina de trigo",
-      "Leche",
-      "Huevo",
-      "Mantequilla",
-      "Vainilla",
-    ],
-  },
-  {
-    id: 3,
-    nombre: "Huevos Benedictinos",
-    categoria: "Desayunos",
-    precio: 24000,
-    imagen: huevosImg,
-    etiqueta: "Más pedido",
-    descripcion:
-      "Huevos preparados al estilo Benedictino para un brunch especial.",
-    ingredientes: [
-      "Huevos pochados",
-      "Pan tipo muffin",
-      "Jamón",
-      "Salsa holandesa",
-      "Cebollín",
-    ],
-  },
-  {
-    id: 4,
-    nombre: "Croissant",
-    categoria: "Desayunos",
-    precio: 12000,
-    imagen: croasant,
-    etiqueta: "",
-    descripcion: "Croissant de textura crujiente y centro suave.",
-    ingredientes: [
-      "Harina de trigo",
-      "Mantequilla",
-      "Levadura",
-      "Leche",
-      "Azúcar",
-    ],
-  },
-  {
-    id: 5,
-    nombre: "Bowl de frutas",
-    categoria: "Dulces",
-    precio: 16000,
-    imagen: bolfrutas,
-    etiqueta: "Nuevo",
-    descripcion: "Una combinación fresca de frutas de temporada.",
-    ingredientes: ["Fresas", "Banano", "Uvas", "Papaya", "Fruta de temporada"],
-  },
-  {
-    id: 6,
-    nombre: "Café",
-    categoria: "Bebidas",
-    precio: 7000,
-    imagen: cafe,
-    etiqueta: "Más pedido",
-    descripcion: "Café aromático, perfecto para acompañar tu desayuno.",
-    ingredientes: ["Café molido", "Agua"],
-  },
-  {
-    id: 7,
-    nombre: "Tostadas francesas",
-    categoria: "Dulces",
-    precio: 17000,
-    imagen: francesas,
-    etiqueta: "",
-    descripcion: "Tostadas dulces con un toque especial de la casa.",
-    ingredientes: [
-      "Pan",
-      "Huevo",
-      "Leche",
-      "Canela",
-      "Mantequilla",
-      "Miel",
-    ],
-  },
-  {
-    id: 8,
-    nombre: "Chocolate caliente",
-    categoria: "Bebidas",
-    precio: 8000,
-    imagen: chocolate,
-    etiqueta: "",
-    descripcion: "Bebida caliente, cremosa y reconfortante.",
-    ingredientes: ["Leche", "Chocolate", "Azúcar"],
-  },
-  {
-    id: 9,
-    nombre: "Sándwich brunch",
-    categoria: "Desayunos",
-    precio: 24000,
-    imagen: sandwich,
-    etiqueta: "Nuevo",
-    descripcion:
-      "Sándwich de pan artesanal con huevo, aguacate, queso y vegetales.",
-    ingredientes: [
-      "Pan artesanal",
-      "Huevo frito",
-      "Aguacate",
-      "Tomate",
-      "Espinaca",
-      "Queso",
-    ],
-  },
-];
 
 const categorias = ["Todos", "Desayunos", "Dulces", "Bebidas"];
 
@@ -165,12 +23,14 @@ function Menu({ carrito = {}, cambiarCantidad }) {
   const encabezadoRef = useRef(null);
   const tarjetasRef = useRef(null);
 
+  // Comprobar si el usuario prefiere reducir las animaciones.
+  const reducirMovimiento = () =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
   // Animación de entrada del encabezado y los filtros.
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-      }
+      if (reducirMovimiento()) return;
 
       const elementos = gsap.utils.toArray(
         [
@@ -204,13 +64,11 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     { scope: menuRef }
   );
 
-  // Entrada escalonada de las tarjetas cuando cambia la categoría,
-  // la búsqueda o la cantidad de productos visibles.
+  // Animación de las tarjetas al entrar en pantalla.
+  // Se ejecuta también cuando cambian los filtros o la búsqueda.
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-      }
+      if (reducirMovimiento()) return;
 
       const tarjetas = gsap.utils.toArray(
         ".menu-tarjeta",
@@ -223,19 +81,22 @@ function Menu({ carrito = {}, cambiarCantidad }) {
         tarjetas,
         {
           autoAlpha: 0,
-          y: 26,
-          scale: 0.96,
-          filter: "blur(5px)",
+          y: 28,
+          scale: 0.97,
         },
         {
           autoAlpha: 1,
           y: 0,
           scale: 1,
-          filter: "blur(0px)",
           duration: 0.58,
           stagger: 0.075,
           ease: "power3.out",
           clearProps: "all",
+          scrollTrigger: {
+            trigger: tarjetasRef.current,
+            start: "top 90%",
+            once: true,
+          },
         }
       );
     },
@@ -246,6 +107,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     }
   );
 
+  // Filtrar productos por categoría y búsqueda.
   const productosFiltrados = productos.filter((producto) => {
     const coincideCategoria =
       categoriaActiva === "Todos" ||
@@ -253,18 +115,33 @@ function Menu({ carrito = {}, cambiarCantidad }) {
 
     const termino = busqueda.trim().toLowerCase();
 
-    const coincideBusqueda =
-      producto.nombre.toLowerCase().includes(termino) ||
-      producto.descripcion.toLowerCase().includes(termino) ||
-      producto.ingredientes.some((ingrediente) =>
-        ingrediente.toLowerCase().includes(termino)
-      );
+    const coincideNombre = producto.nombre
+      .toLowerCase()
+      .includes(termino);
 
-    return coincideCategoria && coincideBusqueda;
+    const coincideDescripcion = (producto.descripcion || "")
+      .toLowerCase()
+      .includes(termino);
+
+    const coincideIngredientes = (producto.ingredientes || []).some(
+      (ingrediente) =>
+        ingrediente.toLowerCase().includes(termino)
+    );
+
+    return (
+      coincideCategoria &&
+      (coincideNombre ||
+        coincideDescripcion ||
+        coincideIngredientes)
+    );
   });
 
-  const productosVisibles = productosFiltrados.slice(0, cantidadVisible);
+  const productosVisibles = productosFiltrados.slice(
+    0,
+    cantidadVisible
+  );
 
+  // Obtener los productos del carrito.
   const productosCarrito = Object.values(carrito);
 
   const totalUnidades = productosCarrito.reduce(
@@ -273,16 +150,15 @@ function Menu({ carrito = {}, cambiarCantidad }) {
   );
 
   const totalPrecio = productosCarrito.reduce(
-    (total, item) => total + item.producto.precio * item.cantidad,
+    (total, item) =>
+      total + item.producto.precio * item.cantidad,
     0
   );
 
-  // Animación del contador del carrito cuando cambia la cantidad.
+  // Animar el contador cuando cambia la cantidad.
   useGSAP(
     () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-      }
+      if (reducirMovimiento()) return;
 
       const contador = menuRef.current?.querySelector(
         ".menu-carrito-contador"
@@ -311,12 +187,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
   // Animación de apertura del panel del carrito.
   useGSAP(
     () => {
-      if (
-        !carritoAbierto ||
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ) {
-        return;
-      }
+      if (!carritoAbierto || reducirMovimiento()) return;
 
       const panel = menuRef.current?.querySelector(
         ".menu-carrito-panel-flotante"
@@ -347,6 +218,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     }
   );
 
+  // Formatear los precios en pesos colombianos.
   const formatoPrecio = (precio) =>
     precio.toLocaleString("es-CO", {
       style: "currency",
@@ -354,11 +226,14 @@ function Menu({ carrito = {}, cambiarCantidad }) {
       maximumFractionDigits: 0,
     });
 
+  // Cambiar la categoría seleccionada.
   const cambiarCategoria = (categoria) => {
     setCategoriaActiva(categoria);
     setCantidadVisible(6);
+    setTarjetasGiradas([]);
   };
 
+  // Girar una tarjeta para mostrar su descripción.
   const alternarTarjeta = (id) => {
     setTarjetasGiradas((actuales) =>
       actuales.includes(id)
@@ -367,6 +242,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     );
   };
 
+  // Realizar la compra simulada.
   const realizarCompra = () => {
     if (productosCarrito.length === 0) return;
 
@@ -378,6 +254,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     setAvisoCompra(true);
   };
 
+  // Ocultar automáticamente el aviso de compra.
   useEffect(() => {
     if (!avisoCompra) return;
 
@@ -389,11 +266,9 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     return () => window.clearTimeout(temporizador);
   }, [avisoCompra]);
 
-  // Animación de los botones al pasar el cursor.
+  // Animación de los botones.
   const animarBoton = (elemento, escala) => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
+    if (reducirMovimiento()) return;
 
     gsap.to(elemento, {
       scale: escala,
@@ -403,13 +278,13 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     });
   };
 
-  // Zoom de las imágenes al pasar el cursor sobre una tarjeta.
+  // Zoom de las imágenes de los productos.
   const animarImagen = (evento, escala) => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
+    if (reducirMovimiento()) return;
 
-    const imagen = evento.currentTarget.querySelector(".menu-imagen");
+    const imagen = evento.currentTarget.querySelector(
+      ".menu-imagen"
+    );
 
     if (!imagen) return;
 
@@ -421,13 +296,11 @@ function Menu({ carrito = {}, cambiarCantidad }) {
     });
   };
 
-  // Pequeño rebote del botón al agregar un producto.
+  // Agregar un producto al carrito con una pequeña animación.
   const agregarProducto = (producto, elemento) => {
     cambiarCantidad(producto, 1);
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      return;
-    }
+    if (reducirMovimiento()) return;
 
     gsap.fromTo(
       elemento,
@@ -451,10 +324,13 @@ function Menu({ carrito = {}, cambiarCantidad }) {
         </div>
       </div>
 
+      {/* Botón flotante del carrito */}
       <button
         type="button"
         className="menu-carrito-flotante"
-        onClick={() => setCarritoAbierto((abierto) => !abierto)}
+        onClick={() =>
+          setCarritoAbierto((abierto) => !abierto)
+        }
         aria-label={`Abrir carrito. ${totalUnidades} productos`}
         aria-expanded={carritoAbierto}
       >
@@ -468,17 +344,24 @@ function Menu({ carrito = {}, cambiarCantidad }) {
           <circle cx="18" cy="20" r="1.2" />
         </svg>
 
-        <span className="menu-carrito-flotante-texto">Carrito</span>
+        <span className="menu-carrito-flotante-texto">
+          Carrito
+        </span>
 
-        <span className="menu-carrito-contador">{totalUnidades}</span>
+        <span className="menu-carrito-contador">
+          {totalUnidades}
+        </span>
       </button>
 
+      {/* Notificación de compra */}
       {avisoCompra && (
         <div className="menu-aviso-compra" role="status">
-          <span aria-hidden="true">✓</span> Compra realizada correctamente
+          <span aria-hidden="true">✓</span>
+          Compra realizada correctamente
         </div>
       )}
 
+      {/* Panel del carrito */}
       {carritoAbierto && (
         <aside
           className="menu-carrito-panel-flotante"
@@ -505,18 +388,25 @@ function Menu({ carrito = {}, cambiarCantidad }) {
             <>
               <ul className="menu-carrito-lista">
                 {productosCarrito.map(({ producto, cantidad }) => (
-                  <li className="menu-carrito-item" key={producto.id}>
+                  <li
+                    className="menu-carrito-item"
+                    key={producto.id}
+                  >
                     <img src={producto.imagen} alt="" />
 
                     <div className="menu-carrito-detalle">
                       <strong>{producto.nombre}</strong>
 
-                      <span>{formatoPrecio(producto.precio)}</span>
+                      <span>
+                        {formatoPrecio(producto.precio)}
+                      </span>
 
                       <div className="menu-controles-cantidad menu-controles-carrito">
                         <button
                           type="button"
-                          onClick={() => cambiarCantidad(producto, -1)}
+                          onClick={() =>
+                            cambiarCantidad(producto, -1)
+                          }
                           aria-label={`Quitar una unidad de ${producto.nombre}`}
                         >
                           −
@@ -526,7 +416,9 @@ function Menu({ carrito = {}, cambiarCantidad }) {
 
                         <button
                           type="button"
-                          onClick={() => cambiarCantidad(producto, 1)}
+                          onClick={() =>
+                            cambiarCantidad(producto, 1)
+                          }
                           aria-label={`Agregar una unidad de ${producto.nombre}`}
                         >
                           +
@@ -554,17 +446,24 @@ function Menu({ carrito = {}, cambiarCantidad }) {
         </aside>
       )}
 
-      <section className="menu-encabezado" ref={encabezadoRef}>
+      {/* Encabezado del menú */}
+      <section
+        className="menu-encabezado"
+        ref={encabezadoRef}
+      >
         <p className="menu-eyebrow">
           SABORES PARA DISFRUTAR SIN PRISA
         </p>
 
-        <h1 className="menu-titulo">Nuestro menú</h1>
+        <h1 className="menu-titulo">
+          Nuestro menú
+        </h1>
 
         <p className="menu-subtitulo">
           Conoce nuestras opciones de brunch
         </p>
 
+        {/* Buscador */}
         <div className="menu-buscador">
           <input
             type="search"
@@ -574,10 +473,12 @@ function Menu({ carrito = {}, cambiarCantidad }) {
             onChange={(e) => {
               setBusqueda(e.target.value);
               setCantidadVisible(6);
+              setTarjetasGiradas([]);
             }}
           />
         </div>
 
+        {/* Filtros */}
         <div
           className="menu-categorias"
           aria-label="Filtrar por categoría"
@@ -598,6 +499,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
         </div>
       </section>
 
+      {/* Productos */}
       <section
         className="menu-productos"
         aria-label="Productos del menú"
@@ -606,13 +508,19 @@ function Menu({ carrito = {}, cambiarCantidad }) {
         {productosVisibles.length > 0 ? (
           productosVisibles.map((producto) => {
             const girada = tarjetasGiradas.includes(producto.id);
-            const cantidad = carrito[producto.id]?.cantidad || 0;
+
+            const cantidad =
+              carrito[producto.id]?.cantidad || 0;
 
             return (
               <article
-                className={`menu-tarjeta ${girada ? "girada" : ""}`}
+                className={`menu-tarjeta ${
+                  girada ? "girada" : ""
+                }`}
                 key={producto.id}
-                onMouseEnter={(evento) => animarImagen(evento, 1.055)}
+                onMouseEnter={(evento) =>
+                  animarImagen(evento, 1.055)
+                }
                 onMouseLeave={(evento) => {
                   animarImagen(evento, 1);
 
@@ -622,17 +530,22 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                     ).matches
                   ) {
                     setTarjetasGiradas((actuales) =>
-                      actuales.filter((id) => id !== producto.id)
+                      actuales.filter(
+                        (id) => id !== producto.id
+                      )
                     );
                   }
                 }}
               >
                 <div className="menu-tarjeta-interior">
+                  {/* Cara frontal */}
                   <div className="menu-cara menu-cara-frontal">
                     <button
                       type="button"
                       className="menu-cara-clic"
-                      onClick={() => alternarTarjeta(producto.id)}
+                      onClick={() =>
+                        alternarTarjeta(producto.id)
+                      }
                       aria-label={`Ver descripción de ${producto.nombre}`}
                     >
                       <div className="menu-imagen-contenedor">
@@ -671,19 +584,26 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                       <div className="menu-controles-cantidad">
                         <button
                           type="button"
-                          onClick={() => cambiarCantidad(producto, -1)}
+                          onClick={() =>
+                            cambiarCantidad(producto, -1)
+                          }
                           disabled={cantidad === 0}
                           aria-label={`Quitar una unidad de ${producto.nombre}`}
                         >
                           −
                         </button>
 
-                        <span aria-live="polite">{cantidad}</span>
+                        <span aria-live="polite">
+                          {cantidad}
+                        </span>
 
                         <button
                           type="button"
                           onClick={(evento) =>
-                            agregarProducto(producto, evento.currentTarget)
+                            agregarProducto(
+                              producto,
+                              evento.currentTarget
+                            )
                           }
                           aria-label={`Agregar una unidad de ${producto.nombre}`}
                         >
@@ -693,6 +613,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                     </div>
                   </div>
 
+                  {/* Cara trasera */}
                   <div className="menu-cara menu-cara-trasera">
                     <span className="menu-categoria-producto">
                       {producto.categoria}
@@ -708,9 +629,13 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                       <h3>Ingredientes</h3>
 
                       <ul>
-                        {producto.ingredientes.map((ingrediente) => (
-                          <li key={ingrediente}>{ingrediente}</li>
-                        ))}
+                        {(producto.ingredientes || []).map(
+                          (ingrediente) => (
+                            <li key={ingrediente}>
+                              {ingrediente}
+                            </li>
+                          )
+                        )}
                       </ul>
                     </div>
 
@@ -722,19 +647,26 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                       <div className="menu-controles-cantidad">
                         <button
                           type="button"
-                          onClick={() => cambiarCantidad(producto, -1)}
+                          onClick={() =>
+                            cambiarCantidad(producto, -1)
+                          }
                           disabled={cantidad === 0}
                           aria-label={`Quitar una unidad de ${producto.nombre}`}
                         >
                           −
                         </button>
 
-                        <span aria-live="polite">{cantidad}</span>
+                        <span aria-live="polite">
+                          {cantidad}
+                        </span>
 
                         <button
                           type="button"
                           onClick={(evento) =>
-                            agregarProducto(producto, evento.currentTarget)
+                            agregarProducto(
+                              producto,
+                              evento.currentTarget
+                            )
                           }
                           aria-label={`Agregar una unidad de ${producto.nombre}`}
                         >
@@ -754,6 +686,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
         )}
       </section>
 
+      {/* Botón para cargar más productos */}
       {productosVisibles.length < productosFiltrados.length && (
         <div className="menu-cargar-contenedor">
           <button
@@ -762,8 +695,12 @@ function Menu({ carrito = {}, cambiarCantidad }) {
             onClick={() =>
               setCantidadVisible((cantidad) => cantidad + 3)
             }
-            onMouseEnter={(e) => animarBoton(e.currentTarget, 1.04)}
-            onMouseLeave={(e) => animarBoton(e.currentTarget, 1)}
+            onMouseEnter={(e) =>
+              animarBoton(e.currentTarget, 1.04)
+            }
+            onMouseLeave={(e) =>
+              animarBoton(e.currentTarget, 1)
+            }
           >
             Cargar más
           </button>

@@ -89,14 +89,13 @@
 }
 
 .bienvenida-botones .ui.button.boton-menu {
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
 .bienvenida-botones .ui.button.boton-reserva {
-  border: 1px solid rgba(61, 58, 50, 0.22);
-  background-color: transparent;
-  color: var(--color-cafe);
+  background-color: var(--color-terracota-oscuro);
+  color: white;
 }
 
 .bienvenida-botones .ui.button:hover {

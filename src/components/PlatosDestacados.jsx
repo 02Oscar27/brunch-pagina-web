@@ -161,7 +161,11 @@ function PlatosDestacados() {
         ventanaRef.current
       )
 
-      if (movimientoReducido) {
+      // Con una sola tarjeta visible, el efecto 3D agrandaba la tarjeta
+      // y la ventana del carrusel recortaba el nombre y el precio.
+      // En celulares mantenemos el desplazamiento y el giro de la tarjeta,
+      // pero no la inclinación ni el zoom de profundidad.
+      if (movimientoReducido || cardsPorVista === 1) {
         gsap.set(items, {
           rotateY: 0,
           z: 0,

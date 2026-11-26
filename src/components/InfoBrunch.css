@@ -99,7 +99,7 @@
 
 /* Destacar el horario de atención */
 .info-brunch-tarjeta .info-brunch-destacado {
-  color: var(--color-terracota);
+  color: var(--color-terracota-oscuro);
   font-weight: 700;
 }
 

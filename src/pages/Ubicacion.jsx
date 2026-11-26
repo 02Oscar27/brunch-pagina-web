@@ -2,6 +2,7 @@
 import { useRef } from 'react'
 import { Container, Button, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import ClimaBrunch from '../components/ClimaBrunch.jsx'
 
 // Animaciones GSAP
 import { gsap } from 'gsap'
@@ -283,6 +284,8 @@ function Ubicacion() {
           </div>
 
         </div>
+
+        <ClimaBrunch />
 
       </Container>
 
