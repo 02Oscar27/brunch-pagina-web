@@ -11,6 +11,17 @@
   --color-terracota: #A66A4C;
   --color-cafe: #3D3A32;
 
+  /* Variantes oscuras: mejor contraste con texto blanco o sobre fondos claros. */
+  --color-verde-oscuro: #53643A;
+  --color-terracota-oscuro: #8B5037;
+
+  /* Tonos secundarios compartidos, sin cambiar la paleta principal. */
+  --color-papel: #FFFCF6;
+  --color-superficie: #FBF8F3;
+  --color-superficie-suave: #F0EBE2;
+  --color-borde-suave: #E2D9C9;
+  --color-texto-suave: #625D52;
+
   /* Tipografías */
   --fuente-texto: 'DM Sans', sans-serif;
   --fuente-titulos: 'Fraunces', Georgia, serif;
