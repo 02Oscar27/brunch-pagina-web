@@ -76,6 +76,7 @@ function App() {
         totalUnidades={totalUnidades}
         carritoAbierto={carritoAbierto}
         onAlternarCarrito={() => setPanelActivo((actual) => actual === 'carrito-navbar' ? null : 'carrito-navbar')}
+        onAbrirMenu={() => setPanelActivo(null)}
       />
 
       <main>

@@ -403,9 +403,17 @@
     padding: 6px 0 12px;
   }
 
-  /* Tarjetas */
+  /* Tarjetas: desactivar el zoom de hover que puede quedar activo al tocar. */
   .platos-destacados .ui.card.flip-card {
     height: 315px;
+  }
+
+  .platos-destacados .ui.card.flip-card:hover {
+    transform: none;
+  }
+
+  .platos-destacados .ui.card:hover .imagen-plato {
+    transform: none;
   }
 
   .platos-destacados .plato-imagen-contenedor {

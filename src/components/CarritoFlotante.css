@@ -219,12 +219,30 @@
 }
 
 @media (max-width: 767px) {
+  /* Acceso compacto para que no tape los textos al desplazarse. */
   .carrito-global-boton {
     right: 15px;
     bottom: 85px;
-    min-height: 52px;
-    padding: 11px 14px;
-    font-size: 13px;
+    width: 54px;
+    height: 54px;
+    min-height: 54px;
+    padding: 0;
+    gap: 0;
+    border-radius: 50%;
+  }
+
+  .carrito-global-boton > span:not(.carrito-global-contador) {
+    display: none;
+  }
+
+  .carrito-global-contador {
+    position: absolute;
+    top: -4px;
+    right: -5px;
+    min-width: 21px;
+    height: 21px;
+    padding: 0 4px;
+    font-size: 11px;
   }
 
   .carrito-global-panel {
