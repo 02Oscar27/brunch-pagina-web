@@ -18,8 +18,7 @@ const PREGUNTAS_RAPIDAS = [
   { etiqueta: 'Ubicación', pregunta: '¿Dónde están ubicados?' }
 ]
 
-function Chatbot() {
-  const [abierto, setAbierto] = useState(false)
+function Chatbot({ abierto, onAlternar, onCerrar }) {
   const [mensajes, setMensajes] = useState([MENSAJE_INICIAL])
   const [texto, setTexto] = useState('')
   const mensajesRef = useRef(null)
@@ -56,7 +55,7 @@ function Chatbot() {
         type="button"
         circular
         className="chatbot-boton"
-        onClick={() => setAbierto((anterior) => !anterior)}
+        onClick={onAlternar}
         aria-label={abierto ? 'Cerrar chatbot' : 'Abrir chatbot'}
         aria-expanded={abierto}
         aria-controls="chatbot-ventana"
@@ -92,7 +91,7 @@ function Chatbot() {
                   <Link
                     to={mensaje.ruta}
                     className="chatbot-enlace"
-                    onClick={() => setAbierto(false)}
+                    onClick={onCerrar}
                   >
                     {mensaje.enlace}
                   </Link>
