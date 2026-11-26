@@ -158,6 +158,28 @@
 }
 
 
+/* Enlace interno hacia la sección relacionada con la respuesta. */
+.chatbot-enlace {
+  display: block;
+  width: fit-content;
+  margin-top: 8px;
+  color: var(--color-terracota-oscuro);
+  font-family: var(--fuente-texto);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.chatbot-enlace:hover {
+  color: var(--color-cafe);
+}
+
+.chatbot-enlace:focus-visible {
+  outline: 3px solid var(--color-terracota-oscuro);
+  outline-offset: 3px;
+}
+
 /* =========================================
    8. BOTONES DE PREGUNTAS FRECUENTES
 ========================================= */
