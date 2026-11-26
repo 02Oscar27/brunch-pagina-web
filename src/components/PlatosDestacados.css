@@ -16,7 +16,7 @@
   margin: 0 auto;
   padding: 45px 55px 50px;
 
-  background-color: #F0EBE2;
+  background-color: var(--color-superficie-suave);
   border-radius: 26px;
 
   box-shadow: 0 8px 30px rgba(61, 58, 50, 0.05);
@@ -253,7 +253,7 @@
   font-size: 1rem;
   font-weight: 600;
 
-  color: var(--color-terracota);
+  color: var(--color-terracota-oscuro);
   margin-top: 6px;
 }
 
@@ -286,7 +286,7 @@
   font-size: 1.1rem;
   font-weight: 700;
 
-  color: var(--color-terracota);
+  color: var(--color-terracota-oscuro);
 }
 
 /* Indicación para regresar */
@@ -326,7 +326,7 @@
 
 /* Hover de las flechas */
 .platos-destacados .flecha-carrusel.ui.button:hover {
-  background-color: var(--color-terracota);
+  background-color: var(--color-terracota-oscuro);
   color: white;
 
   transform: scale(1.06);
@@ -362,7 +362,7 @@
 
   .platos-destacados {
     padding: 40px 18px;
-    background-color: #F0EBE2;
+    background-color: var(--color-superficie-suave);
   }
 
   /* Panel simplificado para móvil */
