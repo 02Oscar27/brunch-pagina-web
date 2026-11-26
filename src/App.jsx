@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import Chatbot from './components/Chatbot.jsx'
+import CarritoFlotante from './components/CarritoFlotante.jsx'
 import FacturaCompra from './components/FacturaCompra.jsx'
 
 import Inicio from './pages/Inicio.jsx'
@@ -16,6 +17,7 @@ function App() {
   const [carrito, setCarrito] = useState({})
   const [factura, setFactura] = useState(null)
   const [facturaAbierta, setFacturaAbierta] = useState(false)
+  const [panelActivo, setPanelActivo] = useState(null)
 
   // Una única finalización de compra para el Menú y el Navbar.
   const finalizarCompra = () => {
@@ -40,10 +42,14 @@ function App() {
     })
     setFacturaAbierta(true)
     setCarrito({})
+    setPanelActivo(null)
   }
 
   const verUltimaFactura = () => {
-    if (factura) setFacturaAbierta(true)
+    if (factura) {
+      setPanelActivo(null)
+      setFacturaAbierta(true)
+    }
   }
 
   const cambiarCantidad = (producto, cambio) => {
@@ -64,13 +70,7 @@ function App() {
 
   return (
     <div>
-      <Navbar
-        carrito={carrito}
-        cambiarCantidad={cambiarCantidad}
-        finalizarCompra={finalizarCompra}
-        verUltimaFactura={verUltimaFactura}
-        tieneFactura={Boolean(factura)}
-      />
+      <Navbar />
 
       <main>
         <Routes>
@@ -81,9 +81,6 @@ function App() {
               <Menu
                 carrito={carrito}
                 cambiarCantidad={cambiarCantidad}
-                finalizarCompra={finalizarCompra}
-                verUltimaFactura={verUltimaFactura}
-                tieneFactura={Boolean(factura)}
               />
             }
           />
@@ -94,7 +91,22 @@ function App() {
       </main>
 
       <Footer />
-      <Chatbot />
+      <CarritoFlotante
+        carrito={carrito}
+        cambiarCantidad={cambiarCantidad}
+        finalizarCompra={finalizarCompra}
+        verUltimaFactura={verUltimaFactura}
+        tieneFactura={Boolean(factura)}
+        abierto={panelActivo === 'carrito'}
+        chatbotAbierto={panelActivo === 'chatbot'}
+        onAlternar={() => setPanelActivo((actual) => actual === 'carrito' ? null : 'carrito')}
+        onCerrar={() => setPanelActivo(null)}
+      />
+      <Chatbot
+        abierto={panelActivo === 'chatbot'}
+        onAlternar={() => setPanelActivo((actual) => actual === 'chatbot' ? null : 'chatbot')}
+        onCerrar={() => setPanelActivo(null)}
+      />
       {facturaAbierta && factura && (
         <FacturaCompra factura={factura} onCerrar={() => setFacturaAbierta(false)} />
       )}
