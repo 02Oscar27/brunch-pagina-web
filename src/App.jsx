@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import Chatbot from './components/Chatbot.jsx'
+import CarritoFlotante from './components/CarritoFlotante.jsx'
 import FacturaCompra from './components/FacturaCompra.jsx'
 
 import Inicio from './pages/Inicio.jsx'
@@ -16,8 +17,11 @@ function App() {
   const [carrito, setCarrito] = useState({})
   const [factura, setFactura] = useState(null)
   const [facturaAbierta, setFacturaAbierta] = useState(false)
+  const [panelActivo, setPanelActivo] = useState(null)
+  const totalUnidades = Object.values(carrito).reduce((total, item) => total + item.cantidad, 0)
+  const carritoAbierto = panelActivo === 'carrito-navbar' || panelActivo === 'carrito-flotante'
 
-  // Una única finalización de compra para el Menú y el Navbar.
+  // Una sola finalización de compra para ambos accesos al carrito.
   const finalizarCompra = () => {
     const productosComprados = Object.values(carrito)
     if (productosComprados.length === 0) return
@@ -40,10 +44,14 @@ function App() {
     })
     setFacturaAbierta(true)
     setCarrito({})
+    setPanelActivo(null)
   }
 
   const verUltimaFactura = () => {
-    if (factura) setFacturaAbierta(true)
+    if (factura) {
+      setPanelActivo(null)
+      setFacturaAbierta(true)
+    }
   }
 
   const cambiarCantidad = (producto, cambio) => {
@@ -65,11 +73,9 @@ function App() {
   return (
     <div>
       <Navbar
-        carrito={carrito}
-        cambiarCantidad={cambiarCantidad}
-        finalizarCompra={finalizarCompra}
-        verUltimaFactura={verUltimaFactura}
-        tieneFactura={Boolean(factura)}
+        totalUnidades={totalUnidades}
+        carritoAbierto={carritoAbierto}
+        onAlternarCarrito={() => setPanelActivo((actual) => actual === 'carrito-navbar' ? null : 'carrito-navbar')}
       />
 
       <main>
@@ -81,9 +87,6 @@ function App() {
               <Menu
                 carrito={carrito}
                 cambiarCantidad={cambiarCantidad}
-                finalizarCompra={finalizarCompra}
-                verUltimaFactura={verUltimaFactura}
-                tieneFactura={Boolean(factura)}
               />
             }
           />
@@ -94,7 +97,23 @@ function App() {
       </main>
 
       <Footer />
-      <Chatbot />
+      <CarritoFlotante
+        carrito={carrito}
+        cambiarCantidad={cambiarCantidad}
+        finalizarCompra={finalizarCompra}
+        verUltimaFactura={verUltimaFactura}
+        tieneFactura={Boolean(factura)}
+        abierto={carritoAbierto}
+        origen={panelActivo === 'carrito-navbar' ? 'navbar' : 'flotante'}
+        chatbotAbierto={panelActivo === 'chatbot'}
+        onAlternar={() => setPanelActivo((actual) => actual === 'carrito-flotante' ? null : 'carrito-flotante')}
+        onCerrar={() => setPanelActivo(null)}
+      />
+      <Chatbot
+        abierto={panelActivo === 'chatbot'}
+        onAlternar={() => setPanelActivo((actual) => actual === 'chatbot' ? null : 'chatbot')}
+        onCerrar={() => setPanelActivo(null)}
+      />
       {facturaAbierta && factura && (
         <FacturaCompra factura={factura} onCerrar={() => setFacturaAbierta(false)} />
       )}

@@ -113,12 +113,11 @@ const productos = [
 
 const categorias = ["Todos", "Desayunos", "Dulces", "Bebidas"];
 
-function Menu({ carrito = {}, cambiarCantidad, finalizarCompra, verUltimaFactura, tieneFactura }) {
+function Menu({ carrito = {}, cambiarCantidad }) {
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
   const [busqueda, setBusqueda] = useState("");
   const [cantidadVisible, setCantidadVisible] = useState(6);
   const [tarjetasGiradas, setTarjetasGiradas] = useState([]);
-  const [carritoAbierto, setCarritoAbierto] = useState(false);
 
   const menuRef = useRef(null);
   const encabezadoRef = useRef(null);
@@ -211,18 +210,6 @@ function Menu({ carrito = {}, cambiarCantidad, finalizarCompra, verUltimaFactura
 
   const productosVisibles = productosFiltrados.slice(0, cantidadVisible);
 
-  const productosCarrito = Object.values(carrito);
-
-  const totalUnidades = productosCarrito.reduce(
-    (total, item) => total + item.cantidad,
-    0
-  );
-
-  const totalPrecio = productosCarrito.reduce(
-    (total, item) => total + item.producto.precio * item.cantidad,
-    0
-  );
-
   const formatoPrecio = (precio) =>
     precio.toLocaleString("es-CO", {
       style: "currency",
@@ -241,12 +228,6 @@ function Menu({ carrito = {}, cambiarCantidad, finalizarCompra, verUltimaFactura
         ? actuales.filter((tarjetaId) => tarjetaId !== id)
         : [...actuales, id]
     );
-  };
-
-  const realizarCompra = () => {
-    if (productosCarrito.length === 0) return;
-    finalizarCompra?.();
-    setCarritoAbierto(false);
   };
 
   const animarBoton = (elemento, escala) => {
@@ -269,78 +250,6 @@ function Menu({ carrito = {}, cambiarCantidad, finalizarCompra, verUltimaFactura
           Nuestro brunch
         </div>
       </div>
-
-      <button
-        type="button"
-        className="menu-carrito-flotante"
-        onClick={() => setCarritoAbierto((abierto) => !abierto)}
-        aria-label={`Abrir carrito. ${totalUnidades} productos`}
-        aria-expanded={carritoAbierto}
-      >
-        <svg className="menu-carrito-icono" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6" />
-          <circle cx="10" cy="20" r="1.2" />
-          <circle cx="18" cy="20" r="1.2" />
-        </svg>
-        <span className="menu-carrito-flotante-texto">Carrito</span>
-        <span className="menu-carrito-contador">{totalUnidades}</span>
-      </button>
-
-      {carritoAbierto && (
-        <aside className="menu-carrito-panel-flotante" aria-label="Contenido del carrito">
-          <div className="menu-carrito-cabecera">
-            <h2>Tu carrito</h2>
-            <button
-              type="button"
-              className="menu-carrito-cerrar"
-              onClick={() => setCarritoAbierto(false)}
-              aria-label="Cerrar carrito"
-            >×</button>
-          </div>
-
-          {productosCarrito.length === 0 ? (
-            <p className="menu-carrito-vacio">Tu carrito está vacío. Agrega tus platos favoritos.</p>
-          ) : (
-            <>
-              <ul className="menu-carrito-lista">
-                {productosCarrito.map(({ producto, cantidad }) => (
-                  <li className="menu-carrito-item" key={producto.id}>
-                    <img src={producto.imagen} alt="" />
-                    <div className="menu-carrito-detalle">
-                      <strong>{producto.nombre}</strong>
-                      <span>{formatoPrecio(producto.precio)}</span>
-                      <div className="menu-controles-cantidad menu-controles-carrito">
-                        <button type="button" onClick={() => cambiarCantidad(producto, -1)} aria-label={`Quitar una unidad de ${producto.nombre}`}>−</button>
-                        <span>{cantidad}</span>
-                        <button type="button" onClick={() => cambiarCantidad(producto, 1)} aria-label={`Agregar una unidad de ${producto.nombre}`}>+</button>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              <div className="menu-carrito-total">
-                <span>Total</span>
-                <strong>{formatoPrecio(totalPrecio)}</strong>
-              </div>
-              <button type="button" className="menu-realizar-compra" onClick={realizarCompra}>
-                Realizar compra
-              </button>
-            </>
-          )}
-          {tieneFactura && (
-            <button
-              type="button"
-              className="menu-realizar-compra"
-              onClick={() => {
-                setCarritoAbierto(false);
-                verUltimaFactura?.();
-              }}
-            >
-              Ver último comprobante
-            </button>
-          )}
-        </aside>
-      )}
 
       <section className="menu-encabezado" ref={encabezadoRef}>
         <h1 className="menu-titulo">Nuestro menú</h1>
