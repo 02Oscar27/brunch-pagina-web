@@ -1,14 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
-
-:root {
-  --color-crema: #F5F0E6;
-  --color-verde: #8A9A5B;
-  --color-terracota: #A66A4C;
-  --color-cafe: #3D3A32;
-  --fuente-texto: 'DM Sans', sans-serif;
-  --fuente-titulos: 'Fraunces', Georgia, serif;
-}
-
 /* Página */
 .menu-page {
   position: relative;
@@ -48,7 +37,7 @@
   padding: 10px 14px;
   border: 1px solid var(--color-cafe);
   border-radius: 7px;
-  background: #FFFCF6;
+  background: var(--color-papel);
   color: var(--color-cafe);
   font: 600 14px var(--fuente-texto);
   cursor: pointer;
@@ -79,7 +68,7 @@
   padding: 0 5px;
   box-sizing: border-box;
   border-radius: 50px;
-  background: var(--color-terracota);
+  background: var(--color-terracota-oscuro);
   color: #FFFFFF;
   font-size: 12px;
   font-weight: 700;
@@ -96,9 +85,9 @@
   overflow-y: auto;
   padding: 20px;
   box-sizing: border-box;
-  border: 1px solid #E2D9C9;
+  border: 1px solid var(--color-borde-suave);
   border-radius: 10px;
-  background: #FFFCF6;
+  background: var(--color-papel);
   box-shadow: 0 14px 38px rgb(61 58 50 / 20%);
 }
 
@@ -108,7 +97,7 @@
   justify-content: space-between;
   gap: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #E2D9C9;
+  border-bottom: 1px solid var(--color-borde-suave);
 }
 
 .menu-carrito-cabecera h2 {
@@ -131,7 +120,7 @@
 
 .menu-carrito-vacio,
 .menu-carrito-nota {
-  color: #625D52;
+  color: var(--color-texto-suave);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -176,7 +165,7 @@
   justify-content: space-between;
   gap: 12px;
   padding-top: 15px;
-  border-top: 1px solid #E2D9C9;
+  border-top: 1px solid var(--color-borde-suave);
   font-size: 16px;
 }
 
@@ -225,7 +214,7 @@
   box-sizing: border-box;
   border: 1px solid #D5CCBB;
   border-radius: 6px;
-  background: #FFFCF6;
+  background: var(--color-papel);
   color: var(--color-cafe);
   font-family: var(--fuente-texto);
   font-size: 15px;
@@ -234,12 +223,12 @@
 }
 
 .menu-buscador input::placeholder {
-  color: #888174;
+  color: var(--color-texto-suave);
 }
 
 .menu-buscador input:focus {
-  border-color: var(--color-verde);
-  box-shadow: 0 0 0 3px rgb(138 154 91 / 18%);
+  border-color: var(--color-verde-oscuro);
+  box-shadow: 0 0 0 3px rgb(83 100 58 / 20%);
 }
 
 /* Filtros */
@@ -266,12 +255,12 @@
 
 .menu-filtro:hover {
   background: #DDD4C3;
-  border-color: var(--color-verde);
+  border-color: var(--color-verde-oscuro);
 }
 
 .menu-filtro.activo {
-  background: var(--color-verde);
-  border-color: var(--color-verde);
+  background: var(--color-verde-oscuro);
+  border-color: var(--color-verde-oscuro);
   color: #FFFFFF;
 }
 
@@ -313,9 +302,9 @@
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
-  border: 1px solid #E2D9C9;
+  border: 1px solid var(--color-borde-suave);
   border-radius: 8px;
-  background: #FFFCF6;
+  background: var(--color-papel);
   box-shadow: 0 3px 12px rgb(61 58 50 / 8%);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -329,7 +318,7 @@
   align-items: flex-start;
   padding: 24px;
   transform: rotateY(180deg);
-  background: #FFFCF6;
+  background: var(--color-papel);
 }
 
 .menu-cara-clic {
@@ -348,7 +337,7 @@
 .menu-volver:focus-visible,
 .menu-controles-cantidad button:focus-visible,
 .menu-carrito-boton:focus-visible {
-  outline: 3px solid var(--color-verde);
+  outline: 3px solid var(--color-verde-oscuro);
   outline-offset: 3px;
 }
 
@@ -380,7 +369,7 @@
   z-index: 1;
   padding: 6px 11px;
   border-radius: 4px;
-  background: var(--color-terracota);
+  background: var(--color-terracota-oscuro);
   color: #FFFFFF;
   font-size: 12px;
   font-weight: 700;
@@ -403,7 +392,7 @@
 }
 
 .menu-categoria-producto {
-  color: var(--color-terracota);
+  color: var(--color-terracota-oscuro);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -439,7 +428,7 @@
 }
 
 .menu-cantidad-etiqueta {
-  color: #625D52;
+  color: var(--color-texto-suave);
   font-size: 13px;
   font-weight: 600;
 }
@@ -457,9 +446,9 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  border: 1px solid var(--color-verde);
+  border: 1px solid var(--color-verde-oscuro);
   border-radius: 50%;
-  background: var(--color-verde);
+  background: var(--color-verde-oscuro);
   color: #FFFFFF;
   font: 700 21px/1 var(--fuente-texto);
   cursor: pointer;
@@ -510,7 +499,7 @@
 
 .menu-descripcion {
   margin: 12px 0 20px;
-  color: #625D52;
+  color: var(--color-texto-suave);
   font-size: 15px;
   line-height: 1.8;
 }
@@ -533,9 +522,9 @@
 
 .menu-cargar {
   padding: 13px 30px;
-  border: 1px solid var(--color-verde);
+  border: 1px solid var(--color-verde-oscuro);
   border-radius: 5px;
-  background: var(--color-verde);
+  background: var(--color-verde-oscuro);
   color: #FFFFFF;
   font-family: var(--fuente-texto);
   font-size: 15px;
@@ -691,7 +680,7 @@
 
 .menu-carrito-flotante:hover {
   transform: translateY(-3px);
-  background: var(--color-terracota);
+  background: var(--color-terracota-oscuro);
   box-shadow: 0 8px 22px rgb(61 58 50 / 30%);
 }
 
@@ -704,7 +693,7 @@
 .menu-carrito-flotante .menu-carrito-contador {
   min-width: 23px;
   height: 23px;
-  background: var(--color-terracota);
+  background: var(--color-terracota-oscuro);
 }
 
 .menu-carrito-panel-flotante {
@@ -717,9 +706,9 @@
   overflow-y: auto;
   padding: 20px;
   box-sizing: border-box;
-  border: 1px solid #E2D9C9;
+  border: 1px solid var(--color-borde-suave);
   border-radius: 12px;
-  background: #FFFCF6;
+  background: var(--color-papel);
   color: var(--color-cafe);
   box-shadow: 0 14px 38px rgb(61 58 50 / 24%);
 }
@@ -730,7 +719,7 @@
   padding: 12px 16px;
   border: 0;
   border-radius: 6px;
-  background: var(--color-verde);
+  background: var(--color-verde-oscuro);
   color: #fff;
   font: 700 14px var(--fuente-texto);
   cursor: pointer;
@@ -765,7 +754,7 @@
   height: 22px;
   place-items: center;
   border-radius: 50%;
-  background: var(--color-verde);
+  background: var(--color-verde-oscuro);
   font-weight: 700;
 }
 
@@ -808,7 +797,7 @@
   padding: 5px 9px;
   border-radius: 999px;
   background: #EAE3D5;
-  color: #625D52;
+  color: var(--color-texto-suave);
   font-size: 12px;
   line-height: 1.3;
 }

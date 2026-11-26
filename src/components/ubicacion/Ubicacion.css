@@ -28,7 +28,7 @@
   font-weight: 700;
   letter-spacing: 2px;
 
-  color: var(--color-terracota);
+  color: var(--color-terracota-oscuro);
 }
 
 .ubicacion-encabezado h1 {
@@ -69,7 +69,7 @@
 .ubicacion-informacion {
   padding: 35px;
 
-  background-color: #FBF8F3;
+  background-color: var(--color-superficie);
   border-radius: 18px;
 
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
@@ -147,7 +147,7 @@
 
   border-radius: 8px;
 
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 
   font-family: var(--fuente-texto);
@@ -159,7 +159,7 @@
 }
 
 .ubicacion-pagina .ui.button.ubicacion-boton:hover {
-  background-color: #53643A;
+  background-color: var(--color-cafe);
   color: white;
   transform: translateY(-3px);
 }
@@ -175,7 +175,7 @@
 
   overflow: hidden;
 
-  background-color: #FBF8F3;
+  background-color: var(--color-superficie);
   border-radius: 18px;
 
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
@@ -202,7 +202,7 @@
   font-family: var(--fuente-texto);
   font-weight: 600;
 
-  color: var(--color-terracota);
+  color: var(--color-terracota-oscuro);
 }
 
 .ubicacion-enlace-mapa:hover {

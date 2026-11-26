@@ -1,23 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Menu } from 'semantic-ui-react'
 import { NavLink } from 'react-router-dom'
 import './Navbar.css'
 
-function Navbar({ carrito = {}, cambiarCantidad, vaciarCarrito }) {
+function Navbar({ carrito = {}, cambiarCantidad, finalizarCompra, verUltimaFactura, tieneFactura }) {
   const [carritoAbierto, setCarritoAbierto] = useState(false)
-  const [avisoCompra, setAvisoCompra] = useState(false)
-
-  useEffect(() => {
-    if (!avisoCompra) return
-    const temporizador = window.setTimeout(() => setAvisoCompra(false), 3500)
-    return () => window.clearTimeout(temporizador)
-  }, [avisoCompra])
-
   const realizarCompra = () => {
     if (totalUnidades === 0) return
-    vaciarCarrito?.()
+    finalizarCompra?.()
     setCarritoAbierto(false)
-    setAvisoCompra(true)
   }
   const productosCarrito = Object.values(carrito)
   const totalUnidades = productosCarrito.reduce((total, item) => total + item.cantidad, 0)
@@ -129,15 +120,22 @@ function Navbar({ carrito = {}, cambiarCantidad, vaciarCarrito }) {
                 </p>
               </>
             )}
+            {tieneFactura && (
+              <button
+                type="button"
+                className="navbar-realizar-compra"
+                onClick={() => {
+                  setCarritoAbierto(false)
+                  verUltimaFactura?.()
+                }}
+              >
+                Ver último comprobante
+              </button>
+            )}
           </aside>
         )}
       </Menu.Item>
     </Menu>
-    {avisoCompra && (
-      <div className="navbar-compra-aviso" role="status" aria-live="polite">
-        <span aria-hidden="true">✓</span> Compra realizada correctamente
-      </div>
-    )}
     </>
   )
 }

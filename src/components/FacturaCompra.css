@@ -1,0 +1,271 @@
+.factura-superposicion {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 28px 16px;
+  background: rgba(32, 29, 25, 0.7);
+}
+
+.factura-ventana {
+  width: min(100%, 720px);
+  margin: auto 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 16px 55px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.factura-acciones {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--color-borde-suave);
+  background: var(--color-crema);
+}
+
+.factura-acciones button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 8px;
+  font: 600 0.95rem var(--fuente-texto);
+}
+
+.factura-boton-imprimir {
+  padding: 11px 16px;
+  background: var(--color-verde-oscuro);
+  color: #fff;
+}
+
+.factura-boton-imprimir:hover {
+  background: #72844a;
+}
+
+.factura-boton-cerrar {
+  width: 40px;
+  height: 40px;
+  background: #e5ddd2;
+  color: var(--color-cafe);
+  font-size: 1.7rem !important;
+  line-height: 1;
+}
+
+.factura-documento {
+  padding: 38px 42px;
+  color: var(--color-cafe);
+  background: #fff;
+  font-family: var(--fuente-texto);
+}
+
+.factura-encabezado {
+  text-align: center;
+}
+
+.factura-encabezado h2 {
+  margin: 0;
+  font: 700 2.6rem var(--fuente-titulos);
+}
+
+.factura-encabezado h2 span {
+  color: var(--color-terracota);
+}
+
+.factura-encabezado > p {
+  margin: 6px 0 0;
+}
+
+.factura-advertencia {
+  display: inline-block;
+  margin-top: 14px !important;
+  padding: 7px 11px;
+  border: 1px solid #d7a28b;
+  border-radius: 5px;
+  color: #82482f;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.factura-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 30px 0 24px;
+  padding: 16px 0;
+  border-top: 1px solid var(--color-borde-suave);
+  border-bottom: 1px solid var(--color-borde-suave);
+}
+
+.factura-datos div {
+  min-width: 0;
+}
+
+.factura-datos dt {
+  margin-bottom: 5px;
+  color: #756c61;
+  font-size: 0.8rem;
+}
+
+.factura-datos dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.factura-tabla-contenedor {
+  overflow-x: auto;
+}
+
+.factura-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.91rem;
+}
+
+.factura-tabla th {
+  padding: 12px 8px;
+  border-bottom: 2px solid #d9d0c4;
+  font-weight: 700;
+}
+
+.factura-tabla td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #ede6dd;
+}
+
+.factura-tabla th:not(:first-child),
+.factura-tabla td:not(:first-child) {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.factura-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 23px 8px 16px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.factura-total strong {
+  color: var(--color-cafe);
+  font-size: 1.35rem;
+}
+
+.factura-pie {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-borde-suave);
+  text-align: center;
+}
+
+.factura-pie p {
+  margin: 0 0 8px;
+  font: 600 1.2rem var(--fuente-titulos);
+}
+
+.factura-pie small {
+  color: #6c645c;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .factura-superposicion {
+    padding: 12px;
+  }
+
+  .factura-acciones {
+    padding: 12px;
+  }
+
+  .factura-boton-imprimir {
+    font-size: 0.82rem !important;
+  }
+
+  .factura-documento {
+    padding: 24px 16px;
+  }
+
+  .factura-datos {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .factura-tabla {
+    font-size: 0.76rem;
+  }
+
+  .factura-tabla td,
+  .factura-tabla th {
+    padding: 10px 4px;
+  }
+
+  .factura-total {
+    font-size: 1rem;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  html,
+  body,
+  #root {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  .factura-documento,
+  .factura-documento * {
+    visibility: visible !important;
+  }
+
+  .factura-superposicion,
+  .factura-ventana {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+
+  .factura-acciones {
+    display: none !important;
+  }
+
+  .factura-documento {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .factura-tabla-contenedor {
+    overflow: visible !important;
+  }
+
+  .factura-tabla tr {
+    break-inside: avoid;
+  }
+}

@@ -17,7 +17,7 @@
   justify-content: center;
   align-items: center;
 
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 
   font-family: var(--fuente-texto);
@@ -36,7 +36,7 @@
 /* Efecto hover del botón flotante */
 .chatbot-boton.ui.button:hover,
 .chatbot-boton.ui.button:focus {
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
@@ -151,12 +151,34 @@
 ========================================= */
 
 .chatbot-mensajes .mensaje.usuario {
-  background-color: #53643A;
+  background-color: var(--color-verde-oscuro);
   color: white;
 
   align-self: flex-end;
 }
 
+
+/* Enlace interno hacia la sección relacionada con la respuesta. */
+.chatbot-enlace {
+  display: block;
+  width: fit-content;
+  margin-top: 8px;
+  color: var(--color-terracota-oscuro);
+  font-family: var(--fuente-texto);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.chatbot-enlace:hover {
+  color: var(--color-cafe);
+}
+
+.chatbot-enlace:focus-visible {
+  outline: 3px solid var(--color-terracota-oscuro);
+  outline-offset: 3px;
+}
 
 /* =========================================
    8. BOTONES DE PREGUNTAS FRECUENTES
@@ -191,7 +213,7 @@
 
 /* Efecto hover en preguntas rápidas */
 .chatbot-opciones .ui.button:hover {
-  background-color: #53643A;
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
@@ -223,12 +245,12 @@
 .chatbot-formulario .ui.button {
   margin: 0;
 
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
 .chatbot-formulario .ui.button:hover {
-  background-color: #53643A;
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 

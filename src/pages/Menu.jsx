@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -114,13 +114,12 @@ const productos = [
 
 const categorias = ["Todos", "Desayunos", "Dulces", "Bebidas"];
 
-function Menu({ carrito = {}, cambiarCantidad }) {
+function Menu({ carrito = {}, cambiarCantidad, finalizarCompra, verUltimaFactura, tieneFactura }) {
   const [categoriaActiva, setCategoriaActiva] = useState("Todos");
   const [busqueda, setBusqueda] = useState("");
   const [cantidadVisible, setCantidadVisible] = useState(6);
   const [tarjetasGiradas, setTarjetasGiradas] = useState([]);
   const [carritoAbierto, setCarritoAbierto] = useState(false);
-  const [avisoCompra, setAvisoCompra] = useState(false);
 
   const menuRef = useRef(null);
   const encabezadoRef = useRef(null);
@@ -247,20 +246,9 @@ function Menu({ carrito = {}, cambiarCantidad }) {
 
   const realizarCompra = () => {
     if (productosCarrito.length === 0) return;
-
-    productosCarrito.forEach(({ producto, cantidad }) => {
-      cambiarCantidad(producto, -cantidad);
-    });
-
+    finalizarCompra?.();
     setCarritoAbierto(false);
-    setAvisoCompra(true);
   };
-
-  useEffect(() => {
-    if (!avisoCompra) return;
-    const temporizador = window.setTimeout(() => setAvisoCompra(false), 2800);
-    return () => window.clearTimeout(temporizador);
-  }, [avisoCompra]);
 
   const animarBoton = (elemento, escala) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -276,7 +264,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
   };
 
   return (
-    <main className="menu-page" ref={menuRef}>
+    <div className="menu-page" ref={menuRef}>
       <div className="menu-barra-superior">
         <div className="menu-marca" aria-label="Menú de brunch">
           Nuestro brunch
@@ -298,12 +286,6 @@ function Menu({ carrito = {}, cambiarCantidad }) {
         <span className="menu-carrito-flotante-texto">Carrito</span>
         <span className="menu-carrito-contador">{totalUnidades}</span>
       </button>
-
-      {avisoCompra && (
-        <div className="menu-aviso-compra" role="status">
-          <span aria-hidden="true">✓</span> Compra realizada correctamente
-        </div>
-      )}
 
       {carritoAbierto && (
         <aside className="menu-carrito-panel-flotante" aria-label="Contenido del carrito">
@@ -345,6 +327,18 @@ function Menu({ carrito = {}, cambiarCantidad }) {
                 Realizar compra
               </button>
             </>
+          )}
+          {tieneFactura && (
+            <button
+              type="button"
+              className="menu-realizar-compra"
+              onClick={() => {
+                setCarritoAbierto(false);
+                verUltimaFactura?.();
+              }}
+            >
+              Ver último comprobante
+            </button>
           )}
         </aside>
       )}
@@ -520,7 +514,7 @@ function Menu({ carrito = {}, cambiarCantidad }) {
           </button>
         </div>
       )}
-    </main>
+    </div>
   );
 }
 

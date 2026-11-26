@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Icon } from 'semantic-ui-react'
+import { consultarClima } from '../services/climaService.js'
 
 // Animaciones GSAP
 import { gsap } from 'gsap'
@@ -14,17 +15,7 @@ import './ClimaBrunch.css'
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 
-// =========================================
-// 1. CONFIGURACIÓN DE LA API
-// =========================================
-
-// Coordenadas aproximadas de Neiva
-const latitud = 2.93001
-const longitud = -75.27973
-
-// URL de Open-Meteo
-const API_URL =
-  `https://api.open-meteo.com/v1/forecast?latitude=${latitud}&longitude=${longitud}&current=temperature_2m,relative_humidity_2m&timezone=America%2FBogota`
+// La consulta HTTP y validación del JSON están separadas en climaService.js.
 
 
 function ClimaBrunch() {
@@ -53,36 +44,10 @@ function ClimaBrunch() {
 
       try {
 
-        // Realizar una solicitud GET
-        const respuesta = await fetch(API_URL, {
-          signal: controlador.signal
-        })
+        // El servicio devuelve únicamente los datos que necesita la interfaz.
+        const datosClima = await consultarClima(controlador.signal)
 
-        // Comprobar si la respuesta fue correcta
-        if (!respuesta.ok) {
-          throw new Error('Error al consultar la API')
-        }
-
-        // Convertir la respuesta en un objeto JavaScript
-        const datos = await respuesta.json()
-
-        // Extraer temperatura y humedad
-        const temperatura = datos.current?.temperature_2m
-        const humedad = datos.current?.relative_humidity_2m
-
-        // Validar los datos
-        if (
-          !Number.isFinite(temperatura) ||
-          !Number.isFinite(humedad)
-        ) {
-          throw new Error('Datos meteorológicos inválidos')
-        }
-
-        // Guardar la información en el estado
-        setClima({
-          temperatura,
-          humedad
-        })
+        setClima(datosClima)
 
       } catch (errorConsulta) {
 
