@@ -108,13 +108,13 @@
 
 /* Botón "Ver menú" */
 .bienvenida-botones .ui.button.boton-menu {
-  background-color: var(--color-verde);
+  background-color: var(--color-verde-oscuro);
   color: white;
 }
 
 /* Botón "Reservar" */
 .bienvenida-botones .ui.button.boton-reserva {
-  background-color: var(--color-terracota);
+  background-color: var(--color-terracota-oscuro);
   color: white;
 }
 
