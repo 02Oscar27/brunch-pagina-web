@@ -157,9 +157,9 @@
 .ui.form.reserva-formulario .field:not(.error) input:focus,
 .ui.form.reserva-formulario .field:not(.error) textarea:focus {
   background-color: #ffffff;
-  border-color: var(--color-verde);
+  border-color: var(--color-verde-oscuro);
   box-shadow:
-    0 0 0 4px rgba(138, 154, 91, 0.22),
+    0 0 0 4px rgba(83, 100, 58, 0.22),
     0 10px 20px -12px rgba(61, 58, 50, 0.4);
   outline: none;
   transform: translateY(-1px);
@@ -261,7 +261,7 @@
 }
 
 .ui.button.boton-confirmar:focus-visible {
-  outline: 3px solid var(--color-verde);
+  outline: 3px solid var(--color-verde-oscuro);
   outline-offset: 3px;
 }
 
