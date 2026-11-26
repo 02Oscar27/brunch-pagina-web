@@ -88,8 +88,14 @@
 ========================================= */
 
 .ui.menu.navbar-brunch .item:focus-visible {
-  outline: 2px solid var(--color-terracota);
+  /* Contorno claro sobre la barra oscura. */
+  outline: 2px solid var(--color-crema);
   outline-offset: -3px;
+}
+
+.ui.menu.navbar-brunch .active.item:not(.header):focus-visible {
+  /* Contorno oscuro sobre el fondo crema de la pestaña activa. */
+  outline-color: var(--color-cafe);
 }
 
 
