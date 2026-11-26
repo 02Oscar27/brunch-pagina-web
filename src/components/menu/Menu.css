@@ -227,8 +227,8 @@
 }
 
 .menu-buscador input:focus {
-  border-color: var(--color-verde);
-  box-shadow: 0 0 0 3px rgb(138 154 91 / 18%);
+  border-color: var(--color-verde-oscuro);
+  box-shadow: 0 0 0 3px rgb(83 100 58 / 20%);
 }
 
 /* Filtros */
@@ -255,7 +255,7 @@
 
 .menu-filtro:hover {
   background: #DDD4C3;
-  border-color: var(--color-verde);
+  border-color: var(--color-verde-oscuro);
 }
 
 .menu-filtro.activo {
@@ -337,7 +337,7 @@
 .menu-volver:focus-visible,
 .menu-controles-cantidad button:focus-visible,
 .menu-carrito-boton:focus-visible {
-  outline: 3px solid var(--color-verde);
+  outline: 3px solid var(--color-verde-oscuro);
   outline-offset: 3px;
 }
 
