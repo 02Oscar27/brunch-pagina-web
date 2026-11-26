@@ -7,7 +7,6 @@ import "../components/menu/Menu.css";
 import pancakesImg from "../assets/images/pancakes.png";
 import wafflesImg from "../assets/images/waffles.png";
 import huevosImg from "../assets/images/huevos-benedictinos.png";
-import brunchImg from "../assets/images/brunch-principal.png";
 import croasant from "../assets/images/croasant.png";
 import bolfrutas from "../assets/images/bolfrutas.png";
 import cafe from "../assets/images/cafe.png";
