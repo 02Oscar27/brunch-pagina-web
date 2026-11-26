@@ -12,11 +12,9 @@ import brunchPrincipal from '../assets/images/brunch-principal.png'
 
 import './Bienvenida.css'
 
-// Registrar los plugins de GSAP.
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 function Bienvenida() {
-  // Referencia a la sección principal.
   const seccionRef = useRef(null)
 
   useGSAP(() => {
@@ -26,125 +24,128 @@ function Bienvenida() {
 
     if (reducirMovimiento) return
 
-    const imagen = seccionRef.current?.querySelector(
-      '.imagen-principal'
-    )
+    const contexto = seccionRef.current
+    if (!contexto) return
 
-    // Animación de entrada del título.
-    const tl = gsap.timeline()
+    const tl = gsap.timeline({
+      defaults: { ease: 'power3.out' }
+    })
 
+    // Animación del título palabra por palabra.
     tl.fromTo(
-      '.titulo-bienvenida',
+      '.titulo-bienvenida .palabra-titulo',
+      { y: 48, opacity: 0, rotateX: -35 },
       {
-        x: -100,
-        opacity: 0
-      },
-      {
-        x: 0,
+        y: 0,
         opacity: 1,
-        duration: 1.2,
-        ease: 'power2.out'
+        rotateX: 0,
+        duration: 0.85,
+        stagger: 0.11,
+        ease: 'back.out(1.25)'
       }
     )
-
-    // Animación de entrada de la fotografía.
-    tl.fromTo(
-      '.imagen-principal',
-      {
-        x: 100,
-        opacity: 0
-      },
-      {
-        x: 0,
-        opacity: 1,
-        duration: 1.2,
-        ease: 'power2.out'
-      },
-      '-=0.6'
-    )
-
-    // Animación de revelado mediante clipPath.
-    if (imagen) {
-      gsap.fromTo(
-        imagen,
+      // Entrada de la descripción.
+      .fromTo(
+        '.bienvenida-descripcion',
+        { y: 22, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7 },
+        '-=0.38'
+      )
+      // Entrada de los botones.
+      .fromTo(
+        '.bienvenida-botones .ui.button',
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.55, stagger: 0.12 },
+        '-=0.3'
+      )
+      // Revelado de la fotografía.
+      .fromTo(
+        '.imagen-principal',
         {
-          clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)'
+          clipPath: 'inset(0 0 0 100% round 14px)',
+          scale: 1.12
         },
         {
-          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-          duration: 1.2,
-          ease: 'power3.inOut',
-          scrollTrigger: {
-            trigger: imagen,
-            start: 'top 85%',
-            once: true
-          }
-        }
+          clipPath: 'inset(0 0 0 0% round 14px)',
+          scale: 1,
+          duration: 1.25,
+          ease: 'power4.inOut'
+        },
+        '-=0.95'
       )
-    }
+
+    // Movimiento sutil de la imagen al desplazarse.
+    gsap.to('.imagen-principal', {
+      yPercent: 5,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: contexto,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.7
+      }
+    })
 
   }, { scope: seccionRef })
 
   return (
-    <section
-      className="seccion-bienvenida"
-      ref={seccionRef}
-    >
+    <section className="seccion-bienvenida" ref={seccionRef}>
       <Container fluid>
         <Grid columns={2} stackable>
-
-          {/* COLUMNA IZQUIERDA: INFORMACIÓN */}
           <Grid.Column>
             <div className="bienvenida-texto">
-
-              {/* Título principal */}
-              <h1 className="titulo-bienvenida">
-                Disfruta un brunch
-                <span>diferente.</span>
-              </h1>
-
-              {/* Descripción */}
-              <p>
-                Un espacio para disfrutar desayunos,
-                café y buenos momentos.
+              <p className="bienvenida-eyebrow">
+                UN MOMENTO PARA DISFRUTAR
               </p>
 
-              {/* Botones de navegación */}
-              <div className="bienvenida-botones">
+              <h1
+                className="titulo-bienvenida"
+                aria-label="Disfruta un brunch diferente."
+              >
+                <span className="linea-titulo" aria-hidden="true">
+                  <span className="palabra-titulo">Disfruta</span>{' '}
+                  <span className="palabra-titulo">un</span>
+                </span>
 
-                <Button
-                  as={Link}
-                  to="/menu"
-                  className="boton-menu"
+                <span
+                  className="linea-titulo linea-titulo-acento"
+                  aria-hidden="true"
                 >
+                  <span className="palabra-titulo">brunch</span>{' '}
+                  <span className="palabra-titulo">diferente.</span>
+                </span>
+              </h1>
+
+              <p className="bienvenida-descripcion">
+                Un espacio para disfrutar desayunos, café y buenos momentos.
+              </p>
+
+              <div className="bienvenida-botones">
+                <Button as={Link} to="/menu" className="boton-menu">
                   Ver menú
                 </Button>
 
-                <Button
-                  as={Link}
-                  to="/reservas"
-                  className="boton-reserva"
-                >
+                <Button as={Link} to="/reservas" className="boton-reserva">
                   Reservar
                 </Button>
-
               </div>
             </div>
           </Grid.Column>
 
-          {/* COLUMNA DERECHA: FOTOGRAFÍA */}
           <Grid.Column>
             <div className="bienvenida-imagen">
-
               <img
                 src={brunchPrincipal}
                 alt="Mesa con diferentes platos de brunch"
                 className="imagen-principal"
               />
 
+              <span className="imagen-sello" aria-hidden="true">
+                <span>BRUNCH</span>
+                <span> & coffee</span>
+              </span>
             </div>
           </Grid.Column>
-
         </Grid>
       </Container>
     </section>
