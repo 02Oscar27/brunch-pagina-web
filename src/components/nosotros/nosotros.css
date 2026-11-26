@@ -11,7 +11,7 @@
   position: relative;
   overflow: hidden;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   color: var(--color-cafe);
   background-color: var(--color-crema);
 }
@@ -28,7 +28,7 @@
 .nosotros-encabezado h1 {
   margin: 0 0 14px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: clamp(2.4rem, 4.5vw, 3.6rem);
   font-weight: 600;
   line-height: 1.1;
@@ -48,7 +48,7 @@
 .nosotros-titulo-seccion {
   margin: 0 0 56px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: clamp(1.9rem, 3vw, 2.6rem);
   font-weight: 600;
   line-height: 1.15;
@@ -98,7 +98,7 @@
 .nosotros-texto h2 {
   margin: 0 0 22px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: clamp(1.8rem, 2.6vw, 2.4rem);
   font-weight: 600;
   line-height: 1.15;
@@ -163,7 +163,7 @@
 .nosotros-hito-anio {
   display: block;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: 2rem;
   font-weight: 600;
   line-height: 1;
@@ -243,7 +243,7 @@
 .nosotros-tarjeta h2 {
   margin: 0 0 12px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: 1.7rem;
   font-weight: 600;
   line-height: 1.2;
@@ -253,7 +253,7 @@
 .nosotros-tarjeta-lead {
   margin: 0 0 14px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: 1.3rem;
   line-height: 1.4;
   color: var(--color-cafe);
@@ -312,7 +312,7 @@
 .nosotros-valor h3 {
   margin: 0 0 10px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--color-cafe);
@@ -367,7 +367,7 @@
 .nosotros-cta-contenido h2 {
   margin: 0 0 12px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: clamp(1.9rem, 3vw, 2.6rem);
   font-weight: 600;
   line-height: 1.15;
@@ -387,7 +387,7 @@
   margin: 0;
   padding: 1.1em 2.4em;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--color-cafe);
