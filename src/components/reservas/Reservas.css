@@ -55,7 +55,7 @@
 .reserva-encabezado h1 {
   margin: 0 0 14px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: clamp(2.4rem, 4.5vw, 3.6rem);
   font-weight: 600;
   line-height: 1.1;
@@ -69,7 +69,7 @@
   max-width: 40ch;
   margin: 0 auto;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   font-size: 1.15rem;
   line-height: 1.6;
   color: var(--rs-texto-suave);
@@ -107,7 +107,7 @@
 .ui.form.reserva-formulario .field > label {
   margin-bottom: 8px;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   font-size: 0.92rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -122,7 +122,7 @@
 .ui.form.reserva-formulario .field textarea {
   padding: 0.95em 1.2em;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   font-size: 1rem;
   color: var(--color-cafe);
 
@@ -209,13 +209,13 @@
   margin-top: 12px;
   padding: 1.1em 2.2em;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: 0.01em;
   color: #ffffff;
 
-  background-color: var(--color-terracota);
+  background-color: var(--color-terracota-oscuro);
   border-radius: 999px;
   box-shadow: 0 12px 24px -10px rgba(166, 106, 76, 0.7);
 
@@ -244,7 +244,7 @@
 .ui.button.boton-confirmar:hover,
 .ui.button.boton-confirmar:focus {
   color: #ffffff;
-  background-color: #b27555;
+  background-color: var(--color-terracota-oscuro);
   box-shadow: 0 16px 28px -10px rgba(166, 106, 76, 0.8);
   transform: translateY(-3px);
 }
@@ -255,7 +255,7 @@
 
 .ui.button.boton-confirmar:active {
   color: #ffffff;
-  background-color: var(--color-terracota);
+  background-color: var(--color-terracota-oscuro);
   box-shadow: 0 6px 14px -8px rgba(166, 106, 76, 0.8);
   transform: translateY(0) scale(0.98);
 }
@@ -292,7 +292,7 @@
 .reserva-confirmacion > h2 {
   margin: 0 0 10px;
 
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: var(--fuente-titulos);
   font-size: 2rem;
   font-weight: 600;
   color: var(--color-cafe);
@@ -301,7 +301,7 @@
 .reserva-confirmacion > p {
   margin: 0;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   font-size: 1.05rem;
   line-height: 1.6;
   color: var(--rs-texto-suave);
@@ -311,7 +311,7 @@
   margin: 22px 0 28px;
   padding: 6px 22px;
 
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--fuente-texto);
   text-align: left;
   list-style: none;
   color: var(--color-cafe);
