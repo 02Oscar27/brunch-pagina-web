@@ -15,6 +15,7 @@ function CarritoFlotante({
   verUltimaFactura,
   tieneFactura,
   abierto,
+  origen,
   onAlternar,
   onCerrar,
   chatbotAbierto
@@ -65,7 +66,7 @@ function CarritoFlotante({
       {abierto && (
         <aside
           id="carrito-global-panel"
-          className="carrito-global-panel"
+          className={`carrito-global-panel ${origen === 'navbar' ? 'carrito-global-panel-navbar' : ''}`}
           aria-labelledby="carrito-global-titulo"
         >
           <div className="carrito-global-cabecera">
