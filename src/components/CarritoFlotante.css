@@ -251,3 +251,18 @@
     display: none !important;
   }
 }
+
+/* El mismo panel se coloca bajo el Navbar cuando se abre desde allí. */
+.carrito-global-panel-navbar {
+  top: 82px;
+  bottom: auto;
+  max-height: min(70vh, calc(100dvh - 100px));
+}
+
+@media (max-width: 767px) {
+  .carrito-global-panel-navbar {
+    top: 70px;
+    bottom: auto;
+    max-height: min(70vh, calc(100dvh - 86px));
+  }
+}
