@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import Chatbot from './components/Chatbot.jsx'
+import FacturaCompra from './components/FacturaCompra.jsx'
 
 import Inicio from './pages/Inicio.jsx'
 import Menu from './pages/Menu.jsx'
@@ -13,9 +14,37 @@ import Ubicacion from './pages/Ubicacion.jsx'
 
 function App() {
   const [carrito, setCarrito] = useState({})
+  const [factura, setFactura] = useState(null)
+  const [facturaAbierta, setFacturaAbierta] = useState(false)
 
-  // Se comparte el mismo carrito entre el menú y el navbar.
-  const vaciarCarrito = () => setCarrito({})
+  // Una única finalización de compra para el Menú y el Navbar.
+  const finalizarCompra = () => {
+    const productosComprados = Object.values(carrito)
+    if (productosComprados.length === 0) return
+
+    // Copiar el detalle antes de vaciar el carrito.
+    const items = productosComprados.map(({ producto, cantidad }) => ({
+      id: producto.id,
+      nombre: producto.nombre,
+      precio: producto.precio,
+      cantidad,
+      subtotal: producto.precio * cantidad,
+    }))
+    const ahora = new Date()
+
+    setFactura({
+      numero: 'DEMO-' + ahora.getTime(),
+      fecha: ahora.toISOString(),
+      items,
+      total: items.reduce((acumulado, item) => acumulado + item.subtotal, 0),
+    })
+    setFacturaAbierta(true)
+    setCarrito({})
+  }
+
+  const verUltimaFactura = () => {
+    if (factura) setFacturaAbierta(true)
+  }
 
   const cambiarCantidad = (producto, cambio) => {
     setCarrito((actual) => {
@@ -35,14 +64,28 @@ function App() {
 
   return (
     <div>
-      <Navbar carrito={carrito} cambiarCantidad={cambiarCantidad} vaciarCarrito={vaciarCarrito} />
+      <Navbar
+        carrito={carrito}
+        cambiarCantidad={cambiarCantidad}
+        finalizarCompra={finalizarCompra}
+        verUltimaFactura={verUltimaFactura}
+        tieneFactura={Boolean(factura)}
+      />
 
       <main>
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route
             path="/menu"
-            element={<Menu carrito={carrito} cambiarCantidad={cambiarCantidad} />}
+            element={
+              <Menu
+                carrito={carrito}
+                cambiarCantidad={cambiarCantidad}
+                finalizarCompra={finalizarCompra}
+                verUltimaFactura={verUltimaFactura}
+                tieneFactura={Boolean(factura)}
+              />
+            }
           />
           <Route path="/reservas" element={<Reservas />} />
           <Route path="/nosotros" element={<Nosotros />} />
@@ -52,6 +95,9 @@ function App() {
 
       <Footer />
       <Chatbot />
+      {facturaAbierta && factura && (
+        <FacturaCompra factura={factura} onCerrar={() => setFacturaAbierta(false)} />
+      )}
     </div>
   )
 }
